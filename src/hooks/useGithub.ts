@@ -1,5 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import React from "react";
+import { CommitsState } from "../App";
 
 export default function useGithub() {
 
@@ -16,13 +17,13 @@ export default function useGithub() {
   }
 
   async function getRepos() {
-    if (!octokit) return;
+    if (!octokit) return [];
 
     return octokit.rest.repos.listForAuthenticatedUser();
   }
 
   async function getCommits(repos: string[]) {
-    if (!octokit) return;
+    if (!octokit) return [];
 
     const commits = await processRepos(user, repos);
     return commits || [];
@@ -36,17 +37,13 @@ export default function useGithub() {
   }
 
   async function processRepos(user: any, repos: string[]) {
-    let data: Map<string, any[]> = new Map();
+    let data: CommitsState[] = [];
     for (let repo of repos) {
       const commits = await fetchCommits(user, repo, '');
-      // let prs = [];
-      // for (let commit of commits) {
-      //   const commitData = await getCommitData(commit, repo);
-      //   if (commitData) {
-      //     prs.push(commitData);
-      //   }
-      // }
-      data.set(repo, commits);
+      data.push({
+        repoFullName: repo,
+        commits: commits.map(c => ({ commit: c, selected: false }))
+      });
     }
     return data;
   }

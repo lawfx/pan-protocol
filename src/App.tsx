@@ -6,11 +6,23 @@ import Commits from './Commits/Commits';
 import styled from 'styled-components';
 import { DataInfo } from './models/data-info';
 import Data from './Data/Data';
+import Button from './Button/Button';
+import { DocumentData } from './models/document-data';
+
+export interface CommitsState {
+  repoFullName: string;
+  commits: { commit: any, selected: boolean }[];
+}
+
+export interface RepoState {
+  repo: any;
+  selected: boolean;
+}
 
 export default function App() {
 
-  const [repos, setRepos] = React.useState<{ repo: any, selected: boolean }[]>([]);
-  const [commits, setCommits] = React.useState<Map<string, any[]>>(new Map());
+  const [repos, setRepos] = React.useState<RepoState[]>([]);
+  const [commits, setCommits] = React.useState<CommitsState[]>([]);
   const [data, setData] = React.useState<DataInfo>({
     name: '',
     position: '',
@@ -49,6 +61,20 @@ export default function App() {
     }));
   }
 
+  function selectCommit(repo: string, sha: string) {
+    setCommits(commits => commits.map(repoInfo => {
+      if (repoInfo.repoFullName !== repo) return repoInfo;
+      return { ...repoInfo, commits: repoInfo.commits.map(c => c.commit.sha === sha ? { ...c, selected: true } : c) }
+    }));
+  }
+
+  function unselectCommit(repo: string, sha: string) {
+    setCommits(commits => commits.map(repoInfo => {
+      if (repoInfo.repoFullName !== repo) return repoInfo;
+      return { ...repoInfo, commits: repoInfo.commits.map(c => c.commit.sha === sha ? { ...c, selected: false } : c) }
+    }));
+  }
+
   function setName(name: string) {
     setData(d => ({ ...d, name }));
   }
@@ -65,6 +91,14 @@ export default function App() {
     setData(d => ({ ...d, position }));
   }
 
+  // function generateDocument() {
+  //   const docData: DocumentData = compileData(data, commits);
+  // }
+
+  // function compileData(data: DataInfo, commits: any[]): DocumentData {
+  //   return;
+  // }
+
   return (
     <Wrapper>
       <LoginWrapper>
@@ -77,8 +111,9 @@ export default function App() {
         <Data data={data} setName={setName} setDate={setDate} setHours={setHours} setPosition={setPosition} />
       </DataWrapper>
       <CommitsWrapper>
-        <Commits repos={repos.filter(r => r.selected).map(r => r.repo.full_name)} commits={commits} setCommits={setCommits} />
+        <Commits repos={repos.filter(r => r.selected).map(r => r.repo.full_name)} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
       </CommitsWrapper>
+      {/* <Button onClick={ }>Generate</Button> */}
     </Wrapper>
   )
 }
