@@ -8,6 +8,10 @@ import { DataInfo } from './models/data-info';
 import Data from './Data/Data';
 import Button from './Button/Button';
 import { DocumentData } from './models/document-data';
+import PizZip from 'pizzip';
+import Docxtemplater from 'docxtemplater';
+import { saveAs } from 'file-saver';
+import FileInput from './FileInput/FileInput';
 
 export interface CommitsState {
   repoFullName: string;
@@ -29,6 +33,7 @@ export default function App() {
     date: '',
     hours: 0
   });
+  const [file, setFile] = React.useState<string | ArrayBuffer | null>();
 
   const { user, getRepos } = React.useContext(GitHubContext);
 
@@ -94,6 +99,29 @@ export default function App() {
   function generateDocument() {
     const docData: DocumentData = compileData(data, commits);
     console.log(docData);
+
+    const zip = new PizZip(file);
+    const doc = new Docxtemplater(zip, {
+      paragraphLoop: true,
+      linebreaks: true,
+    });
+
+    doc.render({
+      name: docData.userData.name,
+      position: docData.userData.position,
+      date: docData.userData.date,
+      hours: docData.userData.hours,
+      prs: docData.commits.map(c => ({ title: c.message, num: c.prNum, sha: c.sha, hour: 5 }))
+    });
+
+    const blob = doc.getZip().generate({
+      type: "blob",
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      compression: "DEFLATE",
+    });
+
+    saveAs(blob, "output.docx");
   }
 
   function compileData(data: DataInfo, commits: CommitsState[]): DocumentData {
@@ -115,11 +143,27 @@ export default function App() {
     }
   }
 
+  function handleUploadDocument(file: File) {
+    const reader = new FileReader();
+
+    reader.onerror = function (evt) {
+      console.error("error reading file", evt);
+    };
+
+    reader.onload = function (evt) {
+      const content = evt.target!.result;
+      setFile(content);
+    };
+
+    reader.readAsBinaryString(file);
+  }
+
   return (
     <Wrapper>
       <LoginWrapper>
         <Login />
       </LoginWrapper>
+      <FileInput onFileUpload={handleUploadDocument} allowedTypes={['application/vnd.openxmlformats-officedocument.wordprocessingml.document']} />
       <RepositoriesWrapper>
         <Repositories repos={repos} selectRepo={selectRepo} unselectRepo={unselectRepo} />
       </RepositoriesWrapper>
