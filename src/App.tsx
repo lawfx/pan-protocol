@@ -91,13 +91,29 @@ export default function App() {
     setData(d => ({ ...d, position }));
   }
 
-  // function generateDocument() {
-  //   const docData: DocumentData = compileData(data, commits);
-  // }
+  function generateDocument() {
+    const docData: DocumentData = compileData(data, commits);
+    console.log(docData);
+  }
 
-  // function compileData(data: DataInfo, commits: any[]): DocumentData {
-  //   return;
-  // }
+  function compileData(data: DataInfo, commits: CommitsState[]): DocumentData {
+    return {
+      userData: data,
+      commits: commits.flatMap(repoInfo => {
+        return repoInfo.commits.map(c => {
+          if (!c.selected) return null as any; //TODO change
+          const messageData = c.commit.commit.message.match(/(?<title>.+) (\(#(?<num>\d+)\))/);
+          return {
+            repo: repoInfo.repoFullName,
+            sha: c.commit.sha,
+            message: messageData?.groups.title ?? c.commit.commit.message,
+            prNum: messageData?.groups.num ? +messageData?.groups.num : -1
+          }
+        }
+        )
+      }).filter(r => !!r)
+    }
+  }
 
   return (
     <Wrapper>
@@ -113,7 +129,7 @@ export default function App() {
       <CommitsWrapper>
         <Commits repos={repos.filter(r => r.selected).map(r => r.repo.full_name)} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
       </CommitsWrapper>
-      {/* <Button onClick={ }>Generate</Button> */}
+      <Button onClick={generateDocument}>Generate</Button>
     </Wrapper>
   )
 }
