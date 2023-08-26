@@ -1,6 +1,4 @@
 import React from 'react';
-import Config from './Config/Config';
-import { Config as ConfigModel } from './models/config';
 import { GitHubContext } from './GithubProvider/GithubProvider';
 import Repositories from './Repositories/Repositories';
 import Login from './Login/Login';
@@ -10,16 +8,6 @@ import { DataInfo } from './models/data-info';
 import Data from './Data/Data';
 
 export default function App() {
-
-  // const [config, setConfig] = React.useState<ConfigModel>({
-  //   randomHours: true,
-  //   docx: {
-  //     name: "Nikolaos Ioannou",
-  //     position: "Software Engineer",
-  //     date: "03/2022",
-  //     hours: 139
-  //   }
-  // });
 
   const [repos, setRepos] = React.useState<{ repo: any, selected: boolean }[]>([]);
   const [commits, setCommits] = React.useState<Map<string, any[]>>(new Map());
@@ -31,10 +19,6 @@ export default function App() {
   });
 
   const { user, getRepos } = React.useContext(GitHubContext);
-
-  // function handleConfigChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-  //   setConfig(JSON.parse(e.target.value));
-  // }
 
   console.log(repos, data);
 
