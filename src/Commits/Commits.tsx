@@ -21,13 +21,14 @@ export default function Commits({ repos, commits, setCommits }: { repos: string[
         [...commits].map(([repo, comms]) => (
           <React.Fragment key={repo}>
             <h5>{repo}</h5>
-            <CommitsWrapper>
+            {!comms.length && <p>No commits for {repo}</p>}
+            {!!comms.length && <CommitsWrapper>
               {
                 comms.map(c => (
                   <Commit key={c.sha} commit={c} />
                 ))
               }
-            </CommitsWrapper>
+            </CommitsWrapper>}
           </React.Fragment>
         )
         )
