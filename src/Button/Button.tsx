@@ -11,6 +11,7 @@ export default function Button({ children, onClick, ...rest }: { children: React
 const StyledButton = styled.button`
   font-size: 1rem;
   font-weight: 700;
+  text-align: center;
   padding: 8px;
   border: none;
   border-radius: 8px;
