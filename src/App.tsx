@@ -105,7 +105,7 @@ export default function App() {
           const messageData = c.commit.commit.message.match(/(?<title>.+) (\(#(?<num>\d+)\))/);
           return {
             repo: repoInfo.repoFullName,
-            sha: c.commit.sha,
+            sha: c.commit.sha.substring(0, 7),
             message: messageData?.groups.title ?? c.commit.commit.message,
             prNum: messageData?.groups.num ? +messageData?.groups.num : -1
           }
