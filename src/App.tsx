@@ -122,8 +122,8 @@ const Wrapper = styled.main`
   display: grid;
   grid-template-areas:
   "login login"
-  "repos data"
-  "commits data";
+  "data data"
+  "repos commits";
   gap: 8px;
 `;
 

@@ -1,3 +1,4 @@
+import { styled } from "styled-components";
 import Input from "../Input/Input";
 import { DataInfo } from "../models/data-info";
 
@@ -10,11 +11,16 @@ export default function Data({ data, setName, setDate, setHours, setPosition }:
   }) {
 
   return (
-    <>
+    <Wrapper>
       <Input label="Name" value={data.name} setValue={setName} />
       <Input label="Position" value={data.position} setValue={setPosition} />
       <Input label="Month" type="month" value={data.date} setValue={setDate} />
       <Input label="Creative hours" type="number" value={data.hours} setValue={setHours} />
-    </>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
