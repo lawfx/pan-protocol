@@ -17,6 +17,7 @@ const StyledButton = styled.button`
   background-color: hsl(0deg, 0%, 90%);
   box-shadow: 0 2px 0 hsl(0deg 0% 50%);
   transition: box-shadow 300ms, transform 300ms;
+  cursor: pointer;
 
   &:hover{
     transform: translateY(-2px);
