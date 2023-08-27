@@ -185,6 +185,7 @@ const Wrapper = styled.main`
   "data data"
   "repos commits";
   gap: 8px;
+  padding-inline: 8px;
 `;
 
 const LoginWrapper = styled.div`
