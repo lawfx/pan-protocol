@@ -16,8 +16,8 @@ function Data({ data, setName, setDateFrom, setDateTo, setHours, setPosition }:
     <Wrapper>
       <Input label="Name" value={data.name} setValue={setName} />
       <Input label="Position" value={data.position} setValue={setPosition} />
-      <Input label="From" type="date" value={data.date.from} setValue={setDateFrom} />
-      <Input label="To" type="date" value={data.date.to} setValue={setDateTo} />
+      <Input label="From" type="date" value={data.date.from} setValue={setDateFrom} max={data.date.to} />
+      <Input label="To" type="date" value={data.date.to} setValue={setDateTo} min={data.date.from} />
       <Input label="Creative hours" type="number" value={data.hours} setValue={setHours} />
     </Wrapper>
   );
