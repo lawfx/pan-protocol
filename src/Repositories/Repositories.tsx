@@ -1,6 +1,23 @@
+import React from "react";
 import styled from "styled-components";
+import { GitHubContext } from "../GithubProvider/GithubProvider";
 
-export default function Repositories({ repos, selectRepo, unselectRepo }: { repos: any[], selectRepo: (id: string) => void, unselectRepo: (id: string) => void }) {
+export default function Repositories({ repos, onReposUpdated, selectRepo, unselectRepo }: { repos: any[], onReposUpdated: (repos: any[]) => void, selectRepo: (id: string) => void, unselectRepo: (id: string) => void }) {
+
+  const { user, getRepos } = React.useContext(GitHubContext);
+
+  React.useEffect(() => {
+    let valid = true;
+    async function fetchRepos() {
+      const t = await getRepos();
+      if (!t?.data || !valid) return;
+      onReposUpdated(t.data);
+    }
+
+    fetchRepos();
+
+    return () => { valid = false; };
+  }, [user]);
 
   function handleClickRepo(id: string) {
     const repo = repos.find(r => r.repo.id === id);
@@ -15,13 +32,14 @@ export default function Repositories({ repos, selectRepo, unselectRepo }: { repo
   return (
     <Wrapper>
       <ReposLabel>Repositories</ReposLabel>
-      <Repos>
+      {!repos.length && <p>No repositories 😭</p>}
+      {!!repos.length && <Repos>
         {repos.map(r => (
           <Repo type='button' selected={r.selected} key={r.repo.id} onClick={() => handleClickRepo(r.repo.id)}>
             {r.repo.full_name}
           </Repo>
         ))}
-      </Repos>
+      </Repos>}
     </Wrapper>
   )
 }
@@ -39,8 +57,8 @@ const ReposLabel = styled.h4`
 `;
 
 const Repos = styled.section`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 `;
 

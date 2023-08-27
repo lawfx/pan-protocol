@@ -19,7 +19,9 @@ export default function useGithub() {
   async function getRepos() {
     if (!octokit) return [];
 
-    return octokit.rest.repos.listForAuthenticatedUser();
+    return octokit.rest.repos.listForAuthenticatedUser({
+      sort: 'pushed'
+    });
   }
 
   async function getCommits(repos: string[]) {
@@ -57,24 +59,9 @@ export default function useGithub() {
       author: user.login,
       since: '2022-03-01',//getBeginningOfMonth(date),
       until: '2022-03-31',//getEndOfMonth(date),
-      per_page: 100
     });
     return data;
   }
-
-  // async function getCommitData(commit: any, repo: string) {
-  //   const m = commit.commit.message.match(/(?<title>.+) (\(#(?<num>\d+)\))/);
-  //   if (!m?.groups.num) {
-  //     console.log(`Skipping commit ${commit.sha.substring(0, 7)}, message is not matching template.`);
-  //     return;
-  //   }
-  //   return {
-  //     title: m.groups.title,
-  //     num: m.groups.num,
-  //     sha: commit.sha.substring(0, 7),
-  //     repo: repo.split('/')[1]
-  //   };
-  // }
 
   function getBeginningOfMonth(protocolDate: string): string {
     const [month, year] = protocolDate.split('/');

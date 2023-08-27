@@ -35,22 +35,11 @@ export default function App() {
   });
   const [file, setFile] = React.useState<string | ArrayBuffer | null>();
 
-  const { user, getRepos } = React.useContext(GitHubContext);
-
   console.log(repos, data);
 
-  React.useEffect(() => {
-    async function fetchRepos() {
-      const t = await getRepos();
-      if (!!t?.data) {
-        setRepos(t.data.map((d: any) => ({ repo: d, selected: false })));
-        console.log(t.data);
-      }
-    }
-
-    fetchRepos();
-  }, [user]);
-
+  function handleReposUpdated(repos: any[]) {
+    setRepos(repos.map((d: any) => ({ repo: d, selected: false })));
+  }
 
   function selectRepo(id: string) {
     setRepos(repos => repos.map(r => {
@@ -165,7 +154,7 @@ export default function App() {
       </LoginWrapper>
       <FileInput onFileUpload={handleUploadDocument} allowedTypes={['application/vnd.openxmlformats-officedocument.wordprocessingml.document']} />
       <RepositoriesWrapper>
-        <Repositories repos={repos} selectRepo={selectRepo} unselectRepo={unselectRepo} />
+        <Repositories repos={repos} onReposUpdated={handleReposUpdated} selectRepo={selectRepo} unselectRepo={unselectRepo} />
       </RepositoriesWrapper>
       <DataWrapper>
         <Data data={data} setName={setName} setDate={setDate} setHours={setHours} setPosition={setPosition} />
@@ -180,6 +169,7 @@ export default function App() {
 
 const Wrapper = styled.main`
   display: grid;
+  grid-template-columns: 300px 1fr;
   grid-template-areas:
   "login login"
   "data data"
