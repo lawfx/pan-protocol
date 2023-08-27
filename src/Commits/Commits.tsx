@@ -3,10 +3,12 @@ import { GitHubContext } from "../GithubProvider/GithubProvider";
 import Commit from "../Commit/Commit";
 import styled from "styled-components";
 import { CommitsState } from "../App";
+import { DateRange } from "../models/data-info";
 
-function Commits({ repos, commits, setCommits, selectCommit, unselectCommit }:
+function Commits({ repos, date, commits, setCommits, selectCommit, unselectCommit }:
   {
     repos: string[],
+    date: DateRange,
     commits: CommitsState[],
     setCommits: React.Dispatch<React.SetStateAction<CommitsState[]>>,
     selectCommit: (repo: string, sha: string) => void,
@@ -20,9 +22,8 @@ function Commits({ repos, commits, setCommits, selectCommit, unselectCommit }:
 
     async function fetchCommits() {
       try {
-        const commits = await getCommits(repos);
+        const commits = await getCommits(repos, date);
         if (!commits || !valid) return;
-        console.log(commits);
         setCommits(commits);
       } catch (e) {
         console.error(e);
@@ -32,7 +33,7 @@ function Commits({ repos, commits, setCommits, selectCommit, unselectCommit }:
     fetchCommits();
 
     return () => { valid = false; }
-  }, [repos]);
+  }, [repos, date]);
 
   function handleClickCommit(repo: string, sha: string, selected: boolean) {
     if (selected) {
@@ -45,6 +46,7 @@ function Commits({ repos, commits, setCommits, selectCommit, unselectCommit }:
 
   return (
     <Wrapper>
+      {!repos.length && <p>Select a repo to find commits...</p>}
       {
         commits.map(({ repoFullName, commits }) => (
           <React.Fragment key={repoFullName}>

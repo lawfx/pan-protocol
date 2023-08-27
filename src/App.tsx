@@ -1,5 +1,4 @@
 import React from 'react';
-import { GitHubContext } from './GithubProvider/GithubProvider';
 import Repositories from './Repositories/Repositories';
 import Login from './Login/Login';
 import Commits from './Commits/Commits';
@@ -30,10 +29,14 @@ export default function App() {
   const [data, setData] = React.useState<DataInfo>({
     name: '',
     position: '',
-    date: '',
+    date: {
+      from: '',
+      to: ''
+    },
     hours: 0
   });
   const [file, setFile] = React.useState<string | ArrayBuffer | null>();
+  console.log('repos', repos, 'commits', commits, 'data', data);
 
   const selectedReposFullName = React.useMemo(() => repos.filter(r => r.selected).map(r => r.repo.full_name), [repos]);
 
@@ -76,8 +79,12 @@ export default function App() {
     setData(d => ({ ...d, name }));
   }, []);
 
-  const setDate = React.useCallback((date: string) => {
-    setData(d => ({ ...d, date: date }));
+  const setDateFrom = React.useCallback((date: string) => {
+    setData(d => ({ ...d, date: { ...d.date, from: date } }));
+  }, []);
+
+  const setDateTo = React.useCallback((date: string) => {
+    setData(d => ({ ...d, date: { ...d.date, to: date } }));
   }, []);
 
   const setHours = React.useCallback((hours: string) => {
@@ -160,10 +167,10 @@ export default function App() {
         <Repositories repos={repos} onReposUpdated={handleReposUpdated} selectRepo={selectRepo} unselectRepo={unselectRepo} />
       </RepositoriesWrapper>
       <DataWrapper>
-        <Data data={data} setName={setName} setDate={setDate} setHours={setHours} setPosition={setPosition} />
+        <Data data={data} setName={setName} setDateFrom={setDateFrom} setDateTo={setDateTo} setHours={setHours} setPosition={setPosition} />
       </DataWrapper>
       <CommitsWrapper>
-        <Commits repos={selectedReposFullName} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
+        <Commits repos={selectedReposFullName} date={data.date} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
       </CommitsWrapper>
       <Button onClick={generateDocument}>Generate</Button>
     </Wrapper>

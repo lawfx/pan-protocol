@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import React from "react";
 import { CommitsState } from "../App";
+import { DateRange } from "../models/data-info";
 
 export default function useGithub() {
 
@@ -24,10 +25,10 @@ export default function useGithub() {
     });
   }
 
-  async function getCommits(repos: string[]) {
+  async function getCommits(repos: string[], date: DateRange) {
     if (!octokit) return [];
 
-    const commits = await processRepos(user, repos);
+    const commits = await processRepos(user, repos, date);
     return commits || [];
   }
 
@@ -38,10 +39,10 @@ export default function useGithub() {
     return user;
   }
 
-  async function processRepos(user: any, repos: string[]) {
+  async function processRepos(user: any, repos: string[], date: DateRange) {
     let data: CommitsState[] = [];
     for (let repo of repos) {
-      const commits = await fetchCommits(user, repo, '');
+      const commits = await fetchCommits(user, repo, date);
       data.push({
         repoFullName: repo,
         commits: commits.map(c => ({ commit: c, selected: false }))
@@ -50,31 +51,31 @@ export default function useGithub() {
     return data;
   }
 
-  async function fetchCommits(user: any, repo_fullname: string, date: string) {
+  async function fetchCommits(user: any, repo_fullname: string, date: DateRange) {
     console.log('Searching repo:', repo_fullname);
     const [owner, repo] = repo_fullname.split('/');
     const { data } = await octokit!.rest.repos.listCommits({
       owner,
       repo,
       author: user.login,
-      since: '2022-03-01',//getBeginningOfMonth(date),
-      until: '2022-03-31',//getEndOfMonth(date),
+      ...(!!date.from ? { since: date.from } : {}),
+      ...(!!date.to ? { until: date.to } : {})
     });
     return data;
   }
 
-  function getBeginningOfMonth(protocolDate: string): string {
-    const [month, year] = protocolDate.split('/');
-    const d = new Date(+year, +month - 1);
-    return d.toISOString().replace('Z', '+00:00');
-  }
+  // function getBeginningOfMonth(protocolDate: string): string {
+  //   const [month, year] = protocolDate.split('/');
+  //   const d = new Date(+year, +month - 1);
+  //   return d.toISOString().replace('Z', '+00:00');
+  // }
 
-  function getEndOfMonth(protocolDate: string): string {
-    const [month, year] = protocolDate.split('/');
-    const d = new Date(+year, +month);
-    d.setMilliseconds(d.getMilliseconds() - 1);
-    return d.toISOString().replace('Z', '+00:00');
-  }
+  // function getEndOfMonth(protocolDate: string): string {
+  //   const [month, year] = protocolDate.split('/');
+  //   const d = new Date(+year, +month);
+  //   d.setMilliseconds(d.getMilliseconds() - 1);
+  //   return d.toISOString().replace('Z', '+00:00');
+  // }
 
   return { connect, getCommits, user, getRepos };
 }
