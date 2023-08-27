@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
 import Input from "../Input/Input";
 import { DataInfo } from "../models/data-info";
+import React from "react";
 
-export default function Data({ data, setName, setDate, setHours, setPosition }:
+function Data({ data, setName, setDate, setHours, setPosition }:
   {
     data: DataInfo, setName: (name: string) => void,
     setDate: (date: string) => void,
@@ -19,6 +20,8 @@ export default function Data({ data, setName, setDate, setHours, setPosition }:
     </Wrapper>
   );
 }
+
+export default React.memo(Data);
 
 const Wrapper = styled.div`
   display: flex;

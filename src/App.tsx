@@ -35,55 +35,58 @@ export default function App() {
   });
   const [file, setFile] = React.useState<string | ArrayBuffer | null>();
 
-  console.log(repos, data);
+  const selectedReposFullName = React.useMemo(() => repos.filter(r => r.selected).map(r => r.repo.full_name), [repos]);
 
-  function handleReposUpdated(repos: any[]) {
+  const handleReposUpdated = React.useCallback((repos: any[]) => {
+    console.log('repo1');
     setRepos(repos.map((d: any) => ({ repo: d, selected: false })));
-  }
+  }, []);
 
-  function selectRepo(id: string) {
+  const selectRepo = React.useCallback((id: string) => {
+    console.log('repo2');
     setRepos(repos => repos.map(r => {
       if (r.repo.id === id) return { repo: r.repo, selected: true };
       return r;
     }));
-  }
+  }, []);
 
-  function unselectRepo(id: string) {
+  const unselectRepo = React.useCallback((id: string) => {
+    console.log('repo3');
     setRepos(repos => repos.map(r => {
       if (r.repo.id === id) return { repo: r.repo, selected: false };
       return r;
     }));
-  }
+  }, []);
 
-  function selectCommit(repo: string, sha: string) {
+  const selectCommit = React.useCallback((repo: string, sha: string) => {
     setCommits(commits => commits.map(repoInfo => {
       if (repoInfo.repoFullName !== repo) return repoInfo;
       return { ...repoInfo, commits: repoInfo.commits.map(c => c.commit.sha === sha ? { ...c, selected: true } : c) }
     }));
-  }
+  }, []);
 
-  function unselectCommit(repo: string, sha: string) {
+  const unselectCommit = React.useCallback((repo: string, sha: string) => {
     setCommits(commits => commits.map(repoInfo => {
       if (repoInfo.repoFullName !== repo) return repoInfo;
       return { ...repoInfo, commits: repoInfo.commits.map(c => c.commit.sha === sha ? { ...c, selected: false } : c) }
     }));
-  }
+  }, []);
 
-  function setName(name: string) {
+  const setName = React.useCallback((name: string) => {
     setData(d => ({ ...d, name }));
-  }
+  }, []);
 
-  function setDate(date: string) {
+  const setDate = React.useCallback((date: string) => {
     setData(d => ({ ...d, date: date }));
-  }
+  }, []);
 
-  function setHours(hours: string) {
+  const setHours = React.useCallback((hours: string) => {
     setData(d => ({ ...d, hours: +hours }));
-  }
+  }, []);
 
-  function setPosition(position: string) {
+  const setPosition = React.useCallback((position: string) => {
     setData(d => ({ ...d, position }));
-  }
+  }, []);
 
   function generateDocument() {
     const docData: DocumentData = compileData(data, commits);
@@ -160,7 +163,7 @@ export default function App() {
         <Data data={data} setName={setName} setDate={setDate} setHours={setHours} setPosition={setPosition} />
       </DataWrapper>
       <CommitsWrapper>
-        <Commits repos={repos.filter(r => r.selected).map(r => r.repo.full_name)} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
+        <Commits repos={selectedReposFullName} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
       </CommitsWrapper>
       <Button onClick={generateDocument}>Generate</Button>
     </Wrapper>

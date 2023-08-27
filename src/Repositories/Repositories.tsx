@@ -2,21 +2,26 @@ import React from "react";
 import styled from "styled-components";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
 
-export default function Repositories({ repos, onReposUpdated, selectRepo, unselectRepo }: { repos: any[], onReposUpdated: (repos: any[]) => void, selectRepo: (id: string) => void, unselectRepo: (id: string) => void }) {
+function Repositories({ repos, onReposUpdated, selectRepo, unselectRepo }: { repos: any[], onReposUpdated: (repos: any[]) => void, selectRepo: (id: string) => void, unselectRepo: (id: string) => void }) {
 
   const { user, getRepos } = React.useContext(GitHubContext);
 
   React.useEffect(() => {
     let valid = true;
     async function fetchRepos() {
-      const t = await getRepos();
-      if (!t?.data || !valid) return;
-      onReposUpdated(t.data);
+      try {
+        const t = await getRepos();
+        if (!t?.data || !valid) return;
+        onReposUpdated(t.data);
+      }
+      catch (e) {
+        console.error(e);
+      }
     }
 
     fetchRepos();
 
-    return () => { valid = false; };
+    return () => { valid = false; }
   }, [user]);
 
   function handleClickRepo(id: string) {
@@ -43,6 +48,8 @@ export default function Repositories({ repos, onReposUpdated, selectRepo, unsele
     </Wrapper>
   )
 }
+
+export default React.memo(Repositories);
 
 const Wrapper = styled.div`
   padding: 8px;

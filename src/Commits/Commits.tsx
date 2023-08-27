@@ -2,10 +2,9 @@ import React from "react";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
 import Commit from "../Commit/Commit";
 import styled from "styled-components";
-import Button from "../Button/Button";
 import { CommitsState } from "../App";
 
-export default function Commits({ repos, commits, setCommits, selectCommit, unselectCommit }:
+function Commits({ repos, commits, setCommits, selectCommit, unselectCommit }:
   {
     repos: string[],
     commits: CommitsState[],
@@ -16,11 +15,24 @@ export default function Commits({ repos, commits, setCommits, selectCommit, unse
 
   const { getCommits } = React.useContext(GitHubContext);
 
-  async function handleCommits() {
-    const commits = await getCommits(repos);
-    console.log(commits);
-    setCommits(commits);
-  }
+  React.useEffect(() => {
+    let valid = true;
+
+    async function fetchCommits() {
+      try {
+        const commits = await getCommits(repos);
+        if (!commits || !valid) return;
+        console.log(commits);
+        setCommits(commits);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    fetchCommits();
+
+    return () => { valid = false; }
+  }, [repos]);
 
   function handleClickCommit(repo: string, sha: string, selected: boolean) {
     if (selected) {
@@ -33,7 +45,6 @@ export default function Commits({ repos, commits, setCommits, selectCommit, unse
 
   return (
     <Wrapper>
-      <Button onClick={handleCommits}>Get commits</Button>
       {
         commits.map(({ repoFullName, commits }) => (
           <React.Fragment key={repoFullName}>
@@ -53,6 +64,8 @@ export default function Commits({ repos, commits, setCommits, selectCommit, unse
     </Wrapper>
   );
 }
+
+export default React.memo(Commits);
 
 const Wrapper = styled.section`
   padding: 8px;
