@@ -4,6 +4,7 @@ import { DataInfo } from "../models/data-info";
 import React from "react";
 import MonthPicker from "../MonthPicker/MonthPicker";
 import FileInput from "../FileInput/FileInput";
+import { DOCX_MIME_TYPE } from "../constants/constants";
 
 function Data({ data, onNameUpdated, onDateUpdated, onHoursUpdated, onPositionUpdated, onDocumentUploaded }:
   {
@@ -21,7 +22,7 @@ function Data({ data, onNameUpdated, onDateUpdated, onHoursUpdated, onPositionUp
       <Input label="Position" value={data.position} setValue={onPositionUpdated} placeholder='Senior Chairwarmer' />
       <MonthPicker label="Month" value={data.date} onChange={onDateUpdated} placeholder='Select month' />
       <Input label="Creative hours" type="number" value={data.hours} setValue={onHoursUpdated} min="0" />
-      <FileInput label="Choose protocol template" onFileUpload={onDocumentUploaded} allowedTypes={['application/vnd.openxmlformats-officedocument.wordprocessingml.document']} />
+      <FileInput label="Choose protocol template" onFileUpload={onDocumentUploaded} allowedTypes={[DOCX_MIME_TYPE]} />
     </Wrapper>
   );
 }

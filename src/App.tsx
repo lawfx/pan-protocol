@@ -12,6 +12,7 @@ import Docxtemplater from 'docxtemplater';
 import { saveAs } from 'file-saver';
 import FileInput from './FileInput/FileInput';
 import { format, lastDayOfMonth } from 'date-fns';
+import { DOCX_MIME_TYPE } from './constants/constants';
 
 export interface CommitsState {
   repoFullName: string;
@@ -108,8 +109,7 @@ export default function App() {
 
     const blob = doc.getZip().generate({
       type: "blob",
-      mimeType:
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      mimeType: DOCX_MIME_TYPE,
       compression: "DEFLATE",
     });
 
