@@ -3,14 +3,14 @@ import { GitHubContext } from "../GithubProvider/GithubProvider";
 import Commit from "../Commit/Commit";
 import styled, { keyframes } from "styled-components";
 import { CommitsState } from "../App";
-import { DateRange } from "../models/data-info";
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 
-function Commits({ repos, date, commits, setCommits, selectCommit, unselectCommit }:
+function Commits({ repos, from, to, commits, setCommits, selectCommit, unselectCommit }:
   {
     repos: string[],
-    date: DateRange,
+    from: string,
+    to: string;
     commits: CommitsState[],
     setCommits: React.Dispatch<React.SetStateAction<CommitsState[]>>,
     selectCommit: (repo: string, sha: string) => void,
@@ -24,7 +24,7 @@ function Commits({ repos, date, commits, setCommits, selectCommit, unselectCommi
 
     async function fetchCommits() {
       try {
-        const commits = await getCommits(repos, date);
+        const commits = await getCommits(repos, from, to);
         if (!commits || !valid) return;
         setCommits(commits);
       } catch (e) {
@@ -35,7 +35,7 @@ function Commits({ repos, date, commits, setCommits, selectCommit, unselectCommi
     fetchCommits();
 
     return () => { valid = false; }
-  }, [repos, date]);
+  }, [repos, from, to]);
 
   function handleClickCommit(repo: string, sha: string, selected: boolean) {
     if (selected) {

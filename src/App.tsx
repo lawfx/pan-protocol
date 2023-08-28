@@ -11,6 +11,7 @@ import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
 import { saveAs } from 'file-saver';
 import FileInput from './FileInput/FileInput';
+import { format, lastDayOfMonth } from 'date-fns';
 
 export interface CommitsState {
   repoFullName: string;
@@ -36,14 +37,14 @@ export default function App() {
   console.log('repos', repos, 'commits', commits, 'data', data);
 
   const selectedReposFullName = React.useMemo(() => repos.filter(r => r.selected).map(r => r.repo.full_name), [repos]);
+  const firstDayOfSelectedMonth = React.useMemo(() => !!data.date ? format(data.date, 'yyyy-MM-01') : '', [data]);
+  const lastDayOfSelectedMonth = React.useMemo(() => !!data.date ? format(lastDayOfMonth(data.date), 'yyyy-MM-dd') : '', [data]);
 
   const handleReposUpdated = React.useCallback((repos: any[]) => {
-    console.log('repo1');
     setRepos(repos.map((d: any) => ({ repo: d, selected: false })));
   }, []);
 
   const selectRepo = React.useCallback((id: string) => {
-    console.log('repo2');
     setRepos(repos => repos.map(r => {
       if (r.repo.id === id) return { repo: r.repo, selected: true };
       return r;
@@ -51,7 +52,6 @@ export default function App() {
   }, []);
 
   const unselectRepo = React.useCallback((id: string) => {
-    console.log('repo3');
     setRepos(repos => repos.map(r => {
       if (r.repo.id === id) return { repo: r.repo, selected: false };
       return r;
@@ -163,7 +163,7 @@ export default function App() {
         <Data data={data} setName={setName} setDate={setDate} setHours={setHours} setPosition={setPosition} />
       </DataWrapper>
       <CommitsWrapper>
-        <Commits repos={selectedReposFullName} date={data.date} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
+        <Commits repos={selectedReposFullName} from={firstDayOfSelectedMonth} to={lastDayOfSelectedMonth} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
       </CommitsWrapper>
       <Button onClick={generateDocument}>Generate</Button>
     </Wrapper>
