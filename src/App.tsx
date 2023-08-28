@@ -113,7 +113,7 @@ export default function App() {
       compression: "DEFLATE",
     });
 
-    saveAs(blob, "output.docx");
+    saveAs(blob, `${docData.userData.name}_${docData.userData.date}_procotol.docx`);
   }
 
   function compileData(data: DataInfo, commits: CommitsState[]): DocumentData {
