@@ -1,11 +1,6 @@
 export interface DataInfo {
   name: string;
   position: string;
-  date: DateRange;
+  date: Date | null;
   hours: number;
-}
-
-export interface DateRange {
-  from: string;
-  to: string;
 }

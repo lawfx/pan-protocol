@@ -2,22 +2,21 @@ import { styled } from "styled-components";
 import Input from "../Input/Input";
 import { DataInfo } from "../models/data-info";
 import React from "react";
+import MonthPicker from "../MonthPicker/MonthPicker";
 
-function Data({ data, setName, setDateFrom, setDateTo, setHours, setPosition }:
+function Data({ data, setName, setDate, setHours, setPosition }:
   {
     data: DataInfo, setName: (name: string) => void,
-    setDateFrom: (date: string) => void,
-    setDateTo: (date: string) => void,
+    setDate: (date: Date | null) => void,
     setHours: (hours: string) => void,
     setPosition: (position: string) => void
   }) {
 
   return (
     <Wrapper>
-      <Input label="Name" value={data.name} setValue={setName} />
-      <Input label="Position" value={data.position} setValue={setPosition} />
-      <Input label="From" type="date" value={data.date.from} setValue={setDateFrom} max={data.date.to} />
-      <Input label="To" type="date" value={data.date.to} setValue={setDateTo} min={data.date.from} />
+      <Input label="Name" value={data.name} setValue={setName} placeholder='Namey McNameface' />
+      <Input label="Position" value={data.position} setValue={setPosition} placeholder='Senior Chairwarmer' />
+      <MonthPicker label="Month" value={data.date} onChange={setDate} placeholder='Select month' />
       <Input label="Creative hours" type="number" value={data.hours} setValue={setHours} min="0" />
     </Wrapper>
   );

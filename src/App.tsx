@@ -29,10 +29,7 @@ export default function App() {
   const [data, setData] = React.useState<DataInfo>({
     name: '',
     position: '',
-    date: {
-      from: '',
-      to: ''
-    },
+    date: null,
     hours: 0
   });
   const [file, setFile] = React.useState<string | ArrayBuffer | null>();
@@ -79,12 +76,8 @@ export default function App() {
     setData(d => ({ ...d, name }));
   }, []);
 
-  const setDateFrom = React.useCallback((date: string) => {
-    setData(d => ({ ...d, date: { ...d.date, from: date } }));
-  }, []);
-
-  const setDateTo = React.useCallback((date: string) => {
-    setData(d => ({ ...d, date: { ...d.date, to: date } }));
+  const setDate = React.useCallback((date: Date | null) => {
+    setData(d => ({ ...d, date: date }));
   }, []);
 
   const setHours = React.useCallback((hours: string) => {
@@ -167,7 +160,7 @@ export default function App() {
         <Repositories repos={repos} onReposUpdated={handleReposUpdated} selectRepo={selectRepo} unselectRepo={unselectRepo} />
       </RepositoriesWrapper>
       <DataWrapper>
-        <Data data={data} setName={setName} setDateFrom={setDateFrom} setDateTo={setDateTo} setHours={setHours} setPosition={setPosition} />
+        <Data data={data} setName={setName} setDate={setDate} setHours={setHours} setPosition={setPosition} />
       </DataWrapper>
       <CommitsWrapper>
         <Commits repos={selectedReposFullName} date={data.date} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
