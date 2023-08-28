@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
+import Section from "../Section/Section";
 
 function Repositories({ repos, onReposUpdated, onRepoSelected, onRepoUnselected }:
   {
@@ -41,45 +42,45 @@ function Repositories({ repos, onReposUpdated, onRepoSelected, onRepoUnselected 
   }
 
   return (
-    <Wrapper>
+    <Section>
       <ReposLabel>Repositories</ReposLabel>
-      {!repos.length && <p>No repositories 😭</p>}
-      {!!repos.length && <Repos>
-        {repos.map(r => (
+      <Repos>
+        {!repos.length && <p>No repositories 😭</p>}
+        {!!repos.length && repos.map(r => (
           <Repo type='button' selected={r.selected} key={r.repo.id} onClick={() => handleClickRepo(r.repo.id)}>
             {r.repo.full_name}
           </Repo>
-        ))}
-      </Repos>}
-    </Wrapper>
+        )
+        )}
+      </Repos>
+    </Section>
   )
 }
 
 export default React.memo(Repositories);
 
-const Wrapper = styled.div`
-  padding: 8px;
-  background-color: hsl(0deg, 0%, 90%);
-  border-radius: 8px;
-`;
-
 const ReposLabel = styled.h4`
   margin: 0;
   padding: 8px;
-  padding-inline-start: 0;
+  border-bottom: 1px solid ${p => p.theme.primaryLighter};
 `;
 
 const Repos = styled.section`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 8px;
 `;
 
 const Repo = styled.button<{ selected: boolean }>`
   padding: 8px;
-  background-color: ${p => (p.selected ? 'green' : 'initial')};
-  border: 2px solid hsl(0deg 0% 50%);
+  background-color: ${p => p.selected ? p.theme.accentLight : p.theme.primaryLight};
+  color: ${p => p.selected ? 'black' : 'white'};
+  border: 1px solid ${p => p.theme.primaryLighter};
   border-radius: 8px;
-  box-shadow: 2px 2px 0 hsl(0deg 0% 50%);
   cursor: pointer;
+
+  &:hover {
+    background-color: ${p => p.selected ? p.theme.accentLight : p.theme.primaryLighter};
+  }
 `;

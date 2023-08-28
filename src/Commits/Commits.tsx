@@ -5,6 +5,7 @@ import styled, { keyframes } from "styled-components";
 import { CommitsState } from "../App";
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from "@radix-ui/react-icons";
+import Section from "../Section/Section";
 
 function Commits({ repos, from, to, commits, onCommitsUpdated, onCommitSelected, onCommitUnselected }:
   {
@@ -47,33 +48,46 @@ function Commits({ repos, from, to, commits, onCommitsUpdated, onCommitSelected,
   }
 
   return (
-    <>
-      {!repos.length && <p>Select a repo to find commits...</p>}
-      <AccordionsWrapper>
-        {
-          commits.map(({ repoFullName, commits }) => (
-            <AccordionRoot key={repoFullName} type="single" defaultValue={repoFullName} collapsible>
-              <AccordionItem value={repoFullName}>
-                <AccordionTrigger>{repoFullName} | {commits.length} commit(s)</AccordionTrigger>
-                <AccordionContent>
-                  {!commits.length && <p>No commits for {repoFullName}</p>}
-                  {!!commits.length &&
-                    commits.map(({ commit, selected }) => (
-                      <Commit onClick={() => handleClickCommit(repoFullName, commit.sha, selected)} key={commit.sha} commit={commit} selected={selected} />
-                    ))
-                  }
-                </AccordionContent>
-              </AccordionItem>
-            </AccordionRoot>
-          )
-          )
-        }
-      </AccordionsWrapper>
-    </>
+    <Section>
+      <CommitsLabel>Commits</CommitsLabel>
+      <Wrapper>
+        {!repos.length && <p>Select a repo to find commits...</p>}
+        <AccordionsWrapper>
+          {
+            commits.map(({ repoFullName, commits }) => (
+              <AccordionRoot key={repoFullName} type="single" defaultValue={repoFullName} collapsible>
+                <AccordionItem value={repoFullName}>
+                  <AccordionTrigger>{repoFullName} | {commits.length} commit(s)</AccordionTrigger>
+                  <AccordionContent>
+                    {!commits.length && <p>No commits for {repoFullName}</p>}
+                    {!!commits.length &&
+                      commits.map(({ commit, selected }) => (
+                        <Commit onClick={() => handleClickCommit(repoFullName, commit.sha, selected)} key={commit.sha} commit={commit} selected={selected} />
+                      ))
+                    }
+                  </AccordionContent>
+                </AccordionItem>
+              </AccordionRoot>
+            )
+            )
+          }
+        </AccordionsWrapper>
+      </Wrapper>
+    </Section>
   );
 }
 
 export default React.memo(Commits);
+
+const Wrapper = styled.div`
+  padding: 8px;
+`;
+
+const CommitsLabel = styled.h4`
+  margin: 0;
+  padding: 8px;
+  border-bottom: 1px solid ${p => p.theme.primaryLighter};
+`;
 
 const AccordionsWrapper = styled.div`
   display: flex;
@@ -83,7 +97,7 @@ const AccordionsWrapper = styled.div`
 
 const AccordionRoot = styled(Accordion.Root)`
   border-radius: 8px;
-  background-color: hsl(0deg 0% 90%);
+  background-color: ${p => p.theme.primaryLighter};
 `;
 
 const AccordionItem = styled(Accordion.Item)`
@@ -118,6 +132,10 @@ const StyledTrigger = styled(Accordion.Trigger)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &[data-state="open"] {
+    border-bottom: 1px solid ${p => p.theme.primaryLight};
+  }
 `;
 
 const StyledChevron = styled(ChevronDownIcon)`
@@ -153,4 +171,7 @@ const StyledContent = styled(Accordion.Content)`
 
 const StyledContentText = styled('div')`
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;

@@ -10,7 +10,6 @@ import { DocumentData } from './models/document-data';
 import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
 import { saveAs } from 'file-saver';
-import FileInput from './FileInput/FileInput';
 import { format, lastDayOfMonth } from 'date-fns';
 import { DOCX_MIME_TYPE } from './constants/constants';
 
@@ -181,17 +180,21 @@ export default function App() {
           onCommitSelected={selectCommit}
           onCommitUnselected={unselectCommit} />
       </CommitsWrapper>
-      <Button onClick={generateDocument}>Generate</Button>
+      <GenerateWrapper>
+        <Button onClick={generateDocument}>Generate</Button>
+      </GenerateWrapper>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.main`
+  background-color: ${p => p.theme.primary};
   display: grid;
   grid-template-columns: 300px 1fr;
   grid-template-areas:
   "login login"
   "data data"
+  "generate generate"
   "repos commits";
   gap: 8px;
   padding-inline: 8px;
@@ -211,4 +214,8 @@ const DataWrapper = styled.div`
 
 const CommitsWrapper = styled.div`
   grid-area: commits;
+`;
+
+const GenerateWrapper = styled.div`
+  grid-area: generate;
 `;

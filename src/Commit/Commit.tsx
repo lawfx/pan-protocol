@@ -11,9 +11,14 @@ export default function Commit({ commit, selected, onClick }: { commit: any, sel
 }
 
 const Wrapper = styled.div<{ selected: boolean }>`
-padding: 8px;
-border: 2px solid hsl(0deg 0% 50%);
-border-radius: 8px;
-box-shadow: 2px 2px 0 hsl(0deg 0% 50%);
-background-color: ${p => (p.selected ? 'green' : 'initial')};
+  padding: 8px;
+  background-color: ${p => p.selected ? p.theme.accentLight : p.theme.primaryLight};
+  color: ${p => p.selected ? 'black' : 'white'};
+  border: 1px solid ${p => p.theme.primaryLighter};
+  border-radius: 8px;
+
+  &:hover {
+    background-color: ${p => p.selected ? p.theme.accentLight : p.theme.primaryLighter};
+    border: 1px solid ${p => p.theme.primaryLight};
+  }
 `;
