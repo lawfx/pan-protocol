@@ -1,7 +1,14 @@
 import React from "react";
 import { styled } from "styled-components";
 
-export default function Input({ type = 'text', value, setValue, label, ...rest }: { type?: string, value: any, setValue: (val: string) => void, label: string, [key: string]: any }) {
+export default function Input({ type = 'text', value, setValue, label, ...rest }:
+  {
+    type?: string,
+    value: any,
+    setValue: (val: string) => void,
+    label: string,
+    [key: string]: any
+  }) {
 
   const id = React.useId();
 

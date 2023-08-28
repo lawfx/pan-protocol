@@ -2,7 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
 
-function Repositories({ repos, onReposUpdated, selectRepo, unselectRepo }: { repos: any[], onReposUpdated: (repos: any[]) => void, selectRepo: (id: string) => void, unselectRepo: (id: string) => void }) {
+function Repositories({ repos, onReposUpdated, onRepoSelected, onRepoUnselected }:
+  {
+    repos: any[],
+    onReposUpdated: (repos: any[]) => void,
+    onRepoSelected: (id: string) => void,
+    onRepoUnselected: (id: string) => void
+  }) {
 
   const { user, getRepos } = React.useContext(GitHubContext);
 
@@ -27,10 +33,10 @@ function Repositories({ repos, onReposUpdated, selectRepo, unselectRepo }: { rep
   function handleClickRepo(id: string) {
     const repo = repos.find(r => r.repo.id === id);
     if (repo.selected) {
-      unselectRepo(id);
+      onRepoUnselected(id);
     }
     else {
-      selectRepo(id);
+      onRepoSelected(id);
     }
   }
 

@@ -1,7 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 
-export default function FileInput({ onFileUpload, allowedTypes }:
-  { onFileUpload: (file: File) => void, allowedTypes: string[] }
+export default function FileInput({ onFileUpload, allowedTypes, label }:
+  {
+    onFileUpload: (file: File) => void,
+    allowedTypes: string[],
+    label: string
+  }
 ) {
 
   const ref = React.useRef<any>();
@@ -24,6 +29,17 @@ export default function FileInput({ onFileUpload, allowedTypes }:
   }
 
   return (
-    <input ref={ref} type='file' id={id} onChange={handleOnChange} />
+    <Wrapper>
+      <label htmlFor={id}>
+        {label}:
+      </label>
+      <input ref={ref} type='file' id={id} onChange={handleOnChange} />
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;

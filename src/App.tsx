@@ -118,7 +118,7 @@ export default function App() {
 
   function compileData(data: DataInfo, commits: CommitsState[]): DocumentData {
     return {
-      userData: data,
+      userData: { ...data, date: format(data.date!, 'MM/yyyy') },
       commits: commits.flatMap(repoInfo => {
         return repoInfo.commits.map(c => {
           if (!c.selected) return null as any; //TODO change
@@ -155,15 +155,31 @@ export default function App() {
       <LoginWrapper>
         <Login />
       </LoginWrapper>
-      <FileInput onFileUpload={handleUploadDocument} allowedTypes={['application/vnd.openxmlformats-officedocument.wordprocessingml.document']} />
       <RepositoriesWrapper>
-        <Repositories repos={repos} onReposUpdated={handleReposUpdated} selectRepo={selectRepo} unselectRepo={unselectRepo} />
+        <Repositories
+          repos={repos}
+          onReposUpdated={handleReposUpdated}
+          onRepoSelected={selectRepo}
+          onRepoUnselected={unselectRepo} />
       </RepositoriesWrapper>
       <DataWrapper>
-        <Data data={data} setName={setName} setDate={setDate} setHours={setHours} setPosition={setPosition} />
+        <Data
+          data={data}
+          onNameUpdated={setName}
+          onDateUpdated={setDate}
+          onHoursUpdated={setHours}
+          onPositionUpdated={setPosition}
+          onDocumentUploaded={handleUploadDocument} />
       </DataWrapper>
       <CommitsWrapper>
-        <Commits repos={selectedReposFullName} from={firstDayOfSelectedMonth} to={lastDayOfSelectedMonth} commits={commits} setCommits={setCommits} selectCommit={selectCommit} unselectCommit={unselectCommit} />
+        <Commits
+          repos={selectedReposFullName}
+          from={firstDayOfSelectedMonth}
+          to={lastDayOfSelectedMonth}
+          commits={commits}
+          onCommitsUpdated={setCommits}
+          onCommitSelected={selectCommit}
+          onCommitUnselected={unselectCommit} />
       </CommitsWrapper>
       <Button onClick={generateDocument}>Generate</Button>
     </Wrapper>

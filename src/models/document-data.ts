@@ -1,7 +1,7 @@
 import { DataInfo } from "./data-info";
 
 export interface DocumentData {
-  userData: DataInfo;
+  userData: Omit<DataInfo, 'date'> & { date: string };
   commits: {
     sha: string;
     message: string;

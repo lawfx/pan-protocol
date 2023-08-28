@@ -6,15 +6,15 @@ import { CommitsState } from "../App";
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 
-function Commits({ repos, from, to, commits, setCommits, selectCommit, unselectCommit }:
+function Commits({ repos, from, to, commits, onCommitsUpdated, onCommitSelected, onCommitUnselected }:
   {
     repos: string[],
     from: string,
     to: string;
     commits: CommitsState[],
-    setCommits: React.Dispatch<React.SetStateAction<CommitsState[]>>,
-    selectCommit: (repo: string, sha: string) => void,
-    unselectCommit: (repo: string, sha: string) => void
+    onCommitsUpdated: React.Dispatch<React.SetStateAction<CommitsState[]>>,
+    onCommitSelected: (repo: string, sha: string) => void,
+    onCommitUnselected: (repo: string, sha: string) => void
   }) {
 
   const { getCommits } = React.useContext(GitHubContext);
@@ -26,7 +26,7 @@ function Commits({ repos, from, to, commits, setCommits, selectCommit, unselectC
       try {
         const commits = await getCommits(repos, from, to);
         if (!commits || !valid) return;
-        setCommits(commits);
+        onCommitsUpdated(commits);
       } catch (e) {
         console.error(e);
       }
@@ -39,10 +39,10 @@ function Commits({ repos, from, to, commits, setCommits, selectCommit, unselectC
 
   function handleClickCommit(repo: string, sha: string, selected: boolean) {
     if (selected) {
-      unselectCommit(repo, sha);
+      onCommitUnselected(repo, sha);
     }
     else {
-      selectCommit(repo, sha);
+      onCommitSelected(repo, sha);
     }
   }
 

@@ -3,21 +3,25 @@ import Input from "../Input/Input";
 import { DataInfo } from "../models/data-info";
 import React from "react";
 import MonthPicker from "../MonthPicker/MonthPicker";
+import FileInput from "../FileInput/FileInput";
 
-function Data({ data, setName, setDate, setHours, setPosition }:
+function Data({ data, onNameUpdated, onDateUpdated, onHoursUpdated, onPositionUpdated, onDocumentUploaded }:
   {
-    data: DataInfo, setName: (name: string) => void,
-    setDate: (date: Date | null) => void,
-    setHours: (hours: string) => void,
-    setPosition: (position: string) => void
+    data: DataInfo,
+    onNameUpdated: (name: string) => void,
+    onDateUpdated: (date: Date | null) => void,
+    onHoursUpdated: (hours: string) => void,
+    onPositionUpdated: (position: string) => void,
+    onDocumentUploaded: (file: File) => void
   }) {
 
   return (
     <Wrapper>
-      <Input label="Name" value={data.name} setValue={setName} placeholder='Namey McNameface' />
-      <Input label="Position" value={data.position} setValue={setPosition} placeholder='Senior Chairwarmer' />
-      <MonthPicker label="Month" value={data.date} onChange={setDate} placeholder='Select month' />
-      <Input label="Creative hours" type="number" value={data.hours} setValue={setHours} min="0" />
+      <Input label="Name" value={data.name} setValue={onNameUpdated} placeholder='Namey McNameface' />
+      <Input label="Position" value={data.position} setValue={onPositionUpdated} placeholder='Senior Chairwarmer' />
+      <MonthPicker label="Month" value={data.date} onChange={onDateUpdated} placeholder='Select month' />
+      <Input label="Creative hours" type="number" value={data.hours} setValue={onHoursUpdated} min="0" />
+      <FileInput label="Choose protocol template" onFileUpload={onDocumentUploaded} allowedTypes={['application/vnd.openxmlformats-officedocument.wordprocessingml.document']} />
     </Wrapper>
   );
 }
