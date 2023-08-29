@@ -16,7 +16,7 @@ export default function useGithub() {
   }
 
   async function searchCommits(month: string) {
-    if (!octokit) return [];
+    if (!octokit || !month) return [];
 
     const commits = await octokit?.search.commits({
       q: `author:${user.login} author-date:${month}`,

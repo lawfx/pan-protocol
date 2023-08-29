@@ -6,6 +6,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import Section from "../Section/Section";
 import { CommitState } from "../App";
+import { format } from "date-fns";
 
 function Commits({ month, commits, onCommitsUpdated, onCommitSelected, onCommitUnselected }:
   {
@@ -16,7 +17,7 @@ function Commits({ month, commits, onCommitsUpdated, onCommitSelected, onCommitU
     onCommitUnselected: (sha: string) => void
   }) {
 
-  const { searchCommits } = React.useContext(GitHubContext);
+  const { searchCommits, user } = React.useContext(GitHubContext);
 
   const commitsPerRepo = commits.reduce<{ [repo: string]: CommitState[] }>((acc, curr) => {
     const repoFullName: string = curr.commit.repository.full_name;
@@ -39,7 +40,7 @@ function Commits({ month, commits, onCommitsUpdated, onCommitSelected, onCommitU
     fetchCommits();
 
     return () => { valid = false; }
-  }, [month]);
+  }, [user, month]);
 
   function handleClickCommit(sha: string, selected: boolean) {
     if (selected) {
@@ -50,11 +51,13 @@ function Commits({ month, commits, onCommitsUpdated, onCommitSelected, onCommitU
     }
   }
 
+  const message = !month ? 'Please select a month...' : !commits.length ? `No commits found for ${format(new Date(month), 'MMMM yyyy')}` : '';
+
   return (
     <Section>
       <CommitsLabel>Commits</CommitsLabel>
       <Wrapper>
-        {!commits.length && <span>No commits</span>}
+        {!!message && <span>{message}</span>}
         <AccordionsWrapper>
           {Object.entries(commitsPerRepo).map(([repo, commitsInRepo]) =>
             <AccordionRoot key={repo} type="single" defaultValue={repo} collapsible>

@@ -18,6 +18,9 @@ const StyledButton = styled.button`
   box-shadow: 0 2px 0 ${p => p.theme.secondary200};
   transition: box-shadow 300ms, transform 300ms;
   cursor: pointer;
+  height: 30px;
+  width: 100px;
+  line-height: 1;
 
   &:hover{
     transform: translateY(-2px);

@@ -24,7 +24,7 @@ export default function App() {
   const [data, setData] = React.useState<DataInfo>({
     name: '',
     position: '',
-    date: null,
+    date: new Date(),
     hours: 0
   });
   const [file, setFile] = React.useState<string | ArrayBuffer | null>();
@@ -123,58 +123,45 @@ export default function App() {
 
   return (
     <Wrapper>
-      <LoginWrapper>
-        <Login />
-      </LoginWrapper>
+      <Login />
       <DataWrapper>
-        <Data
-          data={data}
-          onNameUpdated={setName}
-          onDateUpdated={setDate}
-          onHoursUpdated={setHours}
-          onPositionUpdated={setPosition}
-          onDocumentUploaded={handleUploadDocument} />
-      </DataWrapper>
-      <CommitsWrapper>
-        <Commits
-          month={month}
-          commits={commits}
-          onCommitsUpdated={setCommits}
-          onCommitSelected={selectCommit}
-          onCommitUnselected={unselectCommit} />
-      </CommitsWrapper>
-      <GenerateWrapper>
+        <InnerDataWrapper>
+          <Data
+            data={data}
+            onNameUpdated={setName}
+            onDateUpdated={setDate}
+            onHoursUpdated={setHours}
+            onPositionUpdated={setPosition}
+            onDocumentUploaded={handleUploadDocument} />
+        </InnerDataWrapper>
         <Button onClick={generateDocument}>Generate</Button>
-      </GenerateWrapper>
+      </DataWrapper>
+      <Commits
+        month={month}
+        commits={commits}
+        onCommitsUpdated={setCommits}
+        onCommitSelected={selectCommit}
+        onCommitUnselected={unselectCommit} />
     </Wrapper>
   );
 }
 
 const Wrapper = styled.main`
   background-color: ${p => p.theme.primary100};
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-areas:
-  "login login"
-  "data data"
-  "generate generate"
-  "commits doc";
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   padding-inline: 8px;
 `;
 
-const LoginWrapper = styled.div`
-  grid-area: login;
-`;
-
 const DataWrapper = styled.div`
-  grid-area: data;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 `;
 
-const CommitsWrapper = styled.div`
-  grid-area: commits;
-`;
-
-const GenerateWrapper = styled.div`
-  grid-area: generate;
+const InnerDataWrapper = styled.div`
+  flex: 1;
 `;
