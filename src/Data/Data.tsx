@@ -20,10 +20,10 @@ function Data({ data, onNameUpdated, onDateUpdated, onHoursUpdated, onPositionUp
   return (
     <Section>
       <Wrapper>
-        <Input label="Name" value={data.name} setValue={onNameUpdated} placeholder='Namey McNameface' />
-        <Input label="Position" value={data.position} setValue={onPositionUpdated} placeholder='Senior Chairwarmer' />
+        <Input label="Name" value={data.name} onChange={onNameUpdated} placeholder='Namey McNameface' />
+        <Input label="Position" value={data.position} onChange={onPositionUpdated} placeholder='Senior Chairwarmer' />
         <MonthPicker label="Month" value={data.date} onChange={onDateUpdated} placeholder='Select month' />
-        <Input label="Creative hours" type="number" value={data.hours} setValue={onHoursUpdated} min="0" />
+        <Input label="Creative hours" type="text" value={data.hours} onChange={onHoursUpdated} pattern='\d+' />
         <FileInput label="Choose protocol template" onFileUpload={onDocumentUploaded} allowedTypes={[DOCX_MIME_TYPE]} />
       </Wrapper>
     </Section>

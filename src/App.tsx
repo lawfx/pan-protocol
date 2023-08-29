@@ -55,7 +55,7 @@ export default function App() {
   }, []);
 
   const setHours = React.useCallback((hours: string) => {
-    setData(d => ({ ...d, hours: +hours }));
+    setData(d => ({ ...d, hours: isNaN(+hours) ? d.hours : +hours }));
   }, []);
 
   const setPosition = React.useCallback((position: string) => {

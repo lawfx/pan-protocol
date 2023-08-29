@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import FormControl from "../FormControl/FormControl";
 
 export default function FileInput({ onFileUpload, allowedTypes, label }:
   {
@@ -29,17 +30,8 @@ export default function FileInput({ onFileUpload, allowedTypes, label }:
   }
 
   return (
-    <Wrapper>
-      <label htmlFor={id}>
-        {label}
-      </label>
+    <FormControl label={label}>
       <input ref={ref} type='file' id={id} onChange={handleOnChange} />
-    </Wrapper>
+    </FormControl>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
