@@ -31,6 +31,7 @@ export default function App() {
   console.log('commits', commits, 'data', data);
 
   const month = React.useMemo(() => !!data.date ? format(data.date, 'yyyy-MM') : '', [data]);
+  const canGenerateDocx = !!data.name && !!data.position && !!month && !!data.hours && !!file;
 
   const selectCommit = React.useCallback((sha: string) => {
     setCommits(commits => commits.map(c => {
@@ -106,7 +107,12 @@ export default function App() {
     }
   }
 
-  function handleUploadDocument(file: File) {
+  function handleUploadDocument(file: File | null) {
+    if (file === null) {
+      setFile(null);
+      return;
+    }
+
     const reader = new FileReader();
 
     reader.onerror = function (evt) {
@@ -134,7 +140,7 @@ export default function App() {
             onPositionUpdated={setPosition}
             onDocumentUploaded={handleUploadDocument} />
         </InnerDataWrapper>
-        <Button onClick={generateDocument}>Generate</Button>
+        <Button onClick={generateDocument} disabled={!canGenerateDocx}>Generate</Button>
       </DataWrapper>
       <Commits
         month={month}

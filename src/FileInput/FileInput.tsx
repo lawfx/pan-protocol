@@ -1,10 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import FormControl from "../FormControl/FormControl";
 
 export default function FileInput({ onFileUpload, allowedTypes, label }:
   {
-    onFileUpload: (file: File) => void,
+    onFileUpload: (file: File | null) => void,
     allowedTypes: string[],
     label: string
   }
@@ -15,7 +14,7 @@ export default function FileInput({ onFileUpload, allowedTypes, label }:
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files?.length) {
-      alert("No file was chosen!");
+      onFileUpload(null);
       return;
     }
 

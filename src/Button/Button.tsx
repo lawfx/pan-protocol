@@ -24,14 +24,20 @@ const StyledButton = styled.button`
   width: 100px;
   line-height: 1;
 
-  &:hover{
+  &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 0 ${p => p.theme.secondary300};
   }
 
-  &:active{
+  &:active {
     transform: translateY(1px);
     box-shadow: 0 1px 0 ${p => p.theme.secondary200};
     transition: box-shadow 100ms, transform 100ms;
+  }
+
+  &:disabled {
+    transform: none;
+    background-color: ${p => p.theme.secondary100};
+    box-shadow: 0 2px 0 ${p => p.theme.secondary200};   
   }
 `;

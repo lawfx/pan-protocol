@@ -14,7 +14,7 @@ function Data({ data, onNameUpdated, onDateUpdated, onHoursUpdated, onPositionUp
     onDateUpdated: (date: Date | null) => void,
     onHoursUpdated: (hours: string) => void,
     onPositionUpdated: (position: string) => void,
-    onDocumentUploaded: (file: File) => void
+    onDocumentUploaded: (file: File | null) => void
   }) {
 
   return (
