@@ -188,7 +188,7 @@ export default function App() {
 }
 
 const Wrapper = styled.main`
-  background-color: ${p => p.theme.primary};
+  background-color: ${p => p.theme.primary100};
   display: grid;
   grid-template-columns: 300px 1fr;
   grid-template-areas:

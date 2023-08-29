@@ -62,7 +62,7 @@ export default React.memo(Repositories);
 const ReposLabel = styled.h4`
   margin: 0;
   padding: 8px;
-  border-bottom: 1px solid ${p => p.theme.primaryLighter};
+  border-bottom: 1px solid ${p => p.theme.primary300};
 `;
 
 const Repos = styled.section`
@@ -74,13 +74,13 @@ const Repos = styled.section`
 
 const Repo = styled.button<{ selected: boolean }>`
   padding: 8px;
-  background-color: ${p => p.selected ? p.theme.accentLight : p.theme.primaryLight};
-  color: ${p => p.selected ? 'black' : 'white'};
-  border: 1px solid ${p => p.theme.primaryLighter};
+  background-color: ${p => p.selected ? p.theme.secondary400 : p.theme.primary200};
+  color: ${p => p.selected ? p.theme.textOnSecondary : p.theme.textOnPrimary};
+  border: 1px solid ${p => p.theme.primary300};
   border-radius: 8px;
   cursor: pointer;
 
   &:hover {
-    background-color: ${p => p.selected ? p.theme.accentLight : p.theme.primaryLighter};
+    background-color: ${p => p.selected ? p.theme.secondary200 : p.theme.primary300};
   }
 `;

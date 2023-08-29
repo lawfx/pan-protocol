@@ -13,20 +13,20 @@ const StyledButton = styled.button`
   text-align: center;
   padding: 8px;
   border-radius: 8px;
-  background-color: ${p => p.theme.accentLighter};
-  color: ${p => p.theme.primary};
-  box-shadow: 0 2px 0 ${p => p.theme.accent};
+  background-color: ${p => p.theme.secondary500};
+  color: ${p => p.theme.textOnSecondary};
+  box-shadow: 0 2px 0 ${p => p.theme.secondary200};
   transition: box-shadow 300ms, transform 300ms;
   cursor: pointer;
 
   &:hover{
     transform: translateY(-2px);
-    box-shadow: 0 4px 0 ${p => p.theme.accent};
+    box-shadow: 0 4px 0 ${p => p.theme.secondary300};
   }
 
   &:active{
     transform: translateY(1px);
-    box-shadow: 0 1px 0 ${p => p.theme.accent};
+    box-shadow: 0 1px 0 ${p => p.theme.secondary200};
     transition: box-shadow 100ms, transform 100ms;
   }
 `;

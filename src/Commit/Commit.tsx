@@ -12,13 +12,13 @@ export default function Commit({ commit, selected, onClick }: { commit: any, sel
 
 const Wrapper = styled.div<{ selected: boolean }>`
   padding: 8px;
-  background-color: ${p => p.selected ? p.theme.accentLight : p.theme.primaryLight};
-  color: ${p => p.selected ? 'black' : 'white'};
-  border: 1px solid ${p => p.theme.primaryLighter};
+  background-color: ${p => p.selected ? p.theme.secondary400 : p.theme.primary200};
+  color: ${p => p.selected ? p.theme.textOnSecondary : p.theme.textOnPrimary};
+  border: 1px solid ${p => p.theme.primary300};
   border-radius: 8px;
 
   &:hover {
-    background-color: ${p => p.selected ? p.theme.accentLight : p.theme.primaryLighter};
-    border: 1px solid ${p => p.theme.primaryLight};
+    background-color: ${p => p.selected ? p.theme.secondary200 : p.theme.primary300};
+    border: 1px solid ${p => p.theme.primary200};
   }
 `;

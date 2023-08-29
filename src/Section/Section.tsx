@@ -11,7 +11,7 @@ export default function Section({ children }: { children: ReactNode }) {
 }
 
 const Wrapper = styled.section`
-  background-color: ${props => props.theme.primaryLight};
-  color: white;
+  background-color: ${p => p.theme.primary200};
+  color: ${p => p.theme.textOnPrimary};
   border-radius: 8px;
 `;

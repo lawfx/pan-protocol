@@ -86,7 +86,7 @@ const Wrapper = styled.div`
 const CommitsLabel = styled.h4`
   margin: 0;
   padding: 8px;
-  border-bottom: 1px solid ${p => p.theme.primaryLighter};
+  border-bottom: 1px solid ${p => p.theme.primary300};
 `;
 
 const AccordionsWrapper = styled.div`
@@ -97,7 +97,7 @@ const AccordionsWrapper = styled.div`
 
 const AccordionRoot = styled(Accordion.Root)`
   border-radius: 8px;
-  background-color: ${p => p.theme.primaryLighter};
+  background-color: ${p => p.theme.primary300};
 `;
 
 const AccordionItem = styled(Accordion.Item)`
@@ -134,7 +134,7 @@ const StyledTrigger = styled(Accordion.Trigger)`
   justify-content: space-between;
 
   &[data-state="open"] {
-    border-bottom: 1px solid ${p => p.theme.primaryLight};
+    border-bottom: 1px solid ${p => p.theme.primary200};
   }
 `;
 
