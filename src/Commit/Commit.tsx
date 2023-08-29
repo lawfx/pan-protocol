@@ -1,11 +1,15 @@
 import { styled } from "styled-components";
+import { parseGithubCommitMessage } from "../utils/utils";
 
 export default function Commit({ commit, selected, onClick }: { commit: any, selected: boolean, onClick: () => void }) {
+
+  const messageData = parseGithubCommitMessage(commit.commit.message);
 
   return (
     <Wrapper onClick={onClick} selected={selected}>
       <div><strong>SHA:</strong> <span>{commit.sha.substring(0, 7)}</span></div>
-      <div><strong>Commit message:</strong> <span>{commit.commit.message}</span></div>
+      <div><strong>PR:</strong> <span>{messageData.prNum !== 'N/A' && '#'}{messageData.prNum}</span></div>
+      <div><strong>Message:</strong> <span>{commit.commit.message}</span></div>
     </Wrapper>
   );
 }

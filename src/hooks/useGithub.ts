@@ -1,6 +1,5 @@
 import { Octokit } from "@octokit/rest";
 import React from "react";
-import { CommitsState } from "../App";
 
 export default function useGithub() {
 
@@ -16,19 +15,14 @@ export default function useGithub() {
     setUser(user);
   }
 
-  async function getRepos() {
+  async function searchCommits(month: string) {
     if (!octokit) return [];
 
-    return octokit.rest.repos.listForAuthenticatedUser({
-      sort: 'pushed'
+    const commits = await octokit?.search.commits({
+      q: `author:${user.login} author-date:${month}`,
+      sort: 'author-date'
     });
-  }
-
-  async function getCommits(repos: string[], from: string, to: string) {
-    if (!octokit) return [];
-
-    const commits = await processRepos(user, repos, from, to);
-    return commits || [];
+    return commits?.data.items || [];
   }
 
   async function getUser(octokit: Octokit): Promise<any> {
@@ -38,30 +32,5 @@ export default function useGithub() {
     return user;
   }
 
-  async function processRepos(user: any, repos: string[], from: string, to: string) {
-    let data: CommitsState[] = [];
-    for (let repo of repos) {
-      const commits = await fetchCommits(user, repo, from, to);
-      data.push({
-        repoFullName: repo,
-        commits: commits.map(c => ({ commit: c, selected: false }))
-      });
-    }
-    return data;
-  }
-
-  async function fetchCommits(user: any, repo_fullname: string, from: string, to: string) {
-    console.log('Searching repo:', repo_fullname);
-    const [owner, repo] = repo_fullname.split('/');
-    const { data } = await octokit!.rest.repos.listCommits({
-      owner,
-      repo,
-      author: user.login,
-      ...(!!from ? { since: from } : {}),
-      ...(!!to ? { until: to } : {})
-    });
-    return data;
-  }
-
-  return { connect, getCommits, user, getRepos };
+  return { connect, searchCommits, user };
 }

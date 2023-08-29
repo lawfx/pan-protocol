@@ -5,7 +5,7 @@ export interface DocumentData {
   commits: {
     sha: string;
     message: string;
-    prNum: number;
+    prNum: string;
     repo: string;
   }[];
 }
