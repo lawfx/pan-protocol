@@ -31,7 +31,7 @@ export default function FileInput({ onFileUpload, allowedTypes, label }:
   return (
     <Wrapper>
       <label htmlFor={id}>
-        {label}:
+        {label}
       </label>
       <input ref={ref} type='file' id={id} onChange={handleOnChange} />
     </Wrapper>
