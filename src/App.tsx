@@ -12,6 +12,7 @@ import { saveAs } from 'file-saver';
 import { format } from 'date-fns';
 import { DOCX_MIME_TYPE } from './constants/constants';
 import { parseGithubCommitMessage } from './utils/utils';
+import Header from './Header/Header';
 
 export interface CommitState {
   commit: any;
@@ -129,7 +130,7 @@ export default function App() {
 
   return (
     <Wrapper>
-      <Login />
+      <Header />
       <DataWrapper>
         <InnerDataWrapper>
           <Data

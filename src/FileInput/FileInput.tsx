@@ -29,7 +29,7 @@ export default function FileInput({ onFileUpload, allowedTypes, label }:
   }
 
   return (
-    <FormControl label={label}>
+    <FormControl id={id} label={label}>
       <input ref={ref} type='file' id={id} onChange={handleOnChange} />
     </FormControl>
   );

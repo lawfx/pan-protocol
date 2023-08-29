@@ -14,7 +14,7 @@ export default function Input({ type = 'text', value, onChange, label, ...rest }
   const id = React.useId();
 
   return (
-    <FormControl label={label}>
+    <FormControl id={id} label={label}>
       <StyledInput
         type={type}
         id={id}

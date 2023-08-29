@@ -2,13 +2,12 @@ import React from "react";
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-export default function FormControl({ children, label }:
+export default function FormControl({ children, label, id }:
   {
     children: ReactNode,
-    label: string
+    label: string,
+    id: string
   }) {
-
-  const id = React.useId();
 
   return (
     <Wrapper>

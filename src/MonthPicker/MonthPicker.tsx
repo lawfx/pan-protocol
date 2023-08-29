@@ -15,7 +15,7 @@ export default function MonthPicker({ label, value, onChange, placeholder }:
   const id = React.useId();
 
   return (
-    <FormControl label={label}>
+    <FormControl id={id} label={label}>
       <DatePicker
         id={id}
         selected={value}

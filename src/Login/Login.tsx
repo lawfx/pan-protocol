@@ -2,7 +2,7 @@ import React from "react";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
 import styled from "styled-components";
 import Button from "../Button/Button";
-import Section from "../Section/Section";
+import Input from "../Input/Input";
 
 export default function Login() {
 
@@ -10,42 +10,30 @@ export default function Login() {
   const { connect, user } = React.useContext(GitHubContext);
 
   return (
-    <Section>
-      <Wrapper>
-        {user &&
-          <LoggedInUser>
-            <Avatar>
-              <AvatarImage src={user.avatar_url} />
-            </Avatar>
-            <span>Logged in as <strong>{user.login}</strong></span>
-          </LoggedInUser>
-        }
-        {!user && <div>
-          <label htmlFor='token-id'>
-            Token:
-          </label>
-          <input
-            id='token-id'
-            value={token}
-            onChange={e => setToken(e.target.value)}
-          />
+    <>
+      {user ?
+        <LoggedInUser>
+          <span>Logged in as <strong>{user.login}</strong></span>
+          <Avatar>
+            <AvatarImage src={user.avatar_url} />
+          </Avatar>
+        </LoggedInUser>
+        :
+        <LoginForm>
+          <Input label='Token' value={token} onChange={setToken} />
           <Button disabled={!!user} type='button' onClick={() => connect(token)}>Connect</Button>
-        </div>
-        }
-      </Wrapper>
-    </Section>
+        </LoginForm>
+      }
+
+    </>
   );
 }
-
-const Wrapper = styled.div`
-  padding: 8px;
-`;
 
 const LoggedInUser = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 `;
 
 const Avatar = styled.div`
@@ -56,4 +44,10 @@ const AvatarImage = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+`;
+
+const LoginForm = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
