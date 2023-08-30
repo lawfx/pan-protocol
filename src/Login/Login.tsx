@@ -14,17 +14,14 @@ export default function Login() {
       {user ?
         <LoggedInUser>
           <span>Logged in as <strong>{user.login}</strong></span>
-          <Avatar>
-            <AvatarImage src={user.avatar_url} />
-          </Avatar>
+          <AvatarImage src={user.avatar_url} />
         </LoggedInUser>
         :
         <LoginForm>
           <Input label='Token' value={token} onChange={setToken} />
-          <Button disabled={!!user} type='button' onClick={() => connect(token)}>Connect</Button>
+          <Button disabled={!token} type='button' onClick={() => connect(token)}>Connect</Button>
         </LoginForm>
       }
-
     </>
   );
 }
