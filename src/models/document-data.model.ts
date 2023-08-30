@@ -1,7 +1,7 @@
-import { DataInfo } from "./data-info";
+import { UserData } from "./user-data.model";
 
 export interface DocumentData {
-  userData: Omit<DataInfo, 'date'> & { date: string };
+  userData: Omit<UserData, 'date'> & { date: string };
   commits: {
     sha: string;
     message: string;

@@ -1,4 +1,4 @@
-export interface DataInfo {
+export interface UserData {
   name: string;
   position: string;
   date: Date | null;

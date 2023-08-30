@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DataInfo } from './models/data-info';
+import { UserData } from './models/user-data.model';
 
 import Button from './components/Button/Button';
-import { DocumentData } from './models/document-data';
+import { DocumentData } from './models/document-data.model';
 import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
 import { saveAs } from 'file-saver';
@@ -16,7 +16,7 @@ import Commits from './components/Commits/Commits';
 
 export default function App() {
 
-  const [data, setData] = React.useState<DataInfo>({
+  const [data, setData] = React.useState<UserData>({
     name: '',
     position: '',
     date: new Date(),

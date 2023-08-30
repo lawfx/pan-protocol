@@ -3,14 +3,14 @@ import Input from "../Input/Input";
 
 import React from "react";
 import FileInput from "../FileInput/FileInput";
-import { DataInfo } from "../../models/data-info";
+import { UserData } from "../../models/user-data.model";
 import Section from "../Section/Section";
 import MonthPicker from "../MonthPicker/MonthPicker";
 import { DOCX_MIME_TYPE } from "../../constants/constants";
 
 function Data({ data, onNameUpdated, onDateUpdated, onHoursUpdated, onPositionUpdated, onDocumentUploaded }:
   {
-    data: DataInfo,
+    data: UserData,
     onNameUpdated: (name: string) => void,
     onDateUpdated: (date: Date | null) => void,
     onHoursUpdated: (hours: string) => void,
