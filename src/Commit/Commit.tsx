@@ -9,7 +9,7 @@ export default function Commit({ commit, selected, onClick }: { commit: any, sel
     <Wrapper onClick={onClick} selected={selected}>
       <div><strong>SHA:</strong> <span>{commit.sha.substring(0, 7)}</span></div>
       <div><strong>PR:</strong> <span>{messageData.prNum !== 'N/A' && '#'}{messageData.prNum}</span></div>
-      <div><strong>Message:</strong> <span>{commit.commit.message}</span></div>
+      <div><strong>Message:</strong> <CommitMessage>{commit.commit.message}</CommitMessage></div>
     </Wrapper>
   );
 }
@@ -25,4 +25,8 @@ const Wrapper = styled.div<{ selected: boolean }>`
     background-color: ${p => p.selected ? p.theme.secondary200 : p.theme.primary300};
     border: 1px solid ${p => p.theme.primary200};
   }
+`;
+
+const CommitMessage = styled.span`
+  white-space: pre-line;
 `;
