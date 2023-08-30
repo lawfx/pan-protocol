@@ -33,9 +33,6 @@ const LoggedInUser = styled.div`
   gap: 8px;
 `;
 
-const Avatar = styled.div`
-`;
-
 const AvatarImage = styled.img`
   display: block;
   width: 50px;
