@@ -22,7 +22,7 @@ const Wrapper = styled.div<{ selected: boolean }>`
   border-radius: 8px;
 
   &:hover {
-    background-color: ${p => p.selected ? p.theme.secondary200 : p.theme.primary300};
+    background-color: ${p => p.selected ? p.theme.secondary500 : p.theme.primary300};
     border: 1px solid ${p => p.theme.primary200};
   }
 `;
