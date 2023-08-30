@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { parseGithubCommitMessage } from "../utils/utils";
+import { parseGithubCommitMessage } from "../../utils/utils";
 
 export default function Commit({ commit, selected, onClick }: { commit: any, selected: boolean, onClick: () => void }) {
 

@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react"
-import useGithub from "../hooks/useGithub";
+import useGithub from "../../hooks/useGithub";
 
 export const GitHubContext = React.createContext<{
   connect: (token: string) => Promise<any>;

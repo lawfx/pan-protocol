@@ -4,9 +4,9 @@ import Commit from "../Commit/Commit";
 import styled, { keyframes } from "styled-components";
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import Section from "../Section/Section";
-import { CommitState } from "../App";
 import { format } from "date-fns";
+import Section from "../Section/Section";
+import { CommitState } from "../../App";
 
 function Commits({ month, commits, onCommitsUpdated, onCommitSelected, onCommitUnselected }:
   {

@@ -1,11 +1,12 @@
 import { styled } from "styled-components";
 import Input from "../Input/Input";
-import { DataInfo } from "../models/data-info";
+
 import React from "react";
-import MonthPicker from "../MonthPicker/MonthPicker";
 import FileInput from "../FileInput/FileInput";
-import { DOCX_MIME_TYPE } from "../constants/constants";
+import { DataInfo } from "../../models/data-info";
 import Section from "../Section/Section";
+import MonthPicker from "../MonthPicker/MonthPicker";
+import { DOCX_MIME_TYPE } from "../../constants/constants";
 
 function Data({ data, onNameUpdated, onDateUpdated, onHoursUpdated, onPositionUpdated, onDocumentUploaded }:
   {

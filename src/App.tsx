@@ -1,10 +1,8 @@
 import React from 'react';
-import Login from './Login/Login';
-import Commits from './Commits/Commits';
 import styled from 'styled-components';
 import { DataInfo } from './models/data-info';
-import Data from './Data/Data';
-import Button from './Button/Button';
+
+import Button from './components/Button/Button';
 import { DocumentData } from './models/document-data';
 import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
@@ -12,7 +10,9 @@ import { saveAs } from 'file-saver';
 import { format } from 'date-fns';
 import { DOCX_MIME_TYPE } from './constants/constants';
 import { parseGithubCommitMessage } from './utils/utils';
-import Header from './Header/Header';
+import Header from './components/Header/Header';
+import Data from './components/Data/Data';
+import Commits from './components/Commits/Commits';
 
 export interface CommitState {
   commit: any;
