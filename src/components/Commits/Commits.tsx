@@ -6,49 +6,30 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import Section from "../Section/Section";
-import { CommitState } from "../../App";
+import { CommitInfo } from "../../models/commit.model";
 
-function Commits({ month, commits, onCommitsUpdated, onCommitSelected, onCommitUnselected }:
+function Commits({ month }:
   {
-    month: string,
-    commits: CommitState[],
-    onCommitsUpdated: React.Dispatch<React.SetStateAction<CommitState[]>>,
-    onCommitSelected: (sha: string) => void,
-    onCommitUnselected: (sha: string) => void
+    month: string
   }) {
 
-  const { searchCommits, user } = React.useContext(GitHubContext);
+  const { searchCommits, user, commits, toggleCommit } = React.useContext(GitHubContext);
 
-  const commitsPerRepo = commits.reduce<{ [repo: string]: CommitState[] }>((acc, curr) => {
+  const commitsByRepo = React.useMemo(() => commits.reduce<{ [repo: string]: CommitInfo[] }>((acc, curr) => {
     const repoFullName: string = curr.commit.repository.full_name;
     return { ...acc, [repoFullName]: (acc[repoFullName] ? [...acc[repoFullName], curr] : [curr]) }
-  }, {});
+  }, {}), [commits]);
 
   React.useEffect(() => {
-    let valid = true;
-
     async function fetchCommits() {
-      try {
-        const commits = await searchCommits(month);
-        if (!commits || !valid) return;
-        onCommitsUpdated(commits.map(c => ({ commit: c, selected: false })));
-      } catch (e) {
-        console.error(e);
-      }
+      await searchCommits(month);
     }
 
     fetchCommits();
-
-    return () => { valid = false; }
   }, [user, month]);
 
   function handleClickCommit(sha: string, selected: boolean) {
-    if (selected) {
-      onCommitUnselected(sha);
-    }
-    else {
-      onCommitSelected(sha);
-    }
+    toggleCommit(sha, selected);
   }
 
   const message = !month ? 'Please select a month...' : !commits.length ? `No commits found for ${format(new Date(month), 'MMMM yyyy')}` : '';
@@ -59,7 +40,7 @@ function Commits({ month, commits, onCommitsUpdated, onCommitSelected, onCommitU
       <Wrapper>
         {!!message && <span>{message}</span>}
         <AccordionsWrapper>
-          {Object.entries(commitsPerRepo).map(([repo, commitsInRepo]) =>
+          {Object.entries(commitsByRepo).map(([repo, commitsInRepo]) =>
             <AccordionRoot key={repo} type="single" defaultValue={repo} collapsible>
               <AccordionItem value={repo}>
                 <AccordionTrigger>
@@ -70,7 +51,7 @@ function Commits({ month, commits, onCommitsUpdated, onCommitSelected, onCommitU
                   {!commitsInRepo.length && <p>No commits for {repo}</p>}
                   {!!commitsInRepo.length &&
                     commitsInRepo.map(({ commit, selected }) => (
-                      <Commit onClick={() => handleClickCommit(commit.sha, selected)} key={commit.sha} commit={commit} selected={selected} />
+                      <Commit onClick={() => handleClickCommit(commit.sha, !selected)} key={commit.sha} commit={commit} selected={selected} />
                     ))
                   }
                 </AccordionContent>

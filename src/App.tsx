@@ -14,14 +14,8 @@ import Header from './components/Header/Header';
 import Data from './components/Data/Data';
 import Commits from './components/Commits/Commits';
 
-export interface CommitState {
-  commit: any;
-  selected: boolean;
-}
-
 export default function App() {
 
-  const [commits, setCommits] = React.useState<CommitState[]>([]);
   const [data, setData] = React.useState<DataInfo>({
     name: '',
     position: '',
@@ -29,24 +23,10 @@ export default function App() {
     hours: 0
   });
   const [file, setFile] = React.useState<string | ArrayBuffer | null>();
-  console.log('commits', commits, 'data', data);
+  console.log('data', data);
 
   const month = React.useMemo(() => !!data.date ? format(data.date, 'yyyy-MM') : '', [data]);
   const canGenerateDocx = !!data.name && !!data.position && !!month && !!data.hours && !!file;
-
-  const selectCommit = React.useCallback((sha: string) => {
-    setCommits(commits => commits.map(c => {
-      if (c.commit.sha !== sha) return c;
-      return { ...c, selected: true }
-    }));
-  }, []);
-
-  const unselectCommit = React.useCallback((sha: string) => {
-    setCommits(commits => commits.map(c => {
-      if (c.commit.sha !== sha) return c;
-      return { ...c, selected: false }
-    }));
-  }, []);
 
   const setName = React.useCallback((name: string) => {
     setData(d => ({ ...d, name }));
@@ -64,49 +44,49 @@ export default function App() {
     setData(d => ({ ...d, position }));
   }, []);
 
-  function generateDocument() {
-    const docData: DocumentData = compileData(data, commits);
-    console.log(docData);
+  // function generateDocument() {
+  //   const docData: DocumentData = compileData(data, commits);
+  //   console.log(docData);
 
-    const zip = new PizZip(file);
-    const doc = new Docxtemplater(zip, {
-      paragraphLoop: true,
-      linebreaks: true,
-    });
+  //   const zip = new PizZip(file);
+  //   const doc = new Docxtemplater(zip, {
+  //     paragraphLoop: true,
+  //     linebreaks: true,
+  //   });
 
-    doc.render({
-      name: docData.userData.name,
-      position: docData.userData.position,
-      date: docData.userData.date,
-      hours: docData.userData.hours,
-      prs: docData.commits.map(c => ({ title: c.message, num: c.prNum, sha: c.sha, hour: 5 }))
-    });
+  //   doc.render({
+  //     name: docData.userData.name,
+  //     position: docData.userData.position,
+  //     date: docData.userData.date,
+  //     hours: docData.userData.hours,
+  //     prs: docData.commits.map(c => ({ title: c.message, num: c.prNum, sha: c.sha, hour: 5 }))
+  //   });
 
-    const blob = doc.getZip().generate({
-      type: "blob",
-      mimeType: DOCX_MIME_TYPE,
-      compression: "DEFLATE",
-    });
+  //   const blob = doc.getZip().generate({
+  //     type: "blob",
+  //     mimeType: DOCX_MIME_TYPE,
+  //     compression: "DEFLATE",
+  //   });
 
-    saveAs(blob, `${docData.userData.name}_${docData.userData.date}_procotol.docx`);
-  }
+  //   saveAs(blob, `${docData.userData.name}_${docData.userData.date}_procotol.docx`);
+  // }
 
-  function compileData(data: DataInfo, commits: CommitState[]): DocumentData {
-    return {
-      userData: { ...data, date: format(data.date!, 'MM/yyyy') },
-      commits: commits.map(c => {
-        if (!c.selected) return null as any; //TODO change
-        const messageData = parseGithubCommitMessage(c.commit.commit.message);
-        return {
-          repo: 'some repo', //TODo change
-          sha: c.commit.sha.substring(0, 7),
-          message: messageData.message,
-          prNum: messageData.prNum
-        }
-      }
-      ).filter(r => !!r)
-    }
-  }
+  // function compileData(data: DataInfo, commits: CommitState[]): DocumentData {
+  //   return {
+  //     userData: { ...data, date: format(data.date!, 'MM/yyyy') },
+  //     commits: commits.map(c => {
+  //       if (!c.selected) return null as any; //TODO change
+  //       const messageData = parseGithubCommitMessage(c.commit.commit.message);
+  //       return {
+  //         repo: 'some repo', //TODo change
+  //         sha: c.commit.sha.substring(0, 7),
+  //         message: messageData.message,
+  //         prNum: messageData.prNum
+  //       }
+  //     }
+  //     ).filter(r => !!r)
+  //   }
+  // }
 
   function handleUploadDocument(file: File | null) {
     if (file === null) {
@@ -141,14 +121,11 @@ export default function App() {
             onPositionUpdated={setPosition}
             onDocumentUploaded={handleUploadDocument} />
         </InnerDataWrapper>
-        <Button onClick={generateDocument} disabled={!canGenerateDocx}>Generate</Button>
+        {/* <Button onClick={generateDocument} disabled={!canGenerateDocx}>Generate</Button> */}
       </DataWrapper>
       <Commits
         month={month}
-        commits={commits}
-        onCommitsUpdated={setCommits}
-        onCommitSelected={selectCommit}
-        onCommitUnselected={unselectCommit} />
+      />
     </Wrapper>
   );
 }
