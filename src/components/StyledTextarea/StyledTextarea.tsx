@@ -1,21 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-function StyledInput({ value, onClick, onChange, ...rest }:
+function StyledTextarea({ value, onClick, onChange, ...rest }:
   {
     value: string,
     onClick: (e: any) => void,
     onChange: (val: string) => void,
     [key: string]: any
   },
-  ref: ((instance: HTMLInputElement | null) => void) | React.MutableRefObject<HTMLInputElement | null> | null) {
+  ref: ((instance: HTMLTextAreaElement | null) => void) | React.MutableRefObject<HTMLTextAreaElement | null> | null) {
 
   return (
-    <Input
+    <Textarea
       ref={ref}
-      type='text'
       value={value}
-      onClick={onClick}
       onChange={event => {
         onChange(event.target.value);
       }}
@@ -24,13 +22,11 @@ function StyledInput({ value, onClick, onChange, ...rest }:
   );
 };
 
-export default React.forwardRef(StyledInput);
+export default React.forwardRef(StyledTextarea);
 
-const Input = styled.input`
+const Textarea = styled.textarea`
   all: unset;
-  width: 150px;
-  height: 30px;
-  line-height: 30px;
+  resize: vertical;
   background-color: ${p => p.theme.primary100};
   border-radius: 8px;
   padding: 2px 8px;

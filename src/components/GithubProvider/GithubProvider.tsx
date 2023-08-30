@@ -9,6 +9,8 @@ export const GitHubContext = React.createContext<{
   user: GitHubUser;
   commits: CommitInfo[];
   toggleCommit: (sha: string, selected: boolean) => void;
+  updateFinalMessage: (sha: string, message: string) => void;
+  updateHoursSpent: (sha: string, hours: string) => void;
 }>(null as any);
 
 export default function GithubProvider({ children }: { children: ReactNode }) {

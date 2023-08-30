@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import Data from './components/Data/Data';
 import Commits from './components/Commits/Commits';
 import DocumentGenerator from './components/DocumentGenerator/DocumentGenerator';
+import Preview from './components/Preview/Preview';
 
 export default function App() {
 
@@ -59,7 +60,9 @@ export default function App() {
 
   return (
     <Wrapper>
-      <Header />
+      <HeaderWrapper>
+        <Header />
+      </HeaderWrapper>
       <DataWrapper>
         <InnerDataWrapper>
           <Data
@@ -72,22 +75,36 @@ export default function App() {
         </InnerDataWrapper>
         <DocumentGenerator file={file} userData={data} />
       </DataWrapper>
-      <Commits
-        month={month}
-      />
+      <CommitsWrapper>
+        <Commits
+          month={month}
+        />
+      </CommitsWrapper>
+      <PreviewWrapper>
+        <Preview hours={data.hours} />
+      </PreviewWrapper>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.main`
   background-color: ${p => p.theme.primary100};
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-template-areas:
+  'header header'
+  'data data'
+  'commits preview';
   gap: 8px;
   padding-inline: 8px;
 `;
 
+const HeaderWrapper = styled.div`
+  grid-area: header;
+`;
+
 const DataWrapper = styled.div`
+  grid-area: data;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -97,4 +114,12 @@ const DataWrapper = styled.div`
 
 const InnerDataWrapper = styled.div`
   flex: 1;
+`;
+
+const CommitsWrapper = styled.div`
+  grid-area: commits;
+`;
+
+const PreviewWrapper = styled.div`
+  grid-area: preview;
 `;

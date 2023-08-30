@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { CommitInfo } from "../models/commit.model";
-import { DocumentData } from "../models/document-data.model";
+import { DocumentData, DocumentDataCommit } from "../models/document-data.model";
 import { UserData } from "../models/user-data.model";
 import Docxtemplater from "docxtemplater";
 import saveAs from "file-saver";
@@ -19,17 +19,19 @@ export function parseGithubCommitMessage(message: string): { message: string, pr
 export function compileDocumentData(data: UserData, commits: CommitInfo[]): DocumentData {
   return {
     userData: { ...data, date: format(data.date!, 'MM/yyyy') },
-    commits: commits.map(c => {
-      if (!c.selected) return null as any; //TODO change
-      const messageData = parseGithubCommitMessage(c.commit.commit.message);
-      return {
-        repo: c.commit.repository.full_name,
-        sha: c.commit.sha.substring(0, 7),
-        message: messageData.message,
-        prNum: messageData.prNum
+    commits: commits
+      .filter(c => c.selected)
+      .map<DocumentDataCommit>(c => {
+        const messageData = parseGithubCommitMessage(c.commit.commit.message);
+        return {
+          repo: c.commit.repository.full_name,
+          sha: c.commit.sha.substring(0, 7),
+          message: c.final_message,
+          prNum: messageData.prNum,
+          hours_spend: c.hours_spent
+        }
       }
-    }
-    ).filter(r => !!r)
+      )
   }
 }
 
@@ -49,7 +51,7 @@ export function generateDocument(file: string | ArrayBuffer | null, userData: Us
     position: docData.userData.position,
     date: docData.userData.date,
     hours: docData.userData.hours,
-    prs: docData.commits.map(c => ({ title: c.message, num: c.prNum, sha: c.sha, hour: 5 }))
+    prs: docData.commits.map(c => ({ title: c.message, num: c.prNum, sha: c.sha, hour: c.hours_spend }))
   });
 
   const blob = doc.getZip().generate({

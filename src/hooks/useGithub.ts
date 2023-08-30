@@ -29,7 +29,7 @@ export default function useGithub() {
 
       if (!commits?.data.items) return;
 
-      setCommits(commits.data.items.map(c => ({ commit: c, selected: false })));
+      setCommits(commits.data.items.map(c => ({ commit: c, selected: false, final_message: c.commit.message, hours_spent: 0 })));
     } catch (e) {
       console.error(e);
     }
@@ -49,5 +49,19 @@ export default function useGithub() {
     }));
   }, []);
 
-  return { connect, searchCommits, user, commits, toggleCommit };
+  const updateFinalMessage = React.useCallback((sha: string, message: string) => {
+    setCommits(commits => commits.map(c => {
+      if (c.commit.sha !== sha) return c;
+      return { ...c, final_message: message };
+    }));
+  }, []);
+
+  const updateHoursSpent = React.useCallback((sha: string, hours: string) => {
+    setCommits(commits => commits.map(c => {
+      if (c.commit.sha !== sha) return c;
+      return { ...c, hours_spent: isNaN(+hours) ? c.hours_spent : +hours };
+    }));
+  }, []);
+
+  return { connect, searchCommits, user, commits, toggleCommit, updateFinalMessage, updateHoursSpent };
 }

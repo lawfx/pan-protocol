@@ -12,7 +12,8 @@ export default function DocumentGenerator({ file, userData }:
 
   const { commits } = React.useContext(GitHubContext);
 
-  const canGenerateDocx = !!userData.name && !!userData.position && !!userData.date && !!userData.hours && !!file;
+  const allHoursFilledIn = commits.filter(c => c.selected).reduce((acc, curr) => acc + curr.hours_spent, 0) === userData.hours;
+  const canGenerateDocx = !!userData.name && !!userData.position && !!userData.date && !!userData.hours && !!file && allHoursFilledIn;
 
   function handleClickGenerate() {
     generateDocument(file, userData, commits);
