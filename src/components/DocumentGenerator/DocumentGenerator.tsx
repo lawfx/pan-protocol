@@ -16,7 +16,6 @@ export default function DocumentGenerator({ file, userData }:
   }) {
 
   const { commits } = React.useContext(GitHubContext);
-  console.log('rendering document generator', commits);
 
   const canGenerateDocx = !!userData.name && !!userData.position && !!userData.date && !!userData.hours && !!file;
 
