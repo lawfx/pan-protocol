@@ -6,7 +6,7 @@ export default function Header() {
 
   return (
     <StyledSection>
-      <Title>Protocol Maker</Title>
+      <Title>Protocol Maker OmniMax 9000</Title>
       <Login />
     </StyledSection>
   );
