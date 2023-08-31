@@ -14,3 +14,6 @@ export const DARK_THEME = {
   textOnPrimary: 'hsl(30, 67%, 94%)',
   textOnSecondary: 'hsl(257, 18%, 23%)'
 }
+
+export const SQUASH_AND_MERGE_REGEX = /(?<message>.+) (\(#(?<pr>\d+)\))/;
+export const MERGE_REGEX = /.+ #(?<pr>\d+).*\n(?<message>.+)/s;
