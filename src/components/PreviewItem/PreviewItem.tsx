@@ -4,6 +4,7 @@ import Input from "../Input/Input";
 import Textarea from "../Textarea/Textarea";
 import React from "react";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
+import Button from "../Button/Button";
 
 export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdated, onPrUpdated }:
   {
@@ -21,7 +22,13 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
 
   return (
     <Wrapper>
-      <X type="button" onClick={() => handleUnselect(commitInfo.commit_sha)}>X</X>
+      <Button style={{
+        width: '15px',
+        height: '15px',
+        position: 'absolute',
+        top: 0,
+        right: 0
+      }} onClick={() => handleUnselect(commitInfo.commit_sha)}>X</Button>
       <TextAreaWrapper>
         <span>
           <strong>SHA:</strong>{' '}
@@ -56,22 +63,4 @@ const TextAreaWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-`;
-
-
-const X = styled.button`
-  all: unset;
-  position: absolute;
-  padding: 8px;
-  width: 15px;
-  height: 15px;
-  line-height: 1;
-  text-align: center;
-  right: 0;
-  top: 0;
-  border: 1px solid ${p => p.theme.primary100};
-  border-top: none;
-  border-right: none;
-  border-radius: 0 0 0 8px;
-  cursor: pointer;
 `;

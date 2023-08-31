@@ -65,3 +65,19 @@ export function generateDocument(file: string | ArrayBuffer | null, userData: Us
 
   saveAs(blob, `${docData.userData.name}_${docData.userData.date}_procotol.docx`);
 }
+
+export function calculateRandomHours(maxHours: number, numberOfResults: number, minHoursInSingleResult = 1): number[] {
+  const randombit = maxHours - minHoursInSingleResult * numberOfResults;
+  const out = [];
+
+  for (let i = 0; i < numberOfResults; i++) {
+    out.push(Math.random());
+  }
+  const mult = randombit / out.reduce((a, b) => a + b);
+  const res = out.map((el) => Math.floor(el * mult + minHoursInSingleResult));
+  const sum = res.reduce((a, b) => a + b);
+  if (sum === maxHours) return res;
+  const diff = maxHours - sum;
+  res[0] += diff;
+  return res;
+}
