@@ -13,7 +13,7 @@ export default function PreviewItem({ commitInfo, hours, onMessageUpdated, onHou
 
   return (
     <Wrapper>
-      <div><strong>SHA:</strong> <span>{commitInfo.commit.sha.substring(0, 7)}</span></div>
+      <div><strong>SHA:</strong> <span>{commitInfo.commit_sha.substring(0, 7)}</span></div>
       <InnerWrapper>
         <TextAreaWrapper>
           <Textarea label="Commit message" rows={3} value={commitInfo.final_message} onChange={onMessageUpdated} placeholder="Describe the commit" />

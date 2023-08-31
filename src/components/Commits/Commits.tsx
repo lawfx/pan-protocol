@@ -7,17 +7,18 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import Section from "../Section/Section";
 import { CommitInfo } from "../../models/commit.model";
+import { GitHubCommit } from "../../models/octokit.model";
 
 function Commits({ month }:
   {
     month: string
   }) {
 
-  const { searchCommits, user, commits, toggleCommit, loading, error } = React.useContext(GitHubContext);
+  const { searchCommits, user, commits, selectedCommits, toggleCommit, loading, error } = React.useContext(GitHubContext);
   const monthReadable = format(new Date(month), 'MMMM yyyy');
 
-  const commitsByRepo = React.useMemo(() => commits.reduce<{ [repo: string]: CommitInfo[] }>((acc, curr) => {
-    const repoFullName: string = curr.commit.repository.full_name;
+  const commitsByRepo = React.useMemo(() => commits.reduce<{ [repo: string]: GitHubCommit[] }>((acc, curr) => {
+    const repoFullName: string = curr.repository.full_name;
     return { ...acc, [repoFullName]: (acc[repoFullName] ? [...acc[repoFullName], curr] : [curr]) }
   }, {}), [commits]);
 
@@ -51,14 +52,16 @@ function Commits({ month }:
                 <AccordionItem value={repo}>
                   <AccordionTrigger>
                     <span>
-                      <strong>{repo}</strong> | {commitsInRepo.length} commit{!!commitsInRepo.length && 's'} | {commitsInRepo.filter(c => c.selected).length} selected
-                    </span></AccordionTrigger>
+                      <strong>{repo}</strong> | {commitsInRepo.length} commit{!!commitsInRepo.length && 's'} | {selectedCommits.length} selected
+                    </span>
+                  </AccordionTrigger>
                   <AccordionContent>
                     {!commitsInRepo.length && <p>No commits for {repo}</p>}
                     {!!commitsInRepo.length &&
-                      commitsInRepo.map(({ commit, selected }) => (
-                        <Commit onClick={() => handleClickCommit(commit.sha, !selected)} key={commit.sha} commit={commit} selected={selected} />
-                      ))
+                      commitsInRepo.map((commit) => {
+                        const selected = !!selectedCommits.find(c => c.commit_sha === commit.sha);
+                        return <Commit onClick={() => handleClickCommit(commit.sha, !selected)} key={commit.sha} commit={commit} selected={selected} />
+                      })
                     }
                   </AccordionContent>
                 </AccordionItem>

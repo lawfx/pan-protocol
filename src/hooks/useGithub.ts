@@ -1,13 +1,12 @@
 import { Octokit } from "@octokit/rest";
 import React from "react";
-import { CommitInfo } from "../models/commit.model";
-import { GitHubUser } from "../models/octokit.model";
+import { GitHubCommit, GitHubUser } from "../models/octokit.model";
 
 export default function useGithub() {
 
   const [octokit, setOctokit] = React.useState<Octokit>();
   const [user, setUser] = React.useState<GitHubUser>();
-  const [commits, setCommits] = React.useState<CommitInfo[]>([]);
+  const [commits, setCommits] = React.useState<GitHubCommit[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<unknown>(null);
 
@@ -35,7 +34,7 @@ export default function useGithub() {
 
       if (!commits?.data.items) return;
 
-      setCommits(commits.data.items.map(c => ({ commit: c, selected: false, final_message: c.commit.message, hours_spent: 0 })));
+      setCommits(commits.data.items);
     } catch (e) {
       console.error(e);
       setLoading(false);
@@ -50,26 +49,5 @@ export default function useGithub() {
     return user;
   }, [octokit, user]);
 
-  const toggleCommit = React.useCallback((sha: string, selected: boolean) => {
-    setCommits(commits => commits.map(c => {
-      if (c.commit.sha !== sha) return c;
-      return { ...c, selected };
-    }));
-  }, []);
-
-  const updateFinalMessage = React.useCallback((sha: string, message: string) => {
-    setCommits(commits => commits.map(c => {
-      if (c.commit.sha !== sha) return c;
-      return { ...c, final_message: message };
-    }));
-  }, []);
-
-  const updateHoursSpent = React.useCallback((sha: string, hours: string) => {
-    setCommits(commits => commits.map(c => {
-      if (c.commit.sha !== sha) return c;
-      return { ...c, hours_spent: isNaN(+hours) ? c.hours_spent : +hours };
-    }));
-  }, []);
-
-  return { connect, searchCommits, user, commits, toggleCommit, updateFinalMessage, updateHoursSpent, loading, error };
+  return { connect, searchCommits, user, commits, loading, error };
 }
