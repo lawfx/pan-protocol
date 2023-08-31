@@ -1,18 +1,18 @@
 import { format } from "date-fns";
 import { CommitInfo } from "../models/commit.model";
-import { DocumentData, DocumentDataCommit } from "../models/document-data.model";
+import { DocumentData } from "../models/document-data.model";
 import { UserData } from "../models/user-data.model";
 import Docxtemplater from "docxtemplater";
 import saveAs from "file-saver";
 import PizZip from "pizzip";
 import { DOCX_MIME_TYPE } from "../constants/constants";
 
-export function parseGithubCommitMessage(message: string): { message: string, prNum: string } {
+export function parseGithubCommitMessage(message: string): { message: string, pr_num: number } {
   const messageData = message.match(/(?<title>.+) (\(#(?<num>\d+)\))/);
 
   return {
     message: messageData?.groups?.title || message,
-    prNum: messageData?.groups?.num || 'N/A'
+    pr_num: messageData?.groups?.num ? +messageData.groups.num : 0
   }
 }
 
@@ -20,15 +20,10 @@ export function compileDocumentData(data: UserData, commits: CommitInfo[]): Docu
   return {
     userData: { ...data, date: format(data.date!, 'MM/yyyy') },
     commits: commits
-      .filter(c => c.selected)
-      .map<DocumentDataCommit>(c => {
-        const messageData = parseGithubCommitMessage(c.commit.commit.message);
+      .map<CommitInfo>(c => {
         return {
-          repo: c.commit.repository.full_name,
-          sha: c.commit.sha.substring(0, 7),
-          message: c.final_message,
-          prNum: messageData.prNum,
-          hours_spend: c.hours_spent
+          ...c,
+          commit_sha: c.commit_sha.substring(0, 7)
         }
       }
       )
@@ -51,7 +46,7 @@ export function generateDocument(file: string | ArrayBuffer | null, userData: Us
     position: docData.userData.position,
     date: docData.userData.date,
     hours: docData.userData.hours,
-    prs: docData.commits.map(c => ({ title: c.message, num: c.prNum, sha: c.sha, hour: c.hours_spend }))
+    prs: docData.commits.map(c => ({ title: c.final_message, num: c.pr_num, sha: c.commit_sha, hour: c.hours_spent }))
   });
 
   const blob = doc.getZip().generate({

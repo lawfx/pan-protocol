@@ -6,7 +6,7 @@ import PreviewItem from "../PreviewItem/PreviewItem";
 
 export default function Preview({ hours }: { hours: number }) {
 
-  const { selectedCommits, updateFinalMessage, updateHoursSpent } = React.useContext(GitHubContext);
+  const { selectedCommits, updateFinalMessage, updateHoursSpent, updatePR } = React.useContext(GitHubContext);
 
   const usedHours = selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0);
 
@@ -21,9 +21,10 @@ export default function Preview({ hours }: { hours: number }) {
               <PreviewItem
                 key={c.commit_sha}
                 commitInfo={c}
-                hours={c.hours_spent}
                 onMessageUpdated={(e) => updateFinalMessage(c.commit_sha, e)}
-                onHoursUpdated={(e) => updateHoursSpent(c.commit_sha, e)} />
+                onHoursUpdated={(e) => updateHoursSpent(c.commit_sha, e)}
+                onPrUpdated={(e) => updatePR(c.commit_sha, e)}
+              />
             ))}
           </>
         }

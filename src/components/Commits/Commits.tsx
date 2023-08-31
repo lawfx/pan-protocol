@@ -6,7 +6,6 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import Section from "../Section/Section";
-import { CommitInfo } from "../../models/commit.model";
 import { GitHubCommit } from "../../models/octokit.model";
 
 function Commits({ month }:
@@ -47,9 +46,9 @@ function Commits({ month }:
       <Wrapper>
         {!!message ? <span>{message}</span> :
           <AccordionsWrapper>
-            {Object.entries(commitsByRepo).map(([repo, commitsInRepo]) =>
-              <AccordionRoot key={repo} type="single" defaultValue={repo} collapsible>
-                <AccordionItem value={repo}>
+            <AccordionRoot type="single" collapsible>
+              {Object.entries(commitsByRepo).map(([repo, commitsInRepo]) =>
+                <AccordionItem key={repo} value={repo}>
                   <AccordionTrigger>
                     <span>
                       <strong>{repo}</strong> | {commitsInRepo.length} commit{!!commitsInRepo.length && 's'} | {selectedCommits.length} selected
@@ -65,8 +64,9 @@ function Commits({ month }:
                     }
                   </AccordionContent>
                 </AccordionItem>
-              </AccordionRoot>
-            )}
+              )}
+            </AccordionRoot>
+
           </AccordionsWrapper>}
       </Wrapper>
     </Section>
@@ -97,6 +97,9 @@ const AccordionRoot = styled(Accordion.Root)`
 `;
 
 const AccordionItem = styled(Accordion.Item)`
+  &:not(:last-child){
+    border-bottom: 1px solid ${p => p.theme.primary200};
+  }
 `;
 
 const AccordionTrigger = React.forwardRef<any, { children: ReactNode, [key: string]: any }>(({ children, ...props }, forwardedRef) => (
@@ -154,7 +157,6 @@ const slideUp = keyframes`
 
 const StyledContent = styled(Accordion.Content)`
   overflow: hidden;
-  font-size: 15px;
 
   &[data-state="open"] {
     animation: ${slideDown} 300ms ease-in-out;
