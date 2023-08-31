@@ -13,7 +13,8 @@ function Commits({ month }:
     month: string
   }) {
 
-  const { searchCommits, user, commits, toggleCommit } = React.useContext(GitHubContext);
+  const { searchCommits, user, commits, toggleCommit, loading, error } = React.useContext(GitHubContext);
+  const monthReadable = format(new Date(month), 'MMMM yyyy');
 
   const commitsByRepo = React.useMemo(() => commits.reduce<{ [repo: string]: CommitInfo[] }>((acc, curr) => {
     const repoFullName: string = curr.commit.repository.full_name;
@@ -32,33 +33,38 @@ function Commits({ month }:
     toggleCommit(sha, selected);
   }
 
-  const message = !month ? 'Please select a month...' : !commits.length ? `No commits found for ${format(new Date(month), 'MMMM yyyy')}` : '';
+  const message = !user ? 'Please login to search for commits' :
+    loading ? `Searching commits for ${monthReadable}...` :
+      !!error ? 'An error has occured 😢' :
+        !month ? 'Please select a month' :
+          !commits.length ? `No commits found for ${monthReadable} 😳` :
+            '';
 
   return (
     <Section>
       <CommitsLabel>Commits</CommitsLabel>
       <Wrapper>
-        {!!message && <span>{message}</span>}
-        <AccordionsWrapper>
-          {Object.entries(commitsByRepo).map(([repo, commitsInRepo]) =>
-            <AccordionRoot key={repo} type="single" defaultValue={repo} collapsible>
-              <AccordionItem value={repo}>
-                <AccordionTrigger>
-                  <span>
-                    <strong>{repo}</strong> | {commitsInRepo.length} commit{!!commitsInRepo.length && 's'} | {commitsInRepo.filter(c => c.selected).length} selected
-                  </span></AccordionTrigger>
-                <AccordionContent>
-                  {!commitsInRepo.length && <p>No commits for {repo}</p>}
-                  {!!commitsInRepo.length &&
-                    commitsInRepo.map(({ commit, selected }) => (
-                      <Commit onClick={() => handleClickCommit(commit.sha, !selected)} key={commit.sha} commit={commit} selected={selected} />
-                    ))
-                  }
-                </AccordionContent>
-              </AccordionItem>
-            </AccordionRoot>
-          )}
-        </AccordionsWrapper>
+        {!!message ? <span>{message}</span> :
+          <AccordionsWrapper>
+            {Object.entries(commitsByRepo).map(([repo, commitsInRepo]) =>
+              <AccordionRoot key={repo} type="single" defaultValue={repo} collapsible>
+                <AccordionItem value={repo}>
+                  <AccordionTrigger>
+                    <span>
+                      <strong>{repo}</strong> | {commitsInRepo.length} commit{!!commitsInRepo.length && 's'} | {commitsInRepo.filter(c => c.selected).length} selected
+                    </span></AccordionTrigger>
+                  <AccordionContent>
+                    {!commitsInRepo.length && <p>No commits for {repo}</p>}
+                    {!!commitsInRepo.length &&
+                      commitsInRepo.map(({ commit, selected }) => (
+                        <Commit onClick={() => handleClickCommit(commit.sha, !selected)} key={commit.sha} commit={commit} selected={selected} />
+                      ))
+                    }
+                  </AccordionContent>
+                </AccordionItem>
+              </AccordionRoot>
+            )}
+          </AccordionsWrapper>}
       </Wrapper>
     </Section>
   );

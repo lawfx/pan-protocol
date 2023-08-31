@@ -8,6 +8,8 @@ export default function useGithub() {
   const [octokit, setOctokit] = React.useState<Octokit>();
   const [user, setUser] = React.useState<GitHubUser>();
   const [commits, setCommits] = React.useState<CommitInfo[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<unknown>(null);
 
   const connect = React.useCallback(async (token: string) => {
     const octokit = new Octokit({
@@ -22,16 +24,22 @@ export default function useGithub() {
     if (!octokit || !user || !month) return;
 
     try {
+      setLoading(true);
+      setError(null);
+      setCommits([]);
       const commits = await octokit?.search.commits({
         q: `author:${user.login} author-date:${month}`,
         sort: 'author-date'
       });
+      setLoading(false);
 
       if (!commits?.data.items) return;
 
       setCommits(commits.data.items.map(c => ({ commit: c, selected: false, final_message: c.commit.message, hours_spent: 0 })));
     } catch (e) {
       console.error(e);
+      setLoading(false);
+      setError(e);
     }
   }, [octokit, user]);
 
@@ -63,5 +71,5 @@ export default function useGithub() {
     }));
   }, []);
 
-  return { connect, searchCommits, user, commits, toggleCommit, updateFinalMessage, updateHoursSpent };
+  return { connect, searchCommits, user, commits, toggleCommit, updateFinalMessage, updateHoursSpent, loading, error };
 }

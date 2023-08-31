@@ -15,11 +15,13 @@ export default function Preview({ hours }: { hours: number }) {
     <Section>
       <Wrapper>
         {!selectedCommits.length
-          ? <span>No commits selected...</span>
+          ? <span>No commits selected 🧐</span>
           : <>
-            <Hours>Hours filled in: <UsedHours overfilled={usedHours > hours}>{usedHours}</UsedHours> / {hours}</Hours>
+            <Hours>Hours filled in: <UsedHours $overfilled={usedHours > hours}>{usedHours}</UsedHours> / {hours}</Hours>
             {selectedCommits.map(c => (
-              <PreviewItem commitInfo={c}
+              <PreviewItem
+                key={c.commit.sha}
+                commitInfo={c}
                 hours={c.hours_spent}
                 onMessageUpdated={(e) => updateFinalMessage(c.commit.sha, e)}
                 onHoursUpdated={(e) => updateHoursSpent(c.commit.sha, e)} />
@@ -43,6 +45,6 @@ const Hours = styled.span`
   margin-right: 8px;
 `;
 
-const UsedHours = styled.span<{ overfilled: boolean }>`
-  color: ${p => p.overfilled ? 'red' : 'inherit'};
+const UsedHours = styled.span<{ $overfilled: boolean }>`
+  color: ${p => p.$overfilled ? 'red' : 'inherit'};
 `;
