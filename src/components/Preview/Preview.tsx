@@ -3,12 +3,20 @@ import Section from "../Section/Section";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
 import React from "react";
 import PreviewItem from "../PreviewItem/PreviewItem";
+import Button from "../Button/Button";
+import { calculateRandomHours } from "../../utils/utils";
 
 export default function Preview({ hours }: { hours: number }) {
 
   const { selectedCommits, updateFinalMessage, updateHoursSpent, updatePR } = React.useContext(GitHubContext);
 
   const usedHours = selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0);
+
+  const assignHours = React.useCallback(() => {
+    if (hours < selectedCommits.length) return;
+    const hoursArr = calculateRandomHours(hours, selectedCommits.length);
+    selectedCommits.forEach((c, i) => updateHoursSpent(c.commit_sha, hoursArr[i].toString()));
+  }, [hours, selectedCommits]);
 
   return (
     <Section>
@@ -18,7 +26,12 @@ export default function Preview({ hours }: { hours: number }) {
           : <>
             <Info>
               <CommitsSelected>Selected commits: {selectedCommits.length}</CommitsSelected>
-              <Hours>Hours filled in: <UsedHours $overfilled={usedHours > hours}>{usedHours}</UsedHours> / {hours}</Hours>
+              <Hours>
+                <Button style={{ width: 'fit-content', height: '15px' }} onClick={assignHours}>Random hours</Button>{' '}
+                <span>
+                  Hours filled in: <UsedHours $overfilled={usedHours > hours}>{usedHours}</UsedHours> / {hours}
+                </span>
+              </Hours>
             </Info>
             {selectedCommits.map(c => (
               <PreviewItem
