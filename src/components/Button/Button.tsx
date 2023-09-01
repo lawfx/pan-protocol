@@ -23,27 +23,20 @@ const StyledButton = styled.button`
   border-radius: 8px;
   background-color: ${p => p.theme.secondary500};
   color: ${p => p.theme.textOnSecondary};
-  box-shadow: 0 2px 0 ${p => p.theme.secondary200};
-  transition: box-shadow 300ms, transform 300ms;
   cursor: pointer;
   height: 30px;
   width: 100px;
   line-height: 1;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 0 ${p => p.theme.secondary300};
+    background-color: ${p => p.theme.secondary400};
   }
 
   &:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 0 ${p => p.theme.secondary200};
-    transition: box-shadow 100ms, transform 100ms;
+    background-color: ${p => p.theme.secondary300};
   }
 
   &:disabled {
-    transform: none;
     background-color: ${p => p.theme.secondary100};
-    box-shadow: 0 2px 0 ${p => p.theme.secondary200};   
   }
 `;

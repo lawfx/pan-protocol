@@ -27,7 +27,9 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
         height: '15px',
         position: 'absolute',
         top: 0,
-        right: 0
+        right: 0,
+        borderTopLeftRadius: 0,
+        borderBottomRightRadius: 0
       }} onClick={() => handleUnselect(commitInfo.commit_sha)}>X</Button>
       <TextAreaWrapper>
         <span>
