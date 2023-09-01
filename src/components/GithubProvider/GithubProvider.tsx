@@ -36,7 +36,7 @@ export default function GithubProvider({ children }: { children: ReactNode }) {
         commit_sha: sha,
         final_message: messageData.message,
         hours_spent: 0,
-        repo_fullname: commit.repository.full_name,
+        repo_name: commit.repository.name,
         pr_num: messageData.pr_num
       }])
     }

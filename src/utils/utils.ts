@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, lastDayOfMonth } from "date-fns";
 import { CommitInfo } from "../models/commit.model";
 import { DocumentData } from "../models/document-data.model";
 import { UserData } from "../models/user-data.model";
@@ -21,7 +21,9 @@ export function parseGithubCommitMessage(message: string): { message: string, pr
 
 export function compileDocumentData(data: UserData, commits: CommitInfo[]): DocumentData {
   return {
-    userData: { ...data, date: format(data.date!, 'MM/yyyy') },
+    ...data,
+    date: format(data.date!, 'MM/yyyy'),
+    lastDay: format(lastDayOfMonth(data.date!), 'dd.MM.yyyy'),
     commits: commits
       .map<CommitInfo>(c => {
         return {
@@ -45,13 +47,15 @@ export function generateDocument(file: string | ArrayBuffer | null, userData: Us
   });
 
   doc.render({
-    date: docData.userData.date,
-    hours: docData.userData.hours,
+    date: docData.date,
+    hours: docData.hours,
+    lastDay: docData.lastDay,
     prs: docData.commits.map(c => ({
       title: c.final_message,
-      num: c.pr_num !== 0 ? c.pr_num : 'N/A',
+      pr_num: c.pr_num !== 0 ? c.pr_num : 'N/A',
       sha: c.commit_sha,
-      hour: c.hours_spent
+      hour: c.hours_spent,
+      repo: c.repo_name
     }))
   });
 
@@ -61,7 +65,7 @@ export function generateDocument(file: string | ArrayBuffer | null, userData: Us
     compression: "DEFLATE",
   });
 
-  saveAs(blob, `${docData.userData.date}_procotol.docx`);
+  saveAs(blob, `${docData.date}_procotol.docx`);
 }
 
 export function calculateRandomHours(maxHours: number, numberOfResults: number, minHoursInSingleResult = 1): number[] {
