@@ -5,6 +5,7 @@ import Textarea from "../Textarea/Textarea";
 import React from "react";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
 import Button from "../Button/Button";
+import { Cross2Icon } from "@radix-ui/react-icons";
 
 export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdated, onPrUpdated }:
   {
@@ -23,16 +24,19 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
   return (
     <Wrapper>
       <Button style={{
-        width: '10px',
-        height: '10px',
-        lineHeight: '10px',
+        width: '18px',
+        height: '18px',
+        lineHeight: '20px',
         fontSize: '.8rem',
         position: 'absolute',
         top: 0,
         right: 0,
+        padding: '4px',
         borderTopLeftRadius: 0,
         borderBottomRightRadius: 0
-      }} onClick={() => handleUnselect(commitInfo.commit_sha)}>X</Button>
+      }} onClick={() => handleUnselect(commitInfo.commit_sha)}>
+        <StyledX />
+      </Button>
       <TextAreaWrapper>
         <span>
           <span>{commitInfo.repo_name}</span>{' | '}
@@ -67,4 +71,7 @@ const TextAreaWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+`;
+
+const StyledX = styled(Cross2Icon)`
 `;

@@ -18,7 +18,6 @@ const StyledButton = styled.button`
   all: unset;
   outline: revert;
   font-weight: 700;
-  text-align: center;
   padding: 8px;
   border-radius: 8px;
   background-color: ${p => p.theme.secondary500};
@@ -27,6 +26,10 @@ const StyledButton = styled.button`
   height: 30px;
   width: 100px;
   line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
   &:hover {
     background-color: ${p => p.theme.secondary400};

@@ -27,7 +27,7 @@ export default function Preview({ hours }: { hours: number }) {
             <Info>
               <CommitsSelected>Selected commits: {selectedCommits.length}</CommitsSelected>
               <Hours>
-                <Button style={{ width: 'fit-content', height: '15px' }} onClick={assignHours}>Random hours</Button>{' '}
+                <Button style={{ width: 'fit-content', height: '15px' }} onClick={assignHours}>Random hours</Button>
                 <span>
                   Hours filled in: <UsedHours $overfilled={usedHours !== hours}>{usedHours}</UsedHours> / {hours}
                 </span>
@@ -64,7 +64,9 @@ const Info = styled.div`
 const CommitsSelected = styled.span`
 `;
 
-const Hours = styled.span`
+const Hours = styled.div`
+  display: flex;
+  gap: 8px;
 `;
 
 const UsedHours = styled.span<{ $overfilled: boolean }>`
