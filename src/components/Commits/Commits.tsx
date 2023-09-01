@@ -1,19 +1,18 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
-import Commit from "../Commit/Commit";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import * as Accordion from '@radix-ui/react-accordion';
-import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import Section from "../Section/Section";
 import { GitHubCommit } from "../../models/octokit.model";
+import CommitsAccordionItem from "../CommitsAccordionItem/CommitsAccordionItem";
 
 function Commits({ month }:
   {
     month: string
   }) {
 
-  const { searchCommits, user, commits, selectedCommits, toggleCommit, loading, error } = React.useContext(GitHubContext);
+  const { searchCommits, user, commits, loading, error } = React.useContext(GitHubContext);
   const monthReadable = format(new Date(month), 'MMMM yyyy');
 
   const commitsByRepo = React.useMemo(() => commits.reduce<{ [repo: string]: GitHubCommit[] }>((acc, curr) => {
@@ -28,10 +27,6 @@ function Commits({ month }:
 
     fetchCommits();
   }, [user, month]);
-
-  function handleClickCommit(sha: string, selected: boolean) {
-    toggleCommit(sha, selected);
-  }
 
   const message = !user ? 'Please login to search for commits' :
     loading ? `Searching commits for ${monthReadable}...` :
@@ -48,22 +43,7 @@ function Commits({ month }:
           <AccordionsWrapper>
             <AccordionRoot type="single" collapsible>
               {Object.entries(commitsByRepo).map(([repo, commitsInRepo]) =>
-                <AccordionItem key={repo} value={repo}>
-                  <AccordionTrigger>
-                    <span>
-                      <strong>{repo}</strong> | {commitsInRepo.length} commit{!!commitsInRepo.length && 's'} | {selectedCommits.length} selected
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    {!commitsInRepo.length && <p>No commits for {repo}</p>}
-                    {!!commitsInRepo.length &&
-                      commitsInRepo.map((commit) => {
-                        const selected = !!selectedCommits.find(c => c.commit_sha === commit.sha);
-                        return <Commit onClick={() => handleClickCommit(commit.sha, !selected)} key={commit.sha} commit={commit} selected={selected} />
-                      })
-                    }
-                  </AccordionContent>
-                </AccordionItem>
+                <CommitsAccordionItem key={repo} repo={repo} commits={commitsInRepo} />
               )}
             </AccordionRoot>
 
@@ -94,82 +74,4 @@ const AccordionsWrapper = styled.div`
 const AccordionRoot = styled(Accordion.Root)`
   border-radius: 8px;
   background-color: ${p => p.theme.primary300};
-`;
-
-const AccordionItem = styled(Accordion.Item)`
-  &:not(:last-child){
-    border-bottom: 1px solid ${p => p.theme.primary200};
-  }
-`;
-
-const AccordionTrigger = React.forwardRef<any, { children: ReactNode, [key: string]: any }>(({ children, ...props }, forwardedRef) => (
-  <StyledHeader>
-    <StyledTrigger {...props} ref={forwardedRef}>
-      {children}
-      <StyledChevron aria-hidden />
-    </StyledTrigger>
-  </StyledHeader>
-));
-
-const AccordionContent = React.forwardRef<any, { children: ReactNode, [key: string]: any }>(({ children, ...props }, forwardedRef) => (
-  <StyledContent {...props} ref={forwardedRef}>
-    <StyledContentText>{children}</StyledContentText>
-  </StyledContent>
-));
-
-const StyledHeader = styled(Accordion.Header)`
-  all: unset;
-  display: flex;
-`;
-
-const StyledTrigger = styled(Accordion.Trigger)`
-  all: unset;
-  font-family: inherit;
-  padding: 0 8px;
-  height: 50px;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  &[data-state="open"] {
-    border-bottom: 1px solid ${p => p.theme.primary200};
-  }
-`;
-
-const StyledChevron = styled(ChevronDownIcon)`
-  transition: transform 300ms ease-in-out;
-
-  ${StyledTrigger}[data-state="open"] & {
-    transform: rotate(180deg); 
-  }
-`;
-
-const slideDown = keyframes`
-  from { height: 0; }
-  to { height: var(--radix-accordion-content-height); }
-`;
-
-const slideUp = keyframes`
-  from { height: var(--radix-accordion-content-height); }
-  to { height: 0; }
-`;
-
-const StyledContent = styled(Accordion.Content)`
-  overflow: hidden;
-
-  &[data-state="open"] {
-    animation: ${slideDown} 300ms ease-in-out;
-  }
-
-  &[data-state="closed"] {
-    animation: ${slideUp} 300ms ease-in-out;
-  }
-`;
-
-const StyledContentText = styled('div')`
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 `;
