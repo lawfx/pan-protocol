@@ -12,8 +12,6 @@ import Preview from './components/Preview/Preview';
 export default function App() {
 
   const [data, setData] = React.useState<UserData>({
-    name: '',
-    position: '',
     date: new Date(),
     hours: 0
   });
@@ -22,20 +20,12 @@ export default function App() {
 
   const month = React.useMemo(() => !!data.date ? format(data.date, 'yyyy-MM') : '', [data]);
 
-  const setName = React.useCallback((name: string) => {
-    setData(d => ({ ...d, name }));
-  }, []);
-
   const setDate = React.useCallback((date: Date | null) => {
     setData(d => ({ ...d, date: date }));
   }, []);
 
   const setHours = React.useCallback((hours: string) => {
     setData(d => ({ ...d, hours: isNaN(+hours) ? d.hours : +hours }));
-  }, []);
-
-  const setPosition = React.useCallback((position: string) => {
-    setData(d => ({ ...d, position }));
   }, []);
 
   function handleUploadDocument(file: File | null) {
@@ -67,10 +57,8 @@ export default function App() {
         <InnerDataWrapper>
           <Data
             data={data}
-            onNameUpdated={setName}
             onDateUpdated={setDate}
             onHoursUpdated={setHours}
-            onPositionUpdated={setPosition}
             onDocumentUploaded={handleUploadDocument} />
         </InnerDataWrapper>
         <DocumentGenerator file={file} userData={data} />

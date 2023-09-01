@@ -45,8 +45,6 @@ export function generateDocument(file: string | ArrayBuffer | null, userData: Us
   });
 
   doc.render({
-    name: docData.userData.name,
-    position: docData.userData.position,
     date: docData.userData.date,
     hours: docData.userData.hours,
     prs: docData.commits.map(c => ({
@@ -63,7 +61,7 @@ export function generateDocument(file: string | ArrayBuffer | null, userData: Us
     compression: "DEFLATE",
   });
 
-  saveAs(blob, `${docData.userData.name}_${docData.userData.date}_procotol.docx`);
+  saveAs(blob, `${docData.userData.date}_procotol.docx`);
 }
 
 export function calculateRandomHours(maxHours: number, numberOfResults: number, minHoursInSingleResult = 1): number[] {
