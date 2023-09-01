@@ -38,5 +38,6 @@ const StyledButton = styled.button`
 
   &:disabled {
     background-color: ${p => p.theme.secondary100};
+    cursor: not-allowed;
   }
 `;
