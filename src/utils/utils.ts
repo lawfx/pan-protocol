@@ -21,7 +21,7 @@ export function parseGithubCommitMessage(message: string): { message: string, pr
 
 export function compileDocumentData(data: UserData, commits: CommitInfo[]): DocumentData {
   return {
-    ...data,
+    hours: data.hours,
     date: format(data.date!, 'MM/yyyy'),
     lastDay: format(lastDayOfMonth(data.date!), 'dd.MM.yyyy'),
     commits: commits
@@ -35,12 +35,12 @@ export function compileDocumentData(data: UserData, commits: CommitInfo[]): Docu
   }
 }
 
-export function generateDocument(file: string | ArrayBuffer | null, userData: UserData, commits: CommitInfo[]) {
-  if (!file) return;
+export function generateDocument(userData: UserData, commits: CommitInfo[]) {
+  if (!userData.file) return;
 
   const docData: DocumentData = compileDocumentData(userData, commits);
 
-  const zip = new PizZip(file);
+  const zip = new PizZip(userData.file);
   const doc = new Docxtemplater(zip, {
     paragraphLoop: true,
     linebreaks: true,

@@ -1,7 +1,7 @@
 import { CommitInfo } from "./commit.model";
-import { UserData } from "./user-data.model";
 
-export interface DocumentData extends Omit<UserData, 'date'> {
+export interface DocumentData {
+  hours: number;
   date: string;
   lastDay: string;
   commits: CommitInfo[];

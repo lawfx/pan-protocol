@@ -6,16 +6,15 @@ import { format } from 'date-fns';
 import Header from './components/Header/Header';
 import Data from './components/Data/Data';
 import Commits from './components/Commits/Commits';
-import DocumentGenerator from './components/DocumentGenerator/DocumentGenerator';
 import Preview from './components/Preview/Preview';
 
 export default function App() {
 
   const [data, setData] = React.useState<UserData>({
     date: new Date(),
-    hours: 0
+    hours: 0,
+    file: null
   });
-  const [file, setFile] = React.useState<string | ArrayBuffer | null>(null);
   console.log('data', data);
 
   const month = React.useMemo(() => !!data.date ? format(data.date, 'yyyy-MM') : '', [data]);
@@ -30,7 +29,7 @@ export default function App() {
 
   function handleUploadDocument(file: File | null) {
     if (file === null) {
-      setFile(null);
+      setData(d => ({ ...d, file: null }));
       return;
     }
 
@@ -42,7 +41,7 @@ export default function App() {
 
     reader.onload = function (evt) {
       const content = evt.target!.result;
-      setFile(content);
+      setData(d => ({ ...d, file: content }));
     };
 
     reader.readAsBinaryString(file);
@@ -54,14 +53,11 @@ export default function App() {
         <Header />
       </HeaderWrapper>
       <DataWrapper>
-        <InnerDataWrapper>
-          <Data
-            data={data}
-            onDateUpdated={setDate}
-            onHoursUpdated={setHours}
-            onDocumentUploaded={handleUploadDocument} />
-        </InnerDataWrapper>
-        <DocumentGenerator file={file} userData={data} />
+        <Data
+          data={data}
+          onDateUpdated={setDate}
+          onHoursUpdated={setHours}
+          onDocumentUploaded={handleUploadDocument} />
       </DataWrapper>
       <CommitsWrapper>
         <Commits
@@ -93,15 +89,6 @@ const HeaderWrapper = styled.div`
 
 const DataWrapper = styled.div`
   grid-area: data;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-`;
-
-const InnerDataWrapper = styled.div`
-  flex: 1;
 `;
 
 const CommitsWrapper = styled.div`

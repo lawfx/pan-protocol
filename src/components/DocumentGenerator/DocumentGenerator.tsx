@@ -4,19 +4,18 @@ import { UserData } from "../../models/user-data.model";
 import { GitHubContext } from "../GithubProvider/GithubProvider";
 import React from "react";
 
-export default function DocumentGenerator({ file, userData }:
+export default function DocumentGenerator({ userData }:
   {
-    file: string | ArrayBuffer | null;
     userData: UserData
   }) {
 
   const { selectedCommits } = React.useContext(GitHubContext);
 
   const allHoursFilledIn = selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0) === userData.hours;
-  const canGenerateDocx = !!userData.date && !!userData.hours && !!file && allHoursFilledIn;
+  const canGenerateDocx = !!userData.date && !!userData.hours && !!userData.file && allHoursFilledIn;
 
   function handleClickGenerate() {
-    generateDocument(file, userData, selectedCommits);
+    generateDocument(userData, selectedCommits);
   }
 
   return (
