@@ -6,7 +6,7 @@ import FileInput from "../FileInput/FileInput";
 import { UserData } from "../../models/user-data.model";
 import Section from "../Section/Section";
 import MonthPicker from "../MonthPicker/MonthPicker";
-import { DOCX_MIME_TYPE } from "../../constants/constants";
+import { DOCX_MIME_TYPE, QUERIES } from "../../constants/constants";
 import DocumentGenerator from "../DocumentGenerator/DocumentGenerator";
 
 function Data({ data, onDateUpdated, onHoursUpdated, onDocumentUploaded }:
@@ -20,9 +20,9 @@ function Data({ data, onDateUpdated, onHoursUpdated, onDocumentUploaded }:
   return (
     <Section>
       <Wrapper>
-        <FileInput label="Select protocol..." onFileUpload={onDocumentUploaded} allowedTypes={[DOCX_MIME_TYPE]} />
         <MonthPicker label="Month" value={data.date} onChange={onDateUpdated} placeholder='Select month' />
         <Input label="Creative hours" type="text" value={data.hours} onChange={onHoursUpdated} pattern='\d+' />
+        <FileInput label="Select protocol..." onFileUpload={onDocumentUploaded} allowedTypes={[DOCX_MIME_TYPE]} />
         <DocumentGenerator userData={data} />
       </Wrapper>
     </Section>
@@ -37,4 +37,10 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 8px;
   gap: 8px;
+
+  @media ${QUERIES.tabletAndSmaller}{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+  }
 `;

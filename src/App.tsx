@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import Data from './components/Data/Data';
 import Commits from './components/Commits/Commits';
 import Preview from './components/Preview/Preview';
+import { QUERIES } from './constants/constants';
 
 export default function App() {
 
@@ -81,6 +82,11 @@ const Wrapper = styled.main`
   'commits preview';
   gap: 8px;
   padding-inline: 8px;
+
+  @media ${QUERIES.tabletAndSmaller}{
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const HeaderWrapper = styled.div`
