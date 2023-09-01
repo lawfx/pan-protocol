@@ -29,7 +29,7 @@ export default function Preview({ hours }: { hours: number }) {
               <Hours>
                 <Button style={{ width: 'fit-content', height: '15px' }} onClick={assignHours}>Random hours</Button>{' '}
                 <span>
-                  Hours filled in: <UsedHours $overfilled={usedHours > hours}>{usedHours}</UsedHours> / {hours}
+                  Hours filled in: <UsedHours $overfilled={usedHours !== hours}>{usedHours}</UsedHours> / {hours}
                 </span>
               </Hours>
             </Info>
