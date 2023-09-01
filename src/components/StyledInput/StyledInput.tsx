@@ -28,7 +28,7 @@ export default React.forwardRef(StyledInput);
 
 const Input = styled.input`
   all: unset;
-  width: 150px;
+  width: 134px;
   height: 30px;
   line-height: 30px;
   background-color: ${p => p.theme.primary100};
@@ -37,5 +37,9 @@ const Input = styled.input`
 
   &::placeholder {
     color: ${p => p.theme.secondary100};
+  }
+
+  &:focus {
+    outline: 2px solid ${p => p.theme.secondary200};
   }
 `;

@@ -60,7 +60,7 @@ const AccordionItem = styled(Accordion.Item)`
   },
 
   &:focus-within {
-    border: 2px solid ${p => p.theme.secondary200};
+    outline: 2px solid ${p => p.theme.secondary200};
   }
 `;
 
