@@ -14,7 +14,8 @@ export default function Commit({ commit, selected, onClick }: { commit: any, sel
   );
 }
 
-const Wrapper = styled.div<{ $selected: boolean }>`
+const Wrapper = styled.button<{ $selected: boolean }>`
+  all: unset;
   padding: 8px;
   background-color: ${p => p.$selected ? p.theme.secondary400 : p.theme.primary200};
   color: ${p => p.$selected ? p.theme.textOnSecondary : p.theme.textOnPrimary};
@@ -24,6 +25,10 @@ const Wrapper = styled.div<{ $selected: boolean }>`
   &:hover {
     background-color: ${p => p.$selected ? p.theme.secondary500 : p.theme.primary300};
     border: 1px solid ${p => p.theme.primary200};
+  }
+
+  &:focus {
+    border: 2px solid ${p => p.theme.secondary200};
   }
 `;
 

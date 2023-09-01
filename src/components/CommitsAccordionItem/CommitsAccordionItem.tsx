@@ -48,6 +48,20 @@ const AccordionItem = styled(Accordion.Item)`
   &:not(:last-child){
     border-bottom: 1px solid ${p => p.theme.primary200};
   }
+
+  &:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  },
+
+  &:focus-within {
+    border: 2px solid ${p => p.theme.secondary200};
+  }
 `;
 
 const AccordionTrigger = React.forwardRef<any, { children: ReactNode, [key: string]: any }>(({ children, ...props }, forwardedRef) => (
