@@ -20,7 +20,7 @@ export default function MonthPicker({ label, value, onChange, placeholder }:
         id={id}
         selected={value}
         onChange={onChange}
-        dateFormat="MM/yyyy"
+        dateFormat="MMMM yyyy"
         showMonthYearPicker
         placeholderText={placeholder}
         enableTabLoop={false}
