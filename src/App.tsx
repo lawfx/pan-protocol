@@ -27,7 +27,7 @@ export default function App() {
     setData(d => ({ ...d, hours: isNaN(+hours) ? d.hours : +hours }));
   }, []);
 
-  function handleUploadDocument(file: File | null) {
+  const handleUploadDocument = React.useCallback((file: File | null) => {
     if (file === null) {
       setData(d => ({ ...d, file: null }));
       return;
@@ -45,7 +45,7 @@ export default function App() {
     };
 
     reader.readAsBinaryString(file);
-  }
+  }, []);
 
   return (
     <Wrapper>

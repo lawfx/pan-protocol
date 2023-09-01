@@ -20,7 +20,7 @@ function Data({ data, onDateUpdated, onHoursUpdated, onDocumentUploaded }:
   return (
     <Section>
       <Wrapper>
-        <FileInput label="Choose protocol template" onFileUpload={onDocumentUploaded} allowedTypes={[DOCX_MIME_TYPE]} />
+        <FileInput label="Select protocol..." onFileUpload={onDocumentUploaded} allowedTypes={[DOCX_MIME_TYPE]} />
         <MonthPicker label="Month" value={data.date} onChange={onDateUpdated} placeholder='Select month' />
         <Input label="Creative hours" type="text" value={data.hours} onChange={onHoursUpdated} pattern='\d+' />
         <DocumentGenerator userData={data} />

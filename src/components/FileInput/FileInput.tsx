@@ -1,5 +1,7 @@
 import React from "react";
-import FormControl from "../FormControl/FormControl";
+import styled from "styled-components";
+import Button from "../Button/Button";
+import { FileIcon } from "@radix-ui/react-icons";
 
 export default function FileInput({ onFileUpload, allowedTypes, label }:
   {
@@ -9,12 +11,14 @@ export default function FileInput({ onFileUpload, allowedTypes, label }:
   }
 ) {
 
+  const [filename, setFilename] = React.useState(label);
   const ref = React.useRef<any>();
   const id = React.useId();
 
-  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleOnChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) {
       onFileUpload(null);
+      setFilename(label);
       return;
     }
 
@@ -26,11 +30,43 @@ export default function FileInput({ onFileUpload, allowedTypes, label }:
     }
 
     onFileUpload(file);
-  }
+    setFilename(file.name);
+  }, [allowedTypes, label]);
 
   return (
-    <FormControl id={id} label={label}>
-      <input ref={ref} type='file' id={id} onChange={handleOnChange} />
-    </FormControl>
+    <Wrapper>
+      <Button
+        style={{
+          width: '18px',
+          height: '18px'
+        }}
+        onClick={() => ref.current.click()}>
+        <StyledFileIcon />
+      </Button>
+      <FileName>{filename}</FileName>
+      <HiddenInput ref={ref} type='file' id={id} onChange={handleOnChange} />
+    </Wrapper>
   );
 }
+
+const HiddenInput = styled.input`
+  display: none;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const StyledFileIcon = styled(FileIcon)`
+  width: 20px;
+  height: 20px;
+`;
+
+const FileName = styled.span`
+  max-width: calc(200px - 34px - 8px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
