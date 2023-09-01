@@ -35,7 +35,7 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
       }} onClick={() => handleUnselect(commitInfo.commit_sha)}>X</Button>
       <TextAreaWrapper>
         <span>
-          <strong>SHA:</strong>{' '}
+          <span>{commitInfo.repo_name}</span>{' | '}
           <span>{commitInfo.commit_sha.substring(0, 7)}</span>
         </span>
         <Textarea label="Commit message" rows={3} value={commitInfo.final_message} onChange={onMessageUpdated} placeholder="Describe the commit" />
