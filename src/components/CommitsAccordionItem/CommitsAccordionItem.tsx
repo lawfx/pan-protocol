@@ -61,6 +61,7 @@ const AccordionItem = styled(Accordion.Item)`
 
   &:focus-within {
     outline: 2px solid ${p => p.theme.secondary200};
+    outline-offset: -2px;
   }
 `;
 

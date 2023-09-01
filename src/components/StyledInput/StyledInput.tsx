@@ -41,5 +41,6 @@ const Input = styled.input`
 
   &:focus {
     outline: 2px solid ${p => p.theme.secondary200};
+    outline-offset: -2px;
   }
 `;

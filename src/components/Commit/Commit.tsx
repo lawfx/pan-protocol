@@ -29,6 +29,7 @@ const Wrapper = styled.button<{ $selected: boolean }>`
 
   &:focus {
     outline: 2px solid ${p => p.theme.secondary200};
+    outline-offset: -2px;
   }
 `;
 
