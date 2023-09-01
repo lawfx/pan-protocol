@@ -23,8 +23,10 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
   return (
     <Wrapper>
       <Button style={{
-        width: '15px',
-        height: '15px',
+        width: '10px',
+        height: '10px',
+        lineHeight: '10px',
+        fontSize: '.8rem',
         position: 'absolute',
         top: 0,
         right: 0,
