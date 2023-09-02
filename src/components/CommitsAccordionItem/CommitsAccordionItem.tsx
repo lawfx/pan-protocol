@@ -106,8 +106,8 @@ const StyledHeader = styled(Accordion.Header)`
 const StyledTrigger = styled(Accordion.Trigger)`
   all: unset;
   font-family: inherit;
-  padding: 0 8px;
-  height: 50px;
+  padding: 8px;
+  min-height: 30px;
   flex: 1;
   display: flex;
   align-items: center;
