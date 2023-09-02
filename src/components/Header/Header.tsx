@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import Login from "../Login/Login";
 import Section from "../Section/Section";
+import { APP_TITLE } from "../../constants/constants";
 
 export default function Header() {
 
   return (
     <StyledSection>
-      <Title>Protocol Maker OmniMax 9000</Title>
+      <Title>{APP_TITLE}</Title>
       <Login />
     </StyledSection>
   );

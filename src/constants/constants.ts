@@ -29,3 +29,5 @@ export const QUERIES = {
 
 export const SQUASH_AND_MERGE_REGEX = /(?<message>.+) (\(#(?<pr>\d+)\))/;
 export const MERGE_REGEX = /.+ #(?<pr>\d+).*\n(?<message>.+)/s;
+
+export const APP_TITLE = 'Protocol Maker OmniMax 9000';
