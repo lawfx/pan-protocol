@@ -5,12 +5,15 @@ import React from "react";
 import PreviewItem from "../PreviewItem/PreviewItem";
 import Button from "../Button/Button";
 import { calculateRandomHours } from "../../utils/utils";
+import { UserDataContext } from "../UserDataProvider/UserDataProvider";
 
-export default function Preview({ hours }: { hours: number }) {
+export default function Preview() {
 
   const { selectedCommits, updateFinalMessage, updateHoursSpent, updatePR } = React.useContext(GitHubContext);
+  const { data } = React.useContext(UserDataContext);
+  const { hours } = data;
 
-  const usedHours = selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0);
+  const usedHours = React.useMemo(() => selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0), [selectedCommits]);
 
   const assignHours = React.useCallback(() => {
     if (hours < selectedCommits.length) return;

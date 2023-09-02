@@ -6,13 +6,14 @@ import { format } from "date-fns";
 import Section from "../Section/Section";
 import { GitHubCommit } from "../../models/octokit.model";
 import CommitsAccordionItem from "../CommitsAccordionItem/CommitsAccordionItem";
+import { UserDataContext } from "../UserDataProvider/UserDataProvider";
 
-function Commits({ month }:
-  {
-    month: string
-  }) {
+export default function Commits() {
 
   const { searchCommits, user, commits, loading, error } = React.useContext(GitHubContext);
+  const { data } = React.useContext(UserDataContext);
+
+  const month = !!data.date ? format(data.date, 'yyyy-MM') : '';
   const monthReadable = format(new Date(month), 'MMMM yyyy');
 
   const commitsByRepo = React.useMemo(() => commits.reduce<{ [repo: string]: GitHubCommit[] }>((acc, curr) => {
@@ -52,8 +53,6 @@ function Commits({ month }:
     </Section>
   );
 }
-
-export default React.memo(Commits);
 
 const Wrapper = styled.div`
   padding: 8px;
