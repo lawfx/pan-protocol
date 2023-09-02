@@ -1,5 +1,7 @@
 import { DefaultTheme } from "styled-components";
 
+export const APP_TITLE = 'Protocol Pal';
+
 export const DOCX_MIME_TYPE = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
 export const DARK_THEME: DefaultTheme = {
@@ -59,5 +61,3 @@ export const QUERIES = {
 
 export const SQUASH_AND_MERGE_REGEX = /(?<message>.+) (\(#(?<pr>\d+)\))/;
 export const MERGE_REGEX = /.+ #(?<pr>\d+).*\n(?<message>.+)/s;
-
-export const APP_TITLE = 'Protocol Maker OmniMax 9000';
