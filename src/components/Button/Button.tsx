@@ -2,11 +2,9 @@ import React from "react";
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-function Button({ children, style, onClick, ...rest }:
+function Button({ children, ...rest }:
   {
-    style?: { [key: string]: any };
     children: ReactNode;
-    onClick: () => void;
     [key: string]: any;
   },
   ref: ((instance: HTMLButtonElement | null) => void) | React.MutableRefObject<HTMLButtonElement | null> | null) {
@@ -15,8 +13,7 @@ function Button({ children, style, onClick, ...rest }:
     <StyledButton
       ref={ref}
       type='button'
-      style={style}
-      onClick={onClick} {...rest}>
+      {...rest}>
       {children}
     </StyledButton>
   );

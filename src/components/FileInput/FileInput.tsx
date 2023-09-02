@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "../Button/Button";
 import { FileIcon } from "@radix-ui/react-icons";
+import ButtonIcon from "../ButtonIcon/ButtonIcon";
 
 export default function FileInput({ onFileUpload, allowedTypes, label }:
   {
@@ -35,14 +35,10 @@ export default function FileInput({ onFileUpload, allowedTypes, label }:
 
   return (
     <Wrapper>
-      <Button
-        style={{
-          width: '18px',
-          height: '18px'
-        }}
+      <ButtonIcon
         onClick={() => ref.current.click()}>
         <StyledFileIcon />
-      </Button>
+      </ButtonIcon>
       <FileName>{filename}</FileName>
       <HiddenInput ref={ref} type='file' id={id} onChange={handleOnChange} />
     </Wrapper>

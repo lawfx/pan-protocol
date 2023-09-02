@@ -5,6 +5,7 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import React from 'react';
 import useGithub from '../../hooks/useGithub';
+import ButtonIcon from '../ButtonIcon/ButtonIcon';
 
 export default function Connect() {
 
@@ -14,7 +15,7 @@ export default function Connect() {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button onClick={() => null}>Connect</Button>
+        <Button>Connect</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <DialogOverlay />
@@ -28,13 +29,8 @@ export default function Connect() {
             <Button onClick={() => connect(token)}>Connect</Button>
           </Dialog.Close>
           <Dialog.Close asChild>
-            <Button
-              onClick={() => null}
+            <ButtonIcon
               style={{
-                width: '18px',
-                height: '18px',
-                lineHeight: '20px',
-                fontSize: '.8rem',
                 position: 'absolute',
                 top: 0,
                 right: 0,
@@ -44,7 +40,7 @@ export default function Connect() {
               }}
               aria-label="Close">
               <Cross2Icon />
-            </Button>
+            </ButtonIcon>
           </Dialog.Close>
         </DialogContent>
       </Dialog.Portal>
