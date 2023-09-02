@@ -1,15 +1,14 @@
 import { generateDocument } from "../../utils/utils";
 import Button from "../Button/Button";
 import { UserData } from "../../models/user-data.model";
-import { GitHubContext } from "../GithubProvider/GithubProvider";
-import React from "react";
+import useGithub from "../../hooks/useGithub";
 
 export default function DocumentGenerator({ userData }:
   {
     userData: UserData
   }) {
 
-  const { selectedCommits } = React.useContext(GitHubContext);
+  const { selectedCommits } = useGithub();
 
   const allHoursFilledIn = selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0) === userData.hours;
   const canGenerateDocx = !!userData.date && !!userData.hours && !!userData.file && allHoursFilledIn;

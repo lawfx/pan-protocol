@@ -3,8 +3,8 @@ import { GitHubCommit } from "../../models/octokit.model";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import React, { ReactNode } from "react";
 import * as Accordion from '@radix-ui/react-accordion';
-import { GitHubContext } from "../GithubProvider/GithubProvider";
 import Commit from "../Commit/Commit";
+import useGithub from "../../hooks/useGithub";
 
 export default function CommitsAccordionItem({ commits, repo }:
   {
@@ -12,7 +12,7 @@ export default function CommitsAccordionItem({ commits, repo }:
     repo: string;
   }) {
 
-  const { selectedCommits, toggleCommit } = React.useContext(GitHubContext);
+  const { selectedCommits, toggleCommit } = useGithub();
 
   const selectedCount = React.useMemo(() => {
     return commits.reduce((acc, curr) =>

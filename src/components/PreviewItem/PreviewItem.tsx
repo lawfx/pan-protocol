@@ -3,9 +3,9 @@ import { CommitInfo } from "../../models/commit.model";
 import Input from "../Input/Input";
 import Textarea from "../Textarea/Textarea";
 import React from "react";
-import { GitHubContext } from "../GithubProvider/GithubProvider";
 import Button from "../Button/Button";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import useGithub from "../../hooks/useGithub";
 
 export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdated, onPrUpdated }:
   {
@@ -15,7 +15,7 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
     onPrUpdated: (num: string) => void
   }) {
 
-  const { toggleCommit } = React.useContext(GitHubContext);
+  const { toggleCommit } = useGithub();
 
   const handleUnselect = React.useCallback((sha: string) => {
     toggleCommit(sha, false);

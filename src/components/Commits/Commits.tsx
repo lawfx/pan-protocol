@@ -1,5 +1,4 @@
 import React from "react";
-import { GitHubContext } from "../GithubProvider/GithubProvider";
 import styled from "styled-components";
 import * as Accordion from '@radix-ui/react-accordion';
 import { format } from "date-fns";
@@ -7,10 +6,11 @@ import Section from "../Section/Section";
 import { GitHubCommit } from "../../models/octokit.model";
 import CommitsAccordionItem from "../CommitsAccordionItem/CommitsAccordionItem";
 import { UserDataContext } from "../UserDataProvider/UserDataProvider";
+import useGithub from "../../hooks/useGithub";
 
 export default function Commits() {
 
-  const { searchCommits, user, commits, loading, error } = React.useContext(GitHubContext);
+  const { searchCommits, user, commits, loading, error } = useGithub();
   const { data } = React.useContext(UserDataContext);
 
   const month = !!data.date ? format(data.date, 'yyyy-MM') : '';

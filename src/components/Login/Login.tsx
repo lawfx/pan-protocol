@@ -1,11 +1,10 @@
-import React from "react";
-import { GitHubContext } from "../GithubProvider/GithubProvider";
 import styled from "styled-components";
 import Connect from "../Connect/Connect";
+import useGithub from "../../hooks/useGithub";
 
 export default function Login() {
 
-  const { user } = React.useContext(GitHubContext);
+  const { user } = useGithub();
 
   return (
     <>

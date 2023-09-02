@@ -3,13 +3,13 @@ import { Cross2Icon, GitHubLogoIcon } from '@radix-ui/react-icons';
 import styled, { keyframes } from 'styled-components';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
-import { GitHubContext } from '../GithubProvider/GithubProvider';
 import React from 'react';
+import useGithub from '../../hooks/useGithub';
 
 export default function Connect() {
 
   const [token, setToken] = React.useState('');
-  const { connect } = React.useContext(GitHubContext);
+  const { connect } = useGithub();
 
   return (
     <Dialog.Root>

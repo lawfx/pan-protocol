@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import Section from "../Section/Section";
-import { GitHubContext } from "../GithubProvider/GithubProvider";
 import React from "react";
 import PreviewItem from "../PreviewItem/PreviewItem";
 import Button from "../Button/Button";
 import { calculateRandomHours } from "../../utils/utils";
 import { UserDataContext } from "../UserDataProvider/UserDataProvider";
+import useGithub from "../../hooks/useGithub";
 
 export default function Preview() {
 
-  const { selectedCommits, updateFinalMessage, updateHoursSpent, updatePR } = React.useContext(GitHubContext);
+  const { selectedCommits, updateFinalMessage, updateHoursSpent, updatePR } = useGithub();
   const { data } = React.useContext(UserDataContext);
   const { hours } = data;
 
