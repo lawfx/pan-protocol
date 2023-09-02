@@ -5,6 +5,9 @@ import React, { ReactNode } from "react";
 import * as Accordion from '@radix-ui/react-accordion';
 import Commit from "../Commit/Commit";
 import useGithub from "../../hooks/useGithub";
+import { GithubActionType } from "../GithubProvider/GithubProvider";
+import { parseGithubCommitMessage } from "../../utils/utils";
+import { CommitInfo } from "../../models/commit.model";
 
 export default function CommitsAccordionItem({ commits, repo }:
   {
@@ -12,7 +15,7 @@ export default function CommitsAccordionItem({ commits, repo }:
     repo: string;
   }) {
 
-  const { selectedCommits, toggleCommit } = useGithub();
+  const { selectedCommits, selectedCommitsDispatcher } = useGithub();
 
   const selectedCount = React.useMemo(() => {
     return commits.reduce((acc, curr) =>
@@ -21,8 +24,23 @@ export default function CommitsAccordionItem({ commits, repo }:
   }, [commits, selectedCommits]);
 
   const handleClickCommit = React.useCallback((sha: string, selected: boolean) => {
-    toggleCommit(sha, selected);
-  }, []);
+    if (selected) {
+      const commit = commits.find(c => c.sha === sha);
+      if (!commit) return;
+      const messageData = parseGithubCommitMessage(commit.commit.message);
+      const commitInfo: CommitInfo = {
+        commit_sha: sha,
+        final_message: messageData.message,
+        hours_spent: 0,
+        repo_name: commit.repository.name,
+        pr_num: messageData.pr_num
+      };
+      selectedCommitsDispatcher({ type: GithubActionType.SELECT_COMMIT, commitInfo });
+    }
+    else {
+      selectedCommitsDispatcher({ type: GithubActionType.UNSELECT_COMMIT, sha });
+    }
+  }, [commits]);
 
   return (
     <AccordionItem key={repo} value={repo}>

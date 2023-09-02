@@ -1,6 +1,6 @@
 import React from "react";
-import { GitHubContext } from "../components/GithubProvider/GithubProvider";
+import { GithubContext } from "../components/GithubProvider/GithubProvider";
 
 export default function useGithub() {
-  return React.useContext(GitHubContext);
+  return React.useContext(GithubContext);
 }
