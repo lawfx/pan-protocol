@@ -1,6 +1,8 @@
+import { DefaultTheme } from "styled-components";
+
 export const DOCX_MIME_TYPE = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
-export const DARK_THEME = {
+export const DARK_THEME: DefaultTheme = {
   primary: {
     100: 'hsl(257, 18%, 23%)',
     200: 'hsl(256, 12%, 30%)',
