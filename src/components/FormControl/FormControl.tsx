@@ -22,6 +22,6 @@ export default function FormControl({ children, label, id, inline = false }:
 const Wrapper = styled.div<{ $inline: boolean }>`
   display: flex;
   flex-direction: ${p => p.$inline ? 'row' : 'column'};
-  align-items: ${p => p.$inline ? 'center' : 'start'};
+  align-items: ${p => p.$inline ? 'center' : 'initial'};
   gap: 4px;
 `;

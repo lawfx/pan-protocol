@@ -34,4 +34,9 @@ const Textarea = styled.textarea`
   &::placeholder {
     color: ${p => p.theme.secondary100};
   }
+
+  &:focus {
+    outline: 2px solid ${p => p.theme.secondary200};
+    outline-offset: -2px;
+  }
 `;
