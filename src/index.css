@@ -1,7 +1,6 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
-  background-color: hsl(257, 18%, 23%);
 }
 
 *,
@@ -15,7 +14,8 @@
 }
 
 html,
-body {
+body,
+#root {
   height: 100%;
 }
 

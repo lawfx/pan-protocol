@@ -27,6 +27,9 @@ export default function App() {
 }
 
 const Wrapper = styled.main`
+  height: fit-content;
+  min-height: 100%;
+  align-content: start;
   background-color: ${p => p.theme.primary[100]};
   display: grid;
   grid-template-columns: 2fr 3fr;
