@@ -7,6 +7,27 @@ import saveAs from "file-saver";
 import PizZip from "pizzip";
 import { DOCX_MIME_TYPE, MERGE_REGEX, SQUASH_AND_MERGE_REGEX } from "../constants/constants";
 
+export function processFileAsync(file: File | null): Promise<string | ArrayBuffer | null> {
+  return new Promise((res, rej) => {
+    if (file === null) {
+      return res(null);
+    }
+
+    const reader = new FileReader();
+
+    reader.onerror = function (e) {
+      rej(e);
+    };
+
+    reader.onload = function (e) {
+      const content = e.target!.result;
+      res(content);
+    };
+
+    reader.readAsBinaryString(file);
+  });
+}
+
 export function parseGithubCommitMessage(message: string): { message: string, pr_num: number } {
   let messageData = message.match(SQUASH_AND_MERGE_REGEX);
   if (!messageData?.groups) {
@@ -35,12 +56,12 @@ export function compileDocumentData(data: UserData, commits: CommitInfo[]): Docu
   }
 }
 
-export function generateDocument(userData: UserData, commits: CommitInfo[]) {
-  if (!userData.file) return;
+export function generateDocument(file: string | ArrayBuffer | null, userData: UserData, commits: CommitInfo[]) {
+  if (!file) return;
 
   const docData: DocumentData = compileDocumentData(userData, commits);
 
-  const zip = new PizZip(userData.file);
+  const zip = new PizZip(file);
   const doc = new Docxtemplater(zip, {
     paragraphLoop: true,
     linebreaks: true,

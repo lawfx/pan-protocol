@@ -7,18 +7,28 @@ import MonthPicker from "../MonthPicker/MonthPicker";
 import { DOCX_MIME_TYPE, QUERIES } from "../../constants/constants";
 import DocumentGenerator from "../DocumentGenerator/DocumentGenerator";
 import useUserData from "../../hooks/useUserData";
+import { UserDataActionType } from "../UserDataProvider/UserDataProvider";
+import React from "react";
 
 export default function Data() {
 
-  const { data, setHours, setDate, setFile } = useUserData();
+  const { data, dispatch, uploadFile } = useUserData();
+
+  const setDate = React.useCallback((date: Date | null) => {
+    dispatch({ type: UserDataActionType.UPDATE_DATE, date });
+  }, []);
+
+  const setHours = React.useCallback((hours: string) => {
+    dispatch({ type: UserDataActionType.UPDATE_HOURS, hours });
+  }, []);
 
   return (
     <Section>
       <Wrapper>
         <MonthPicker label="Month" value={data.date} onChange={setDate} placeholder='Select month' />
         <Input label="Creative hours" type="text" value={data.hours} onChange={setHours} pattern='\d+' />
-        <FileInput label="Select protocol..." onFileUpload={setFile} allowedTypes={[DOCX_MIME_TYPE]} />
-        <DocumentGenerator userData={data} />
+        <FileInput label="Select protocol..." onFileUpload={uploadFile} allowedTypes={[DOCX_MIME_TYPE]} />
+        <DocumentGenerator />
       </Wrapper>
     </Section>
   );

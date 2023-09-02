@@ -1,20 +1,18 @@
 import { generateDocument } from "../../utils/utils";
 import Button from "../Button/Button";
-import { UserData } from "../../models/user-data.model";
 import useGithub from "../../hooks/useGithub";
+import useUserData from "../../hooks/useUserData";
 
-export default function DocumentGenerator({ userData }:
-  {
-    userData: UserData
-  }) {
+export default function DocumentGenerator() {
 
+  const { data, file } = useUserData();
   const { selectedCommits } = useGithub();
 
-  const allHoursFilledIn = selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0) === userData.hours;
-  const canGenerateDocx = !!userData.date && !!userData.hours && !!userData.file && allHoursFilledIn;
+  const allHoursFilledIn = selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0) === data.hours;
+  const canGenerateDocx = !!data.date && !!data.hours && !!file && allHoursFilledIn;
 
   function handleClickGenerate() {
-    generateDocument(userData, selectedCommits);
+    generateDocument(file, data, selectedCommits);
   }
 
   return (

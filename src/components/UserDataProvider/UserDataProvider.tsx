@@ -1,53 +1,62 @@
 import React, { ReactNode } from "react";
 import { UserData } from "../../models/user-data.model";
+import { processFileAsync } from "../../utils/utils";
+
+export enum UserDataActionType {
+  UPDATE_DATE,
+  UPDATE_HOURS
+}
+
+interface UserDataUpdateDateAction {
+  type: UserDataActionType.UPDATE_DATE;
+  date: Date | null;
+}
+
+interface UserDataUpdateHoursAction {
+  type: UserDataActionType.UPDATE_HOURS;
+  hours: string;
+}
+
+export type UserDataAction = UserDataUpdateDateAction | UserDataUpdateHoursAction;
 
 export const UserDataContext = React.createContext<{
   data: UserData;
-  setDate: (date: Date | null) => void;
-  setHours: (hours: string) => void;
-  setFile: (file: File | null) => void;
+  file: string | ArrayBuffer | null;
+  dispatch: React.Dispatch<UserDataAction>;
+  uploadFile: (file: File | null) => void;
 }>(null as any);
 
 export default function UserDataProvider({ children }: { children: ReactNode }) {
 
-  const [data, setData] = React.useState<UserData>({
+  const [data, dispatch] = React.useReducer(reducer, {
     date: new Date(),
-    hours: 0,
-    file: null
+    hours: 0
   });
-  console.log('data', data);
+  const [file, setFile] = React.useState<string | ArrayBuffer | null>(null);
 
-  const setDate = React.useCallback((date: Date | null) => {
-    setData(d => ({ ...d, date: date }));
-  }, []);
-
-  const setHours = React.useCallback((hours: string) => {
-    setData(d => ({ ...d, hours: isNaN(+hours) ? d.hours : +hours }));
-  }, []);
-
-  const setFile = React.useCallback((file: File | null) => {
-    if (file === null) {
-      setData(d => ({ ...d, file: null }));
-      return;
+  const uploadFile = React.useCallback(async (file: File | null) => {
+    try {
+      const processedFile = await processFileAsync(file);
+      setFile(processedFile);
     }
-
-    const reader = new FileReader();
-
-    reader.onerror = function (evt) {
-      console.error("error reading file", evt);
-    };
-
-    reader.onload = function (evt) {
-      const content = evt.target!.result;
-      setData(d => ({ ...d, file: content }));
-    };
-
-    reader.readAsBinaryString(file);
+    catch (e) {
+      console.error('Error reading file', e);
+    }
   }, []);
 
   return (
-    <UserDataContext.Provider value={{ data, setDate, setHours, setFile }}>
+    <UserDataContext.Provider value={{ data, file, dispatch, uploadFile }}>
       {children}
     </UserDataContext.Provider>
   )
+}
+
+function reducer(state: UserData, action: UserDataAction): UserData {
+  switch (action.type) {
+    case UserDataActionType.UPDATE_DATE:
+      return { ...state, date: action.date };
+    case UserDataActionType.UPDATE_HOURS:
+      const newHours = isNaN(+action.hours) ? state.hours : +action.hours;
+      return { ...state, hours: newHours };
+  }
 }
