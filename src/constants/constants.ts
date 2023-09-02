@@ -21,7 +21,29 @@ export const DARK_THEME: DefaultTheme = {
     onPrimary: 'hsl(30, 67%, 94%)',
     onSecondary: 'hsl(257, 18%, 23%)'
   }
-}
+};
+
+export const LIGHT_THEME: DefaultTheme = {
+  primary: {
+    100: 'hsl(0, 0%, 100%)',
+    200: 'hsl(200, 16%, 74%)',
+    300: 'hsl(201, 16%, 64%)',
+    400: 'hsl(201, 16%, 54%)',
+    500: 'hsl(200, 17%, 49%)',
+  },
+  secondary: {
+    100: 'hsl(200, 17%, 49%)',
+    200: 'hsl(200, 24%, 40%)',
+    300: 'hsl(201, 34%, 32%)',
+    400: 'hsl(199, 53%, 23%)',
+    500: 'hsl(200, 95%, 14%)',
+  },
+  text: {
+    onPrimary: 'hsl(200, 95%, 14%)',
+    onSecondary: 'hsl(0, 0%, 100%)'
+  }
+};
+
 
 export const BREAKPOINTS = {
   phone: 600,

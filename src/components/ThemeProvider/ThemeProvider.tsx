@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
-import { DARK_THEME } from "../../constants/constants";
+import { DARK_THEME, LIGHT_THEME } from "../../constants/constants";
 
 export default function ThemeProvider({ children }: { children: ReactNode }) {
 
@@ -11,7 +11,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <StyledThemeProvider theme={DARK_THEME}>
+    <StyledThemeProvider theme={isDarkTheme ? DARK_THEME : LIGHT_THEME}>
       <ThemeContext.Provider value={{ isDarkTheme, toggleTheme }}>
         {children}
       </ThemeContext.Provider>
