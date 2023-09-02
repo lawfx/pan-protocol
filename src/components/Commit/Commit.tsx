@@ -25,18 +25,17 @@ const Wrapper = styled.button<{ $selected: boolean }>`
   padding: 8px;
   background-color: ${p => p.$selected ? p.theme.secondary[400] : p.theme.primary[200]};
   color: ${p => p.$selected ? p.theme.text.onSecondary : p.theme.text.onPrimary};
-  border: 1px solid ${p => p.theme.primary[300]};
   border-radius: 8px;
-
+  outline-offset: -3px;
+  &:focus {
+    outline: 2px solid ${p => p.$selected ? p.theme.primary[500] : p.theme.secondary[500]};
+  }
   &:hover {
     background-color: ${p => p.$selected ? p.theme.secondary[500] : p.theme.primary[300]};
-    border: 1px solid ${p => p.theme.primary[200]};
+    outline: 2px solid ${p => p.theme.primary[200]};
   }
 
-  &:focus {
-    outline: 2px solid ${p => p.theme.secondary[200]};
-    outline-offset: -2px;
-  }
+  
 `;
 
 const CommitMessage = styled.span`
