@@ -2,30 +2,6 @@ import React, { ReactNode } from "react";
 import { UserData } from "../../models/user-data.model";
 import { processFileAsync } from "../../utils/utils";
 
-export enum UserDataActionType {
-  UPDATE_DATE,
-  UPDATE_HOURS
-}
-
-interface UserDataUpdateDateAction {
-  type: UserDataActionType.UPDATE_DATE;
-  date: Date | null;
-}
-
-interface UserDataUpdateHoursAction {
-  type: UserDataActionType.UPDATE_HOURS;
-  hours: string;
-}
-
-export type UserDataAction = UserDataUpdateDateAction | UserDataUpdateHoursAction;
-
-export const UserDataContext = React.createContext<{
-  data: UserData;
-  file: string | ArrayBuffer | null;
-  dispatch: React.Dispatch<UserDataAction>;
-  uploadFile: (file: File | null) => void;
-}>(null as any);
-
 export default function UserDataProvider({ children }: { children: ReactNode }) {
 
   const [data, dispatch] = React.useReducer(reducer, {
@@ -50,6 +26,30 @@ export default function UserDataProvider({ children }: { children: ReactNode }) 
     </UserDataContext.Provider>
   )
 }
+
+export enum UserDataActionType {
+  UPDATE_DATE,
+  UPDATE_HOURS
+}
+
+interface UserDataUpdateDateAction {
+  type: UserDataActionType.UPDATE_DATE;
+  date: Date | null;
+}
+
+interface UserDataUpdateHoursAction {
+  type: UserDataActionType.UPDATE_HOURS;
+  hours: string;
+}
+
+export type UserDataAction = UserDataUpdateDateAction | UserDataUpdateHoursAction;
+
+export const UserDataContext = React.createContext<{
+  data: UserData;
+  file: string | ArrayBuffer | null;
+  dispatch: React.Dispatch<UserDataAction>;
+  uploadFile: (file: File | null) => void;
+}>(null as any);
 
 function reducer(state: UserData, action: UserDataAction): UserData {
   switch (action.type) {
