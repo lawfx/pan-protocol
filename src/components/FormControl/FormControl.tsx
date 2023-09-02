@@ -23,5 +23,5 @@ const Wrapper = styled.div<{ $inline: boolean }>`
   display: flex;
   flex-direction: ${p => p.$inline ? 'row' : 'column'};
   align-items: ${p => p.$inline ? 'center' : 'initial'};
-  gap: 4px;
+  gap: ${p => p.$inline ? '8px' : '4px'};
 `;
