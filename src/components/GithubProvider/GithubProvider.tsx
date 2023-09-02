@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react"
-import useGithub from "../../hooks/useGithub";
+import useOctokit from "../../hooks/useOctokit";
 import { CommitInfo } from "../../models/commit.model";
 import { GitHubCommit, GitHubUser } from "../../models/octokit.model";
 import { parseGithubCommitMessage } from "../../utils/utils";
@@ -20,7 +20,7 @@ export const GitHubContext = React.createContext<{
 
 export default function GithubProvider({ children }: { children: ReactNode }) {
 
-  const { commits, ...rest } = useGithub();
+  const { commits, ...rest } = useOctokit();
   const [selectedCommits, setSelectedCommits] = React.useState<CommitInfo[]>([]);
 
   React.useEffect(() => {

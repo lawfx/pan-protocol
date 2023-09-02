@@ -2,7 +2,7 @@ import { Octokit } from "@octokit/rest";
 import React from "react";
 import { GitHubCommit, GitHubUser } from "../models/octokit.model";
 
-export default function useGithub() {
+export default function useOctokit() {
 
   const [octokit, setOctokit] = React.useState<Octokit>();
   const [user, setUser] = React.useState<GitHubUser>();
