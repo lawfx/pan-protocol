@@ -4,13 +4,13 @@ import React from "react";
 import PreviewItem from "../PreviewItem/PreviewItem";
 import Button from "../Button/Button";
 import { calculateRandomHours } from "../../utils/utils";
-import { UserDataContext } from "../UserDataProvider/UserDataProvider";
 import useGithub from "../../hooks/useGithub";
+import useUserData from "../../hooks/useUserData";
 
 export default function Preview() {
 
   const { selectedCommits, updateFinalMessage, updateHoursSpent, updatePR } = useGithub();
-  const { data } = React.useContext(UserDataContext);
+  const { data } = useUserData();
   const { hours } = data;
 
   const usedHours = React.useMemo(() => selectedCommits.reduce((acc, curr) => acc + curr.hours_spent, 0), [selectedCommits]);

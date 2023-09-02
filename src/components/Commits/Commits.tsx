@@ -5,13 +5,13 @@ import { format } from "date-fns";
 import Section from "../Section/Section";
 import { GitHubCommit } from "../../models/octokit.model";
 import CommitsAccordionItem from "../CommitsAccordionItem/CommitsAccordionItem";
-import { UserDataContext } from "../UserDataProvider/UserDataProvider";
 import useGithub from "../../hooks/useGithub";
+import useUserData from "../../hooks/useUserData";
 
 export default function Commits() {
 
   const { searchCommits, user, commits, loading, error } = useGithub();
-  const { data } = React.useContext(UserDataContext);
+  const { data } = useUserData();
 
   const month = !!data.date ? format(data.date, 'yyyy-MM') : '';
   const monthReadable = format(new Date(month), 'MMMM yyyy');

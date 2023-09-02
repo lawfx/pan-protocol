@@ -1,17 +1,16 @@
 import { styled } from "styled-components";
 import Input from "../Input/Input";
 
-import React from "react";
 import FileInput from "../FileInput/FileInput";
 import Section from "../Section/Section";
 import MonthPicker from "../MonthPicker/MonthPicker";
 import { DOCX_MIME_TYPE, QUERIES } from "../../constants/constants";
 import DocumentGenerator from "../DocumentGenerator/DocumentGenerator";
-import { UserDataContext } from "../UserDataProvider/UserDataProvider";
+import useUserData from "../../hooks/useUserData";
 
 export default function Data() {
 
-  const { data, setHours, setDate, setFile } = React.useContext(UserDataContext);
+  const { data, setHours, setDate, setFile } = useUserData();
 
   return (
     <Section>
