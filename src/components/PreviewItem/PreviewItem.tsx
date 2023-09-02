@@ -6,6 +6,7 @@ import React from "react";
 import Button from "../Button/Button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import useGithub from "../../hooks/useGithub";
+import { GithubActionType } from "../GithubProvider/GithubProvider";
 
 export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdated, onPrUpdated }:
   {
@@ -15,10 +16,10 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
     onPrUpdated: (num: string) => void
   }) {
 
-  const { toggleCommit } = useGithub();
+  const { selectedCommitsDispatcher } = useGithub();
 
   const handleUnselect = React.useCallback((sha: string) => {
-    toggleCommit(sha, false);
+    selectedCommitsDispatcher({ type: GithubActionType.UNSELECT_COMMIT, sha });
   }, []);
 
   return (

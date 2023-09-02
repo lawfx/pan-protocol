@@ -12,14 +12,14 @@ import React from "react";
 
 export default function Data() {
 
-  const { data, dispatch, uploadFile } = useUserData();
+  const { data, dataDispatcher, uploadFile } = useUserData();
 
   const setDate = React.useCallback((date: Date | null) => {
-    dispatch({ type: UserDataActionType.UPDATE_DATE, date });
+    dataDispatcher({ type: UserDataActionType.UPDATE_DATE, date });
   }, []);
 
   const setHours = React.useCallback((hours: string) => {
-    dispatch({ type: UserDataActionType.UPDATE_HOURS, hours });
+    dataDispatcher({ type: UserDataActionType.UPDATE_HOURS, hours });
   }, []);
 
   return (

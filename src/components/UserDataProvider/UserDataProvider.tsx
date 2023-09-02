@@ -4,7 +4,7 @@ import { processFileAsync } from "../../utils/utils";
 
 export default function UserDataProvider({ children }: { children: ReactNode }) {
 
-  const [data, dispatch] = React.useReducer(reducer, {
+  const [data, dataDispatcher] = React.useReducer(reducer, {
     date: new Date(),
     hours: 0
   });
@@ -21,7 +21,7 @@ export default function UserDataProvider({ children }: { children: ReactNode }) 
   }, []);
 
   return (
-    <UserDataContext.Provider value={{ data, file, dispatch, uploadFile }}>
+    <UserDataContext.Provider value={{ data, file, dataDispatcher, uploadFile }}>
       {children}
     </UserDataContext.Provider>
   )
@@ -47,7 +47,7 @@ export type UserDataAction = UserDataUpdateDateAction | UserDataUpdateHoursActio
 export const UserDataContext = React.createContext<{
   data: UserData;
   file: string | ArrayBuffer | null;
-  dispatch: React.Dispatch<UserDataAction>;
+  dataDispatcher: React.Dispatch<UserDataAction>;
   uploadFile: (file: File | null) => void;
 }>(null as any);
 

@@ -6,10 +6,11 @@ import Button from "../Button/Button";
 import { calculateRandomHours } from "../../utils/utils";
 import useGithub from "../../hooks/useGithub";
 import useUserData from "../../hooks/useUserData";
+import { GithubActionType } from "../GithubProvider/GithubProvider";
 
 export default function Preview() {
 
-  const { selectedCommits, updateFinalMessage, updateHoursSpent, updatePR } = useGithub();
+  const { selectedCommits, selectedCommitsDispatcher } = useGithub();
   const { data } = useUserData();
   const { hours } = data;
 
@@ -18,8 +19,20 @@ export default function Preview() {
   const assignHours = React.useCallback(() => {
     if (hours < selectedCommits.length) return;
     const hoursArr = calculateRandomHours(hours, selectedCommits.length);
-    selectedCommits.forEach((c, i) => updateHoursSpent(c.commit_sha, hoursArr[i].toString()));
+    selectedCommits.forEach((c, i) => selectedCommitsDispatcher({ type: GithubActionType.UPDATE_HOURS, sha: c.commit_sha, hours: hoursArr[i].toString() }));
   }, [hours, selectedCommits]);
+
+  const updateMessage = React.useCallback((sha: string, message: string) => {
+    selectedCommitsDispatcher({ type: GithubActionType.UPDATE_MESSAGE, sha, message });
+  }, []);
+
+  const updateHours = React.useCallback((sha: string, hours: string) => {
+    selectedCommitsDispatcher({ type: GithubActionType.UPDATE_HOURS, sha, hours });
+  }, []);
+
+  const updatePR = React.useCallback((sha: string, pr_num: string) => {
+    selectedCommitsDispatcher({ type: GithubActionType.UPDATE_PR_NUM, sha, pr_num });
+  }, []);
 
   return (
     <Section>
@@ -40,8 +53,8 @@ export default function Preview() {
               <PreviewItem
                 key={c.commit_sha}
                 commitInfo={c}
-                onMessageUpdated={(e) => updateFinalMessage(c.commit_sha, e)}
-                onHoursUpdated={(e) => updateHoursSpent(c.commit_sha, e)}
+                onMessageUpdated={(e) => updateMessage(c.commit_sha, e)}
+                onHoursUpdated={(e) => updateHours(c.commit_sha, e)}
                 onPrUpdated={(e) => updatePR(c.commit_sha, e)}
               />
             ))}

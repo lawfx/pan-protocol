@@ -15,7 +15,7 @@ export default function GithubProvider({ children }: { children: ReactNode }) {
   return (
     <GithubContext.Provider value={{ commits, ...rest, selectedCommits, selectedCommitsDispatcher }}>
       {children}
-    </GithubContext.Provider >
+    </GithubContext.Provider>
   );
 }
 
