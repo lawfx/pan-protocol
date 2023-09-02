@@ -17,8 +17,7 @@ export default function App() {
         <Data />
       </DataWrapper>
       <CommitsWrapper>
-        <Commits
-        />
+        <Commits />
       </CommitsWrapper>
       <PreviewWrapper>
         <Preview />

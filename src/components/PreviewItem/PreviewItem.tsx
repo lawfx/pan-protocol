@@ -10,10 +10,10 @@ import { GithubActionType } from "../GithubProvider/GithubProvider";
 
 export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdated, onPrUpdated }:
   {
-    commitInfo: CommitInfo,
-    onMessageUpdated: (message: string) => void,
-    onHoursUpdated: (hours: string) => void,
-    onPrUpdated: (num: string) => void
+    commitInfo: CommitInfo;
+    onMessageUpdated: (message: string) => void;
+    onHoursUpdated: (hours: string) => void;
+    onPrUpdated: (num: string) => void;
   }) {
 
   const { selectedCommitsDispatcher } = useGithub();
@@ -28,7 +28,6 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
         width: '18px',
         height: '18px',
         lineHeight: '20px',
-        fontSize: '.8rem',
         position: 'absolute',
         top: 0,
         right: 0,

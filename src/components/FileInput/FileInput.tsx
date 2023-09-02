@@ -5,9 +5,9 @@ import { FileIcon } from "@radix-ui/react-icons";
 
 export default function FileInput({ onFileUpload, allowedTypes, label }:
   {
-    onFileUpload: (file: File | null) => void,
-    allowedTypes: string[],
-    label: string
+    onFileUpload: (file: File | null) => void;
+    allowedTypes: string[];
+    label: string;
   }
 ) {
 

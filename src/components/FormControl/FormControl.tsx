@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 export default function FormControl({ children, label, id, inline = false }:
   {
-    children: ReactNode,
-    label: string,
-    id: string,
-    inline?: boolean
+    children: ReactNode;
+    label: string;
+    id: string;
+    inline?: boolean;
   }) {
 
   return (

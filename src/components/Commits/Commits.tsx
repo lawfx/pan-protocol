@@ -3,7 +3,7 @@ import styled from "styled-components";
 import * as Accordion from '@radix-ui/react-accordion';
 import { format } from "date-fns";
 import Section from "../Section/Section";
-import { GitHubCommit } from "../../models/octokit.model";
+import { GithubCommit } from "../../models/octokit.model";
 import CommitsAccordionItem from "../CommitsAccordionItem/CommitsAccordionItem";
 import useGithub from "../../hooks/useGithub";
 import useUserData from "../../hooks/useUserData";
@@ -16,7 +16,7 @@ export default function Commits() {
   const month = !!data.date ? format(data.date, 'yyyy-MM') : '';
   const monthReadable = format(new Date(month), 'MMMM yyyy');
 
-  const commitsByRepo = React.useMemo(() => commits.reduce<{ [repo: string]: GitHubCommit[] }>((acc, curr) => {
+  const commitsByRepo = React.useMemo(() => commits.reduce<{ [repo: string]: GithubCommit[] }>((acc, curr) => {
     const repoFullName: string = curr.repository.full_name;
     return { ...acc, [repoFullName]: (acc[repoFullName] ? [...acc[repoFullName], curr] : [curr]) }
   }, {}), [commits]);

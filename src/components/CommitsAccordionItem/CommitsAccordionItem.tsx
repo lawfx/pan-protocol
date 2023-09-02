@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { GitHubCommit } from "../../models/octokit.model";
+import { GithubCommit } from "../../models/octokit.model";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import React, { ReactNode } from "react";
 import * as Accordion from '@radix-ui/react-accordion';
@@ -11,7 +11,7 @@ import { CommitInfo } from "../../models/commit.model";
 
 export default function CommitsAccordionItem({ commits, repo }:
   {
-    commits: GitHubCommit[],
+    commits: GithubCommit[];
     repo: string;
   }) {
 

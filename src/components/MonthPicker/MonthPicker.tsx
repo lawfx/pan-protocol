@@ -6,10 +6,10 @@ import StyledInput from '../StyledInput/StyledInput';
 
 export default function MonthPicker({ label, value, onChange, placeholder }:
   {
-    label: string,
-    value: Date | null,
-    onChange: (date: Date | null) => void,
-    placeholder: string
+    label: string;
+    value: Date | null;
+    onChange: (date: Date | null) => void;
+    placeholder: string;
   }) {
 
   const id = React.useId();

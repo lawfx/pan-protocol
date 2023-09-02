@@ -45,8 +45,8 @@ interface UserDataUpdateHoursAction {
 export type UserDataAction = UserDataUpdateDateAction | UserDataUpdateHoursAction;
 
 export const UserDataContext = React.createContext<{
-  data: UserData;
-  file: string | ArrayBuffer | null;
+  data: UserData,
+  file: string | ArrayBuffer | null,
   dataDispatcher: React.Dispatch<UserDataAction>;
   uploadFile: (file: File | null) => void;
 }>(null as any);

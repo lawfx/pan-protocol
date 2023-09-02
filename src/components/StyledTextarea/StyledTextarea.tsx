@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 function StyledTextarea({ value, onClick, onChange, ...rest }:
   {
-    value: string,
-    onClick: (e: any) => void,
-    onChange: (val: string) => void,
-    [key: string]: any
+    value: string;
+    onClick: (e: any) => void;
+    onChange: (val: string) => void;
+    [key: string]: any;
   },
   ref: ((instance: HTMLTextAreaElement | null) => void) | React.MutableRefObject<HTMLTextAreaElement | null> | null) {
 

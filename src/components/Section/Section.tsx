@@ -1,7 +1,11 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-export default function Section({ className, children }: { className?: string, children: ReactNode }) {
+export default function Section({ className, children }:
+  {
+    className?: string;
+    children: ReactNode;
+  }) {
 
   return (
     <Wrapper className={className}>

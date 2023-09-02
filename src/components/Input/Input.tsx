@@ -4,12 +4,12 @@ import StyledInput from "../StyledInput/StyledInput";
 
 export default function Input({ type = 'text', value, onChange, label, inline = false, ...rest }:
   {
-    type?: string,
-    value: any,
-    onChange: (val: string) => void,
-    label: string,
-    inline?: boolean,
-    [key: string]: any
+    type?: string;
+    value: any;
+    onChange: (val: string) => void;
+    label: string;
+    inline?: boolean;
+    [key: string]: any;
   }) {
 
   const id = React.useId();

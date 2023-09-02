@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 import useOctokit from "../../hooks/useOctokit";
 import { CommitInfo } from "../../models/commit.model";
-import { GitHubCommit, GitHubUser } from "../../models/octokit.model";
+import { GithubCommit, GithubUser } from "../../models/octokit.model";
 
 export default function GithubProvider({ children }: { children: ReactNode }) {
 
@@ -75,8 +75,8 @@ export type GithubAction =
 export const GithubContext = React.createContext<{
   connect: (token: string) => Promise<void>;
   searchCommits: (month: string) => Promise<void>;
-  user: GitHubUser;
-  commits: GitHubCommit[];
+  user: GithubUser;
+  commits: GithubCommit[];
   selectedCommits: CommitInfo[];
   selectedCommitsDispatcher: React.Dispatch<GithubAction>;
   loading: boolean;

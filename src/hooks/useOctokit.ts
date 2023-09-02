@@ -1,12 +1,12 @@
 import { Octokit } from "@octokit/rest";
 import React from "react";
-import { GitHubCommit, GitHubUser } from "../models/octokit.model";
+import { GithubCommit, GithubUser } from "../models/octokit.model";
 
 export default function useOctokit() {
 
   const [octokit, setOctokit] = React.useState<Octokit>();
-  const [user, setUser] = React.useState<GitHubUser>();
-  const [commits, setCommits] = React.useState<GitHubCommit[]>([]);
+  const [user, setUser] = React.useState<GithubUser>();
+  const [commits, setCommits] = React.useState<GithubCommit[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<unknown>(null);
 
@@ -42,7 +42,7 @@ export default function useOctokit() {
     }
   }, [octokit, user]);
 
-  const getUser = React.useCallback(async (octokit: Octokit): Promise<GitHubUser> => {
+  const getUser = React.useCallback(async (octokit: Octokit): Promise<GithubUser> => {
     const userData = await octokit.users.getAuthenticated();
     const user = userData.data;
     console.log(`Logged in as ${user.login}`);

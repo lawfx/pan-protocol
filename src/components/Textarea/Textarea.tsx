@@ -4,10 +4,10 @@ import StyledTextarea from "../StyledTextarea/StyledTextarea";
 
 export default function Textarea({ value, onChange, label, ...rest }:
   {
-    value: any,
-    onChange: (val: string) => void,
-    label: string,
-    [key: string]: any
+    value: any;
+    onChange: (val: string) => void;
+    label: string;
+    [key: string]: any;
   }) {
 
   const id = React.useId();

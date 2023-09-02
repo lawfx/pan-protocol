@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 function StyledInput({ value, onClick, onChange, ...rest }:
   {
-    value: string,
-    onClick: (e: any) => void,
-    onChange: (val: string) => void,
-    [key: string]: any
+    value: string;
+    onClick: (e: any) => void;
+    onChange: (val: string) => void;
+    [key: string]: any;
   },
   ref: ((instance: HTMLInputElement | null) => void) | React.MutableRefObject<HTMLInputElement | null> | null) {
 

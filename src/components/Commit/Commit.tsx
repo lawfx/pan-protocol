@@ -1,7 +1,13 @@
 import { styled } from "styled-components";
 import { parseGithubCommitMessage } from "../../utils/utils";
+import { GithubCommit } from "../../models/octokit.model";
 
-export default function Commit({ commit, selected, onClick }: { commit: any, selected: boolean, onClick: () => void }) {
+export default function Commit({ commit, selected, onClick }:
+  {
+    commit: GithubCommit;
+    selected: boolean;
+    onClick: () => void;
+  }) {
 
   const { message, pr_num } = parseGithubCommitMessage(commit.commit.message);
 
