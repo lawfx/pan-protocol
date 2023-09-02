@@ -42,6 +42,11 @@ const StyledButton = styled.button`
     background-color: ${p => p.theme.secondary[400]};
   }
 
+  &:focus {
+    outline-offset: 2px;
+    outline: 2px solid ${p => p.theme.secondary[500]};
+  }
+
   &:active {
     background-color: ${p => p.theme.secondary[300]};
   }
