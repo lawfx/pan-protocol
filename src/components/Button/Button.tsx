@@ -1,18 +1,28 @@
+import React from "react";
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-export default function Button({ children, style, onClick, ...rest }:
+function Button({ children, style, onClick, ...rest }:
   {
     style?: { [key: string]: any },
     children: ReactNode,
     onClick: () => void,
     [key: string]: any
-  }) {
+  },
+  ref: ((instance: HTMLButtonElement | null) => void) | React.MutableRefObject<HTMLButtonElement | null> | null) {
 
   return (
-    <StyledButton type='button' style={style} onClick={onClick} {...rest}>{children}</StyledButton>
+    <StyledButton
+      ref={ref}
+      type='button'
+      style={style}
+      onClick={onClick} {...rest}>
+      {children}
+    </StyledButton>
   );
 }
+
+export default React.forwardRef(Button);
 
 const StyledButton = styled.button`
   all: unset;
