@@ -1,15 +1,16 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-export default function FormControl({ children, label, id }:
+export default function FormControl({ children, label, id, inline = false }:
   {
     children: ReactNode,
     label: string,
-    id: string
+    id: string,
+    inline?: boolean
   }) {
 
   return (
-    <Wrapper>
+    <Wrapper $inline={inline}>
       <label htmlFor={id}>
         {label}
       </label>
@@ -18,8 +19,9 @@ export default function FormControl({ children, label, id }:
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $inline: boolean }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${p => p.$inline ? 'row' : 'column'};
+  align-items: ${p => p.$inline ? 'center' : 'start'};
   gap: 4px;
 `;
