@@ -27,7 +27,7 @@ export default function App() {
 }
 
 const Wrapper = styled.main`
-  background-color: ${p => p.theme.primary100};
+  background-color: ${p => p.theme.primary[100]};
   display: grid;
   grid-template-columns: 2fr 3fr;
   grid-template-areas:

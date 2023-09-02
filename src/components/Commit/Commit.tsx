@@ -23,18 +23,18 @@ export default function Commit({ commit, selected, onClick }:
 const Wrapper = styled.button<{ $selected: boolean }>`
   all: unset;
   padding: 8px;
-  background-color: ${p => p.$selected ? p.theme.secondary400 : p.theme.primary200};
-  color: ${p => p.$selected ? p.theme.textOnSecondary : p.theme.textOnPrimary};
-  border: 1px solid ${p => p.theme.primary300};
+  background-color: ${p => p.$selected ? p.theme.secondary[400] : p.theme.primary[200]};
+  color: ${p => p.$selected ? p.theme.text.onSecondary : p.theme.text.onPrimary};
+  border: 1px solid ${p => p.theme.primary[300]};
   border-radius: 8px;
 
   &:hover {
-    background-color: ${p => p.$selected ? p.theme.secondary500 : p.theme.primary300};
-    border: 1px solid ${p => p.theme.primary200};
+    background-color: ${p => p.$selected ? p.theme.secondary[500] : p.theme.primary[300]};
+    border: 1px solid ${p => p.theme.primary[200]};
   }
 
   &:focus {
-    outline: 2px solid ${p => p.theme.secondary200};
+    outline: 2px solid ${p => p.theme.secondary[200]};
     outline-offset: -2px;
   }
 `;

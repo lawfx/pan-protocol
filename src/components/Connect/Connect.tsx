@@ -76,8 +76,8 @@ const DialogOverlay = styled(Dialog.Overlay)`
 `;
 
 const DialogContent = styled(Dialog.Content)`
-  background-color: ${p => p.theme.primary200};
-  color: ${p => p.theme.secondary500};
+  background-color: ${p => p.theme.primary[200]};
+  color: ${p => p.theme.secondary[500]};
   border-radius: 8px;
   position: fixed;
   top: 50%;

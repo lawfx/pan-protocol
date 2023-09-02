@@ -64,7 +64,7 @@ export default function CommitsAccordionItem({ commits, repo }:
 
 const AccordionItem = styled(Accordion.Item)`
   &:not(:last-child){
-    border-bottom: 1px solid ${p => p.theme.primary200};
+    border-bottom: 1px solid ${p => p.theme.primary[200]};
   }
 
   &:first-child {
@@ -78,7 +78,7 @@ const AccordionItem = styled(Accordion.Item)`
   },
 
   &:focus-within {
-    outline: 2px solid ${p => p.theme.secondary200};
+    outline: 2px solid ${p => p.theme.secondary[200]};
     outline-offset: -2px;
   }
 `;
@@ -114,7 +114,7 @@ const StyledTrigger = styled(Accordion.Trigger)`
   justify-content: space-between;
 
   &[data-state="open"] {
-    border-bottom: 1px solid ${p => p.theme.primary200};
+    border-bottom: 1px solid ${p => p.theme.primary[200]};
   }
 `;
 

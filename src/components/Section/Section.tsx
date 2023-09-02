@@ -15,7 +15,7 @@ export default function Section({ className, children }:
 }
 
 const Wrapper = styled.div`
-  background-color: ${p => p.theme.primary200};
-  color: ${p => p.theme.textOnPrimary};
+  background-color: ${p => p.theme.primary[200]};
+  color: ${p => p.theme.text.onPrimary};
   border-radius: 8px;
 `;

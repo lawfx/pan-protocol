@@ -27,16 +27,16 @@ export default React.forwardRef(StyledTextarea);
 const Textarea = styled.textarea`
   all: unset;
   resize: vertical;
-  background-color: ${p => p.theme.primary100};
+  background-color: ${p => p.theme.primary[100]};
   border-radius: 8px;
   padding: 2px 8px;
 
   &::placeholder {
-    color: ${p => p.theme.secondary100};
+    color: ${p => p.theme.secondary[100]};
   }
 
   &:focus {
-    outline: 2px solid ${p => p.theme.secondary200};
+    outline: 2px solid ${p => p.theme.secondary[200]};
     outline-offset: -2px;
   }
 `;

@@ -30,8 +30,8 @@ const StyledButton = styled.button`
   font-weight: 700;
   padding: 8px;
   border-radius: 8px;
-  background-color: ${p => p.theme.secondary500};
-  color: ${p => p.theme.textOnSecondary};
+  background-color: ${p => p.theme.secondary[500]};
+  color: ${p => p.theme.text.onSecondary};
   cursor: pointer;
   height: 30px;
   width: 100px;
@@ -42,15 +42,15 @@ const StyledButton = styled.button`
   text-align: center;
 
   &:hover {
-    background-color: ${p => p.theme.secondary400};
+    background-color: ${p => p.theme.secondary[400]};
   }
 
   &:active {
-    background-color: ${p => p.theme.secondary300};
+    background-color: ${p => p.theme.secondary[300]};
   }
 
   &:disabled {
-    background-color: ${p => p.theme.secondary100};
+    background-color: ${p => p.theme.secondary[100]};
     cursor: not-allowed;
   }
 `;

@@ -53,7 +53,7 @@ export default function PreviewItem({ commitInfo, onMessageUpdated, onHoursUpdat
 }
 const Wrapper = styled.div`
   position: relative;
-  background-color: ${p => p.theme.primary300};
+  background-color: ${p => p.theme.primary[300]};
   padding: 8px;
   border-radius: 8px;
   display: flex;
