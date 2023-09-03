@@ -38,7 +38,7 @@ const Wrapper = styled.main`
   'data data'
   'commits preview';
   gap: 8px;
-  padding-inline: 8px;
+  padding: 8px;
 
   @media ${QUERIES.tabletAndSmaller}{
     display: flex;
