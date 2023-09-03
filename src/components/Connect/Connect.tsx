@@ -56,7 +56,7 @@ const overlayShow = keyframes`
 const contentShow = keyframes`
   from { 
     opacity: 0;
-    transform: translate(-50%, -48%) scale(.96);
+    transform: translate(-50%, -50%) scale(.5);
   }
   to { 
     opacity: 1;
@@ -76,7 +76,7 @@ const DialogContent = styled(Dialog.Content)`
   color: ${p => p.theme.secondary[500]};
   border-radius: 8px;
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 400px;
