@@ -1,7 +1,7 @@
 Every month had to go spelunking for the commits and manually collect their data to fill in the creative hours protocol.
 This app helps automate part of that process and save some time.
 
-Live version: https://lawfx.github.io/protocol-pal/
+Live version: https://lawfx.github.io/pan-protocol/
 
 ## Steps:
 1. Login to Github
