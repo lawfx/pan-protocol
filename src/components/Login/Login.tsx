@@ -10,7 +10,7 @@ export default function Login() {
     <>
       {user ?
         <LoggedInUser>
-          <span>Logged in as <strong>{user.login}</strong></span>
+          <span>Welcome <strong>{user.login}</strong></span>
           <AvatarImage src={user.avatar_url} />
         </LoggedInUser>
         :
