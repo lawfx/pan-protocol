@@ -10,7 +10,7 @@ export default function Header() {
     <StyledSection>
       <Title>{APP_TITLE}</Title>
       <RightSide>
-        <ThemeToggleIcon />
+        <ThemeToggleIcon /> |
         <Login />
       </RightSide>
     </StyledSection>
