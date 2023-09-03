@@ -22,11 +22,14 @@ export default function Commits() {
   }, {}), [commits]);
 
   React.useEffect(() => {
+    const abortController = new AbortController();
     async function fetchCommits() {
-      await searchCommits(month);
+      await searchCommits(month, abortController.signal);
     }
 
     fetchCommits();
+
+    return () => { abortController.abort(); }
   }, [user, month]);
 
   const message = !user ? 'Please login to search for commits' :

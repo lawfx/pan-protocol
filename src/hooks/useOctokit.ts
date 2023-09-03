@@ -19,7 +19,7 @@ export default function useOctokit() {
     setUser(user);
   }, []);
 
-  const searchCommits = React.useCallback(async (month: string) => {
+  const searchCommits = React.useCallback(async (month: string, signal: AbortSignal) => {
     if (!octokit || !user || !month) return;
 
     try {
@@ -28,14 +28,19 @@ export default function useOctokit() {
       setCommits([]);
       const commits = await octokit?.search.commits({
         q: `author:${user.login} author-date:${month}`,
-        sort: 'author-date'
+        sort: 'author-date',
+        per_page: 100,
+        request: {
+          signal
+        }
       });
       setLoading(false);
 
       if (!commits?.data.items) return;
 
       setCommits(commits.data.items);
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.name === 'AbortError') return;
       console.error(e);
       setLoading(false);
       setError(e);

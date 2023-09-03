@@ -74,7 +74,7 @@ export type GithubAction =
 
 export const GithubContext = React.createContext<{
   connect: (token: string) => Promise<void>;
-  searchCommits: (month: string) => Promise<void>;
+  searchCommits: (month: string, signal: AbortSignal) => Promise<void>;
   user: GithubUser;
   commits: GithubCommit[];
   selectedCommits: CommitInfo[];
