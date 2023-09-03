@@ -59,7 +59,6 @@ const Wrapper = styled.div`
 `;
 
 const CommitsLabel = styled.h4`
-  margin: 0;
   padding: 8px;
   border-bottom: 1px solid ${p => p.theme.primary[300]};
 `;

@@ -26,7 +26,6 @@ const StyledSection = styled(Section)`
 `;
 
 const Title = styled.h2`
-  margin: 0;
 `;
 
 const RightSide = styled.div`
