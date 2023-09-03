@@ -202,7 +202,6 @@ Error generating stack: `+a.message+`
   align-items: center;
   padding: 8px;
 `,O5=be.h2`
-  margin: 0;
 `,R5=be.div`
   display: flex;
   gap: 8px;
@@ -337,7 +336,6 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
 `;function B$(){const{searchCommits:e,user:t,commits:r,loading:n,error:o}=ja(),{data:a}=wd(),i=a.date?Xi(a.date,"yyyy-MM"):"",s=Xi(new Date(i),"MMMM yyyy"),l=A.useMemo(()=>r.reduce((f,p)=>{const h=p.repository.full_name;return{...f,[h]:f[h]?[...f[h],p]:[p]}},{}),[r]);A.useEffect(()=>{async function f(){await e(i)}f()},[t,i]);const c=t?n?`Searching commits for ${s}...`:o?"An error has occured 😢":i?r.length?"":`No commits found for ${s} 😳`:"Please select a month":"Please login to search for commits";return H.jsxs(id,{children:[H.jsx(j$,{children:"Commits"}),H.jsx(U$,{children:c?H.jsx("span",{children:c}):H.jsx(z$,{children:H.jsx(G$,{type:"single",collapsible:!0,children:Object.entries(l).map(([f,p])=>H.jsx(A$,{repo:f,commits:p},f))})})})]})}const U$=be.div`
   padding: 8px;
 `,j$=be.h4`
-  margin: 0;
   padding: 8px;
   border-bottom: 1px solid ${e=>e.theme.primary[300]};
 `,z$=be.div`
