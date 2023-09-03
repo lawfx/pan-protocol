@@ -4,7 +4,7 @@ export default function Logo() {
 
   return (
     <Wrapper>
-      <Image src="/logo.svg" alt="Logo" />
+      <Image src="logo.svg" alt="Logo" />
       <TitleWrapper>
         <Title>Pan</Title>
         <Title>Protocol</Title>
