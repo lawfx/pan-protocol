@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import Login from "../Login/Login";
 import Section from "../Section/Section";
-import { APP_TITLE } from "../../constants/constants";
 import ThemeToggleIcon from "../ThemeToggleIcon/ThemeToggleIcon";
 
 export default function Header() {
 
   return (
     <StyledSection>
-      <Title>{APP_TITLE}</Title>
+      <Title src="name-logo.svg" alt='Logo'></Title>
       <RightSide>
         <ThemeToggleIcon /> |
         <Login />
@@ -20,12 +19,14 @@ export default function Header() {
 
 const StyledSection = styled(Section)`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 8px;
 `;
 
-const Title = styled.h2`
+const Title = styled.img`
+  height: 50px;
+  filter: ${p => p.theme.logo};
 `;
 
 const RightSide = styled.div`

@@ -19,6 +19,7 @@ declare module 'styled-components' {
     text: {
       onPrimary: string;
       onSecondary: string;
-    }
+    },
+    logo: string;
   }
 }

@@ -1,7 +1,5 @@
 import { DefaultTheme } from "styled-components";
 
-export const APP_TITLE = 'Protocol Pal';
-
 export const DOCX_MIME_TYPE = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
 export const DARK_THEME: DefaultTheme = {
@@ -22,7 +20,8 @@ export const DARK_THEME: DefaultTheme = {
   text: {
     onPrimary: 'hsl(30, 67%, 94%)',
     onSecondary: 'hsl(257, 18%, 23%)'
-  }
+  },
+  logo: 'invert(86%) sepia(9%) saturate(809%) hue-rotate(322deg) brightness(115%) contrast(96%)'
 };
 
 export const LIGHT_THEME: DefaultTheme = {
@@ -43,7 +42,8 @@ export const LIGHT_THEME: DefaultTheme = {
   text: {
     onPrimary: 'hsl(257, 18%, 23%)',
     onSecondary: 'hsl(30, 67%, 94%)'
-  }
+  },
+  logo: 'invert(17%) sepia(5%) saturate(3509%) hue-rotate(216deg) brightness(96%) contrast(90%)'
 };
 
 
