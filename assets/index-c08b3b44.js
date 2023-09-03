@@ -149,7 +149,7 @@ Error generating stack: `+a.message+`
 `,d5=Jf`
   from { 
     opacity: 0;
-    transform: translate(-50%, -48%) scale(.96);
+    transform: translate(-50%, -50%) scale(.5);
   }
   to { 
     opacity: 1;
@@ -165,7 +165,7 @@ Error generating stack: `+a.message+`
   color: ${e=>e.theme.secondary[500]};
   border-radius: 8px;
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 400px;
