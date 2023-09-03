@@ -43,7 +43,7 @@ export default function Preview() {
             <Info>
               <CommitsSelected>Selected commits: {selectedCommits.length}</CommitsSelected>
               <Hours>
-                <Button style={{ width: 'fit-content', height: '15px' }} onClick={assignHours}>Random hours</Button>
+                <Button style={{ width: 'fit-content', height: '15px' }} onClick={assignHours}>Random hours 🤫</Button>
                 <span>
                   Hours filled in: <UsedHours $overfilled={usedHours !== hours}>{usedHours}</UsedHours> / {hours}
                 </span>

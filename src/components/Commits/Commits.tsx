@@ -30,7 +30,7 @@ export default function Commits() {
   }, [user, month]);
 
   const message = !user ? 'Please login to search for commits' :
-    loading ? `Searching commits for ${monthReadable}...` :
+    loading ? `Searching commits for ${monthReadable} 🔍` :
       !!error ? 'An error has occured 😢' :
         !month ? 'Please select a month' :
           !commits.length ? `No commits found for ${monthReadable} 😳` :
